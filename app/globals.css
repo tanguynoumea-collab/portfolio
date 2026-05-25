@@ -5,56 +5,80 @@
 @custom-variant dark (&:is(.dark *));
 
 /* ============================================================
-   Palette CSS Variables — :root literals
+   Palette CSS Variables + shadcn Token Aliasing — :root
    ------------------------------------------------------------
-   These are the runtime-mutable tokens. The ThemeProvider
-   (Phase 2) overwrites them via document.documentElement.style
-   .setProperty(...) when the user changes palette. The default
-   values below are the Terra & Sage preset (D-06).
+   Two-layer architecture in a SINGLE :root block:
+
+   1. Palette tokens (6 vars, --color-*) — the runtime-mutable
+      single source of truth. ThemeProvider (Phase 2) overwrites
+      these via document.documentElement.style.setProperty(...)
+      when the user changes palette. Defaults = Terra & Sage (D-06).
+
+   2. shadcn token aliases (19 vars) — every shadcn-named token
+      redirects to var(--color-*) per CONTEXT.md D-10..D-13:
+        - 17 tokens => var(--color-*) (palette-driven)
+        - 2 tokens (--destructive, --destructive-foreground) =>
+          FIXED oklch (D-12, palette-independent affordance)
+        - 2 tokens (--border, --input) => color-mix() on muted at 30%
+          (D-13, subtle palette-aware borders)
+        - 1 token (--ring) => var(--color-accent) (focus ring, D-13)
+
+   D-08: NO radius tokens, NO chart tokens, NO sidebar tokens.
+   Phase 1 ships color tokens ONLY. shadcn's default rounded
+   utilities use Tailwind v4's built-in radius scale (no CSS
+   variable indirection needed).
 
    NEVER hardcode OKLCh literals anywhere else in the codebase.
    Always reference via var(--color-*) or Tailwind utilities
    backed by @theme below.
    ============================================================ */
 :root {
+  /* Palette tokens (plan 01-02 — Terra & Sage defaults, D-06) */
   --color-bg: oklch(0.97 0.012 80);
   --color-surface: oklch(0.94 0.018 75);
   --color-text: oklch(0.22 0.018 50);
   --color-text-muted: oklch(0.5 0.02 55);
   --color-accent: oklch(0.62 0.155 35);
   --color-secondary: oklch(0.55 0.075 145);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
+
+  /* shadcn token aliases (plan 01-03 — D-10..D-13) */
+  --background: var(--color-bg);
+  --foreground: var(--color-text);
+
+  --card: var(--color-surface);
+  --card-foreground: var(--color-text);
+
+  --popover: var(--color-surface);
+  --popover-foreground: var(--color-text);
+
+  /* D-11: shadcn --primary maps to portfolio accent (CTAs, focus) */
+  --primary: var(--color-accent);
+  --primary-foreground: var(--color-bg);
+
+  --secondary: var(--color-secondary);
+  --secondary-foreground: var(--color-text);
+
+  --muted: var(--color-surface);
+  --muted-foreground: var(--color-text-muted);
+
+  /* D-11: shadcn --accent is a HOVER SURFACE (NOT portfolio's accent) */
+  --accent: var(--color-surface);
+  --accent-foreground: var(--color-text);
+
+  /* D-12: --destructive FIXED — palette-independent affordance */
+  --destructive: oklch(0.6 0.22 25);
+  --destructive-foreground: oklch(0.98 0.01 80);
+
+  /* D-13: borders/inputs via color-mix on text-muted at 30% */
+  --border: color-mix(in oklch, var(--color-text-muted) 30%, transparent);
+  --input: color-mix(in oklch, var(--color-text-muted) 30%, transparent);
+
+  /* D-13: focus ring uses portfolio accent (WCAG-friendly) */
+  --ring: var(--color-accent);
+
+  /* D-08: NO radius, chart, or sidebar tokens — Phase 1 ships */
+  /* color tokens ONLY. shadcn rounded utilities use Tailwind v4 */
+  /* built-in radius scale (no CSS variable indirection needed). */
 }
 
 /* ============================================================
@@ -80,6 +104,56 @@
 }
 
 /* ============================================================
+   shadcn @theme inline — wires shadcn tokens to Tailwind utilities
+   ------------------------------------------------------------
+   This block makes `bg-primary`, `text-foreground`, `border-border`,
+   `ring-ring`, etc. resolve to the aliased CSS variables in :root.
+   Combined with the aliasing above, every shadcn component reads
+   the palette via the var() chain: utility -> shadcn token alias ->
+   portfolio palette var. Runtime palette mutation propagates
+   automatically without rebuild.
+   ============================================================ */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+}
+
+/* ============================================================
+   shadcn @layer base — element defaults
+   ------------------------------------------------------------
+   These selectors apply the aliased palette to every element by
+   default. Because `--border`, `--ring`, `--background`,
+   `--foreground` all resolve to var(--color-*), the page renders
+   in the active palette at cold load AND repaints live when
+   ThemeProvider mutates --color-* at runtime.
+   ============================================================ */
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* ============================================================
    Global palette swap transition (ARCH-04)
    ------------------------------------------------------------
    400ms ease cubic on color-related properties only, so palette
@@ -92,93 +166,4 @@
     color 400ms ease,
     background-color 400ms ease,
     border-color 400ms ease;
-}
-
-@theme inline {
-  --font-heading: var(--font-sans);
-  --font-sans: var(--font-sans);
-  --color-sidebar-ring: var(--sidebar-ring);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar: var(--sidebar);
-  --color-chart-5: var(--chart-5);
-  --color-chart-4: var(--chart-4);
-  --color-chart-3: var(--chart-3);
-  --color-chart-2: var(--chart-2);
-  --color-chart-1: var(--chart-1);
-  --color-ring: var(--ring);
-  --color-input: var(--input);
-  --color-border: var(--border);
-  --color-destructive: var(--destructive);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-accent: var(--accent);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-muted: var(--muted);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-secondary: var(--secondary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-primary: var(--primary);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-popover: var(--popover);
-  --color-card-foreground: var(--card-foreground);
-  --color-card: var(--card);
-  --color-foreground: var(--foreground);
-  --color-background: var(--background);
-  --radius-sm: calc(var(--radius) * 0.6);
-  --radius-md: calc(var(--radius) * 0.8);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) * 1.4);
-  --radius-2xl: calc(var(--radius) * 1.8);
-  --radius-3xl: calc(var(--radius) * 2.2);
-  --radius-4xl: calc(var(--radius) * 2.6);
-}
-
-.dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
-}
-
-@layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
-  html {
-    @apply font-sans;
-  }
 }
