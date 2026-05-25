@@ -36,7 +36,7 @@ Decimal phases appear between their surrounding integers in numeric order.
   5. `lib/projects.ts` exports the discriminated `Project = TechProject | DesignProject | BIMProject` union and a `getProjects(locale)` loader compiles a stub MDX file end-to-end
 **Plans**: 5 plans
 - [x] 01-01-scaffold-PLAN.md — Scaffold Next 16 + tooling + folder structure [ARCH-01, ARCH-02, ARCH-09]
-- [ ] 01-02-css-variables-PLAN.md — CSS variables foundation + Tailwind v4 @theme wiring [ARCH-03, ARCH-04]
+- [x] 01-02-css-variables-PLAN.md — CSS variables foundation + Tailwind v4 @theme wiring [ARCH-03, ARCH-04]
 - [ ] 01-03-shadcn-aliasing-PLAN.md — shadcn init + 7 components + exhaustive token aliasing [ARCH-05]
 - [ ] 01-04-i18n-PLAN.md — next-intl bilingual routing + proxy.ts + messages skeleton [ARCH-06, ARCH-07]
 - [ ] 01-05-mdx-loader-PLAN.md — MDX loader + discriminated Project union + palettes lib + stubs [ARCH-08]

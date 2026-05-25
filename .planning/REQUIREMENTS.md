@@ -11,8 +11,8 @@ Requirements for initial release. Each maps to roadmap phases.
 
 - [x] **ARCH-01**: Le projet est scaffolded avec Next.js 16 (App Router) + React 19.2 + TypeScript strict via `create-next-app@latest`, et `npm run dev` démarre sans erreur
 - [x] **ARCH-02**: ESLint flat config + Prettier sont opérationnels (`npm run lint` passe sans warning), et la structure de dossiers (`app/`, `components/`, `components/sections/`, `components/theme/`, `components/providers/`, `lib/`, `content/projects/`, `messages/`, `public/`) existe
-- [ ] **ARCH-03**: Tailwind CSS v4 est configuré avec un bloc `@theme {}` en CSS qui référence des CSS variables OKLCh déclarées en `:root` (toutes les couleurs via `var(--color-*)`, aucune couleur hardcodée dans `@theme`)
-- [ ] **ARCH-04**: Le fichier `app/globals.css` déclare les CSS variables `--color-bg`, `--color-surface`, `--color-text`, `--color-text-muted`, `--color-accent`, `--color-secondary` et applique une transition globale 400ms sur `color, background-color, border-color`
+- [x] **ARCH-03**: Tailwind CSS v4 est configuré avec un bloc `@theme {}` en CSS qui référence des CSS variables OKLCh déclarées en `:root` (toutes les couleurs via `var(--color-*)`, aucune couleur hardcodée dans `@theme`)
+- [x] **ARCH-04**: Le fichier `app/globals.css` déclare les CSS variables `--color-bg`, `--color-surface`, `--color-text`, `--color-text-muted`, `--color-accent`, `--color-secondary` et applique une transition globale 400ms sur `color, background-color, border-color`
 - [ ] **ARCH-05**: shadcn/ui est initialisé via `npx shadcn@latest init`, et les 7 composants `button`, `card`, `dialog`, `slider`, `switch`, `popover`, `tabs` sont installés et utilisent les CSS variables du palette system (aliasing fait dans `globals.css`)
 - [ ] **ARCH-06**: next-intl v4.12 est configuré avec `routing.ts` + `request.ts` + `proxy.ts` (Next 16), les routes localisées `/fr/*` et `/en/*` fonctionnent, et `/` redirige vers la locale appropriée
 - [ ] **ARCH-07**: Les fichiers `messages/fr.json` et `messages/en.json` existent avec une structure complète couvrant nav, hero, about, projects, skills, contact, footer, palette switcher, 404
@@ -139,8 +139,8 @@ Populated by `gsd-roadmapper` on 2026-05-25.
 |-------------|-------|--------|
 | ARCH-01 | Phase 1 | Complete |
 | ARCH-02 | Phase 1 | Complete |
-| ARCH-03 | Phase 1 | Pending |
-| ARCH-04 | Phase 1 | Pending |
+| ARCH-03 | Phase 1 | Complete |
+| ARCH-04 | Phase 1 | Complete |
 | ARCH-05 | Phase 1 | Pending |
 | ARCH-06 | Phase 1 | Pending |
 | ARCH-07 | Phase 1 | Pending |
