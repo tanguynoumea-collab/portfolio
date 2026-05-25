@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 01-02-css-variables-PLAN.md
-last_updated: "2026-05-25T20:44:53.783Z"
+stopped_at: Completed 01-03-shadcn-aliasing-PLAN.md
+last_updated: "2026-05-25T21:00:40.139Z"
 last_activity: 2026-05-25
 progress:
   total_phases: 7
   completed_phases: 0
   total_plans: 5
-  completed_plans: 2
+  completed_plans: 3
   percent: 0
 ---
 
@@ -26,7 +26,7 @@ See: .planning/PROJECT.md (updated 2026-05-25)
 ## Current Position
 
 Phase: 01 (foundations) — EXECUTING
-Plan: 3 of 5
+Plan: 4 of 5
 Status: Ready to execute
 Last activity: 2026-05-25
 
@@ -54,6 +54,7 @@ Progress: [░░░░░░░░░░] 0%
 *Updated after each plan completion*
 | Phase 01-foundations P01 | 9m 9s | 2 tasks | 27 files |
 | Phase 01-foundations P02 | 7m 21s | 1 tasks | 1 files |
+| Phase 01 P03 | 11m | 2 tasks | 12 files |
 
 ## Accumulated Context
 
@@ -74,6 +75,8 @@ Recent decisions affecting current work:
 - [Phase 01-foundations]: Pitfall #2 mitigation by structure, not discipline: @theme contains ONLY var(--color-*) references, ZERO oklch() literals (regex-enforced). Future contributors cannot accidentally break runtime palette switching by adding a hardcoded color there.
 - [Phase 01-foundations]: Lightning CSS (Tailwind v4 optimizer) auto-generates @supports (color: lab(...)) fallback + hex literals for older browsers. This is desirable browser-compat behavior, not a regression. Source file remains the authoritative OKLCh definition.
 - [Phase 01-foundations]: OKLCh-only color authoring established as a project-wide convention: no hex, no rgb(), no hsl() anywhere from this point forward. Aligns with Tailwind v4's color system, culori's API (Phase 2), and the harmonic palette generator's hue-rotation math.
+- [Phase 01-foundations]: shadcn 4.8.0 init: 'new-york' style renamed to 'radix-nova' (CLI evolution). Components use umbrella radix-ui@^1.4.3 package, not legacy @radix-ui/react-*. Exhaustive D-10..D-13 aliasing applied: every shadcn token in :root redirects to var(--color-*), fixed OKLCh (destructive D-12), or color-mix() (borders D-13). D-08 enforced: ZERO --radius / --chart-* / --sidebar-* in :root. .dark block removed (palette replaces dark mode).
+- [Phase 01-foundations]: Pitfall #5 (shadcn token disconnect) is now structurally impossible. The chain bg-primary -> @theme inline --color-primary -> :root --primary -> var(--color-accent) -> Terra OKLCh resolves automatically. When Phase 2 ThemeProvider mutates --color-accent, every shadcn component using bg-primary / ring-ring / etc. repaints without rebuild.
 
 ### Pending Todos
 
@@ -88,6 +91,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-05-25T20:44:18.855Z
-Stopped at: Completed 01-02-css-variables-PLAN.md
+Last session: 2026-05-25T21:00:40.136Z
+Stopped at: Completed 01-03-shadcn-aliasing-PLAN.md
 Resume file: None

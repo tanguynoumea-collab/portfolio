@@ -13,7 +13,7 @@ Requirements for initial release. Each maps to roadmap phases.
 - [x] **ARCH-02**: ESLint flat config + Prettier sont opérationnels (`npm run lint` passe sans warning), et la structure de dossiers (`app/`, `components/`, `components/sections/`, `components/theme/`, `components/providers/`, `lib/`, `content/projects/`, `messages/`, `public/`) existe
 - [x] **ARCH-03**: Tailwind CSS v4 est configuré avec un bloc `@theme {}` en CSS qui référence des CSS variables OKLCh déclarées en `:root` (toutes les couleurs via `var(--color-*)`, aucune couleur hardcodée dans `@theme`)
 - [x] **ARCH-04**: Le fichier `app/globals.css` déclare les CSS variables `--color-bg`, `--color-surface`, `--color-text`, `--color-text-muted`, `--color-accent`, `--color-secondary` et applique une transition globale 400ms sur `color, background-color, border-color`
-- [ ] **ARCH-05**: shadcn/ui est initialisé via `npx shadcn@latest init`, et les 7 composants `button`, `card`, `dialog`, `slider`, `switch`, `popover`, `tabs` sont installés et utilisent les CSS variables du palette system (aliasing fait dans `globals.css`)
+- [x] **ARCH-05**: shadcn/ui est initialisé via `npx shadcn@latest init`, et les 7 composants `button`, `card`, `dialog`, `slider`, `switch`, `popover`, `tabs` sont installés et utilisent les CSS variables du palette system (aliasing fait dans `globals.css`)
 - [ ] **ARCH-06**: next-intl v4.12 est configuré avec `routing.ts` + `request.ts` + `proxy.ts` (Next 16), les routes localisées `/fr/*` et `/en/*` fonctionnent, et `/` redirige vers la locale appropriée
 - [ ] **ARCH-07**: Les fichiers `messages/fr.json` et `messages/en.json` existent avec une structure complète couvrant nav, hero, about, projects, skills, contact, footer, palette switcher, 404
 - [ ] **ARCH-08**: `lib/projects.ts` expose un type discriminé `Project = TechProject | DesignProject | BIMProject` (chaque variante avec metadata domain-spécifique : Tech.stack, Design.tools, BIM.software+projectScale) et un loader `getProjects(locale)` lit les MDX via `@next/mdx` + `gray-matter` + `compileMDX`
@@ -141,7 +141,7 @@ Populated by `gsd-roadmapper` on 2026-05-25.
 | ARCH-02 | Phase 1 | Complete |
 | ARCH-03 | Phase 1 | Complete |
 | ARCH-04 | Phase 1 | Complete |
-| ARCH-05 | Phase 1 | Pending |
+| ARCH-05 | Phase 1 | Complete |
 | ARCH-06 | Phase 1 | Pending |
 | ARCH-07 | Phase 1 | Pending |
 | ARCH-08 | Phase 1 | Pending |
