@@ -1,0 +1,11 @@
+.next
+node_modules
+.vercel
+public
+*.lock
+.planning
+content/projects
+messages
+
+# Project instruction file (human-curated prose for AI agents)
+CLAUDE.md
