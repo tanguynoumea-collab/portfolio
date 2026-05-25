@@ -133,68 +133,81 @@ Explicitly excluded. Documented to prevent scope creep.
 
 ## Traceability
 
-Empty initially — populated during roadmap creation by `gsd-roadmapper`.
+Populated by `gsd-roadmapper` on 2026-05-25.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| ARCH-01 | — | Pending |
-| ARCH-02 | — | Pending |
-| ARCH-03 | — | Pending |
-| ARCH-04 | — | Pending |
-| ARCH-05 | — | Pending |
-| ARCH-06 | — | Pending |
-| ARCH-07 | — | Pending |
-| ARCH-08 | — | Pending |
-| ARCH-09 | — | Pending |
-| THEME-01 | — | Pending |
-| THEME-02 | — | Pending |
-| THEME-03 | — | Pending |
-| THEME-04 | — | Pending |
-| THEME-05 | — | Pending |
-| THEME-06 | — | Pending |
-| THEME-07 | — | Pending |
-| THEME-08 | — | Pending |
-| THEME-09 | — | Pending |
-| THEME-10 | — | Pending |
-| THEME-11 | — | Pending |
-| THEME-12 | — | Pending |
-| LAYOUT-01 | — | Pending |
-| LAYOUT-02 | — | Pending |
-| LAYOUT-03 | — | Pending |
-| LAYOUT-04 | — | Pending |
-| LAYOUT-05 | — | Pending |
-| LAYOUT-06 | — | Pending |
-| HOME-01 | — | Pending |
-| HOME-02 | — | Pending |
-| HOME-03 | — | Pending |
-| HOME-04 | — | Pending |
-| HOME-05 | — | Pending |
-| HOME-06 | — | Pending |
-| HOME-07 | — | Pending |
-| CONTENT-01 | — | Pending |
-| CONTENT-02 | — | Pending |
-| CONTENT-03 | — | Pending |
-| ANIM-01 | — | Pending |
-| ANIM-02 | — | Pending |
-| EGG-01 | — | Pending |
-| EGG-02 | — | Pending |
-| A11Y-01 | — | Pending |
-| A11Y-02 | — | Pending |
-| A11Y-03 | — | Pending |
-| A11Y-04 | — | Pending |
-| A11Y-05 | — | Pending |
-| A11Y-06 | — | Pending |
-| A11Y-07 | — | Pending |
-| A11Y-08 | — | Pending |
-| DEPLOY-01 | — | Pending |
-| DEPLOY-02 | — | Pending |
-| DEPLOY-03 | — | Pending |
+| ARCH-01 | Phase 1 | Pending |
+| ARCH-02 | Phase 1 | Pending |
+| ARCH-03 | Phase 1 | Pending |
+| ARCH-04 | Phase 1 | Pending |
+| ARCH-05 | Phase 1 | Pending |
+| ARCH-06 | Phase 1 | Pending |
+| ARCH-07 | Phase 1 | Pending |
+| ARCH-08 | Phase 1 | Pending |
+| ARCH-09 | Phase 1 | Pending |
+| THEME-01 | Phase 2 | Pending |
+| THEME-02 | Phase 2 | Pending |
+| THEME-03 | Phase 2 | Pending |
+| THEME-04 | Phase 2 | Pending |
+| THEME-05 | Phase 2 | Pending |
+| THEME-06 | Phase 2 | Pending |
+| THEME-07 | Phase 2 | Pending |
+| THEME-08 | Phase 2 | Pending |
+| THEME-09 | Phase 2 | Pending |
+| THEME-10 | Phase 2 | Pending |
+| THEME-11 | Phase 2 | Pending |
+| THEME-12 | Phase 2 | Pending |
+| LAYOUT-01 | Phase 3 | Pending |
+| LAYOUT-02 | Phase 3 | Pending |
+| LAYOUT-03 | Phase 3 | Pending |
+| LAYOUT-04 | Phase 3 | Pending |
+| LAYOUT-05 | Phase 3 | Pending |
+| LAYOUT-06 | Phase 3 | Pending |
+| HOME-01 | Phase 4 | Pending |
+| HOME-02 | Phase 4 | Pending |
+| HOME-03 | Phase 4 | Pending |
+| HOME-04 | Phase 4 | Pending |
+| HOME-05 | Phase 4 | Pending |
+| HOME-06 | Phase 4 | Pending |
+| HOME-07 | Phase 4 | Pending |
+| CONTENT-01 | Phase 5 | Pending |
+| CONTENT-02 | Phase 5 | Pending |
+| CONTENT-03 | Phase 5 | Pending |
+| ANIM-01 | Phase 3 | Pending |
+| ANIM-02 | Phase 5 | Pending |
+| EGG-01 | Phase 3 | Pending |
+| EGG-02 | Phase 6 | Pending |
+| A11Y-01 | Phase 6 | Pending |
+| A11Y-02 | Phase 6 | Pending |
+| A11Y-03 | Phase 6 | Pending |
+| A11Y-04 | Phase 6 | Pending |
+| A11Y-05 | Phase 6 | Pending |
+| A11Y-06 | Phase 6 | Pending |
+| A11Y-07 | Phase 6 | Pending |
+| A11Y-08 | Phase 6 | Pending |
+| DEPLOY-01 | Phase 7 | Pending |
+| DEPLOY-02 | Phase 7 | Pending |
+| DEPLOY-03 | Phase 7 | Pending |
 
 **Coverage:**
-- v1 requirements: 51 total
-- Mapped to phases: 0 ⚠️ (will be populated by roadmapper)
-- Unmapped: 51 ⚠️ (will be resolved by roadmapper)
+- v1 requirements: 52 total (header previously listed 51 — actual REQ-ID count is 52)
+- Mapped to phases: 52 ✓
+- Unmapped: 0 ✓
+
+**Per-phase distribution:**
+
+| Phase | Requirements | Count |
+|-------|--------------|-------|
+| Phase 1 — Foundations | ARCH-01..09 | 9 |
+| Phase 2 — Palette System | THEME-01..12 | 12 |
+| Phase 3 — Layout & Animation Foundation | LAYOUT-01..06, ANIM-01, EGG-01 | 8 |
+| Phase 4 — Homepage Sections | HOME-01..07 | 7 |
+| Phase 5 — Project Content Pipeline | CONTENT-01..03, ANIM-02 | 4 |
+| Phase 6 — SEO, Accessibility & Polish | A11Y-01..08, EGG-02 | 9 |
+| Phase 7 — Deployment | DEPLOY-01..03 | 3 |
+| **Total** | | **52** |
 
 ---
 *Requirements defined: 2026-05-25*
-*Last updated: 2026-05-25 after initial definition (51 REQ-IDs in 9 categories, derived from PROJECT.md Active + research SUMMARY corrections)*
+*Last updated: 2026-05-25 after roadmap creation (52 REQ-IDs mapped to 7 phases with 100% coverage)*
