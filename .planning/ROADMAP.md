@@ -34,7 +34,12 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. `app/globals.css` declares the six `--color-*` OKLCh variables in `:root`, exposes them through `@theme {}`, and applies the global 400ms transition on `color, background-color, border-color`
   4. The seven shadcn components (button, card, dialog, slider, switch, popover, tabs) render using the palette CSS variables (no hardcoded shadcn colors leak through)
   5. `lib/projects.ts` exports the discriminated `Project = TechProject | DesignProject | BIMProject` union and a `getProjects(locale)` loader compiles a stub MDX file end-to-end
-**Plans**: TBD
+**Plans**: 5 plans
+- [ ] 01-01-scaffold-PLAN.md — Scaffold Next 16 + tooling + folder structure [ARCH-01, ARCH-02, ARCH-09]
+- [ ] 01-02-css-variables-PLAN.md — CSS variables foundation + Tailwind v4 @theme wiring [ARCH-03, ARCH-04]
+- [ ] 01-03-shadcn-aliasing-PLAN.md — shadcn init + 7 components + exhaustive token aliasing [ARCH-05]
+- [ ] 01-04-i18n-PLAN.md — next-intl bilingual routing + proxy.ts + messages skeleton [ARCH-06, ARCH-07]
+- [ ] 01-05-mdx-loader-PLAN.md — MDX loader + discriminated Project union + palettes lib + stubs [ARCH-08]
 **UI hint**: no
 
 ### Phase 2: Palette System
@@ -119,7 +124,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundations | 0/TBD | Not started | - |
+| 1. Foundations | 0/5 | Not started | - |
 | 2. Palette System | 0/TBD | Not started | - |
 | 3. Layout & Animation Foundation | 0/TBD | Not started | - |
 | 4. Homepage Sections | 0/TBD | Not started | - |
