@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: planning
-stopped_at: Phase 1 context gathered
-last_updated: "2026-05-25T19:25:52.503Z"
-last_activity: 2026-05-25 — Roadmap created with 7 phases mapping all 52 v1 REQ-IDs
+status: executing
+stopped_at: Completed 01-01-scaffold-PLAN.md
+last_updated: "2026-05-25T20:32:16.663Z"
+last_activity: 2026-05-25
 progress:
   total_phases: 7
   completed_phases: 0
-  total_plans: 0
-  completed_plans: 0
+  total_plans: 5
+  completed_plans: 1
   percent: 0
 ---
 
@@ -21,14 +21,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-05-25)
 
 **Core value:** Demontrer le profil creatif hybride Tech/Design/BIM via une experience web personnalisable qui prouve la maitrise technique, le sens du design et l'attention aux details.
-**Current focus:** Phase 1 — Foundations
+**Current focus:** Phase 01 — foundations
 
 ## Current Position
 
-Phase: 1 of 7 (Foundations)
-Plan: 0 of TBD in current phase
-Status: Ready to plan
-Last activity: 2026-05-25 — Roadmap created with 7 phases mapping all 52 v1 REQ-IDs
+Phase: 01 (foundations) — EXECUTING
+Plan: 2 of 5
+Status: Ready to execute
+Last activity: 2026-05-25
 
 Progress: [░░░░░░░░░░] 0%
 
@@ -52,6 +52,7 @@ Progress: [░░░░░░░░░░] 0%
 - Trend: —
 
 *Updated after each plan completion*
+| Phase 01-foundations P01 | 9m 9s | 2 tasks | 27 files |
 
 ## Accumulated Context
 
@@ -65,6 +66,9 @@ Recent decisions affecting current work:
 - FOUC: blocking `<script>` injected in `<head>` via `next/script strategy="beforeInteractive"` reads localStorage pre-hydration
 - Animation: single RAF — Lenis `autoRaf: false` + `gsap.ticker.add((t) => lenis.raf(t * 1000))`
 - WCAG: validate full 7-pair matrix in `lib/colors.ts`, auto-adjust text via `adjustForAA`
+- [Phase 01-foundations]: Scaffold workaround: create-next-app rejects dir name 'PROJET PORTFOLIO' (caps + space violate npm naming); scaffolded into adjacent temp dir, copied generated files into repo, renamed package to tanguy-portfolio (D-04). Existing .git/.planning/CLAUDE.md preserved 100% intact.
+- [Phase 01-foundations]: Dependency ranges use caret prefix (^16.2.6, ^19.2.4) rather than scaffold default exact pins — enables compatible patch upgrades and matches plan acceptance regex.
+- [Phase 01-foundations]: CLAUDE.md added to .prettierignore: 28KB of human-curated AI-instruction prose should not be reformatted by Prettier's markdown formatter (would reflow paragraphs and reorder structure unhelpfully).
 
 ### Pending Todos
 
@@ -79,6 +83,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-05-25T19:25:52.499Z
-Stopped at: Phase 1 context gathered
-Resume file: .planning/phases/01-foundations/01-CONTEXT.md
+Last session: 2026-05-25T20:32:07.929Z
+Stopped at: Completed 01-01-scaffold-PLAN.md
+Resume file: None

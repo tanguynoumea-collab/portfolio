@@ -9,15 +9,15 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Architecture & Foundations
 
-- [ ] **ARCH-01**: Le projet est scaffolded avec Next.js 16 (App Router) + React 19.2 + TypeScript strict via `create-next-app@latest`, et `npm run dev` démarre sans erreur
-- [ ] **ARCH-02**: ESLint flat config + Prettier sont opérationnels (`npm run lint` passe sans warning), et la structure de dossiers (`app/`, `components/`, `components/sections/`, `components/theme/`, `components/providers/`, `lib/`, `content/projects/`, `messages/`, `public/`) existe
+- [x] **ARCH-01**: Le projet est scaffolded avec Next.js 16 (App Router) + React 19.2 + TypeScript strict via `create-next-app@latest`, et `npm run dev` démarre sans erreur
+- [x] **ARCH-02**: ESLint flat config + Prettier sont opérationnels (`npm run lint` passe sans warning), et la structure de dossiers (`app/`, `components/`, `components/sections/`, `components/theme/`, `components/providers/`, `lib/`, `content/projects/`, `messages/`, `public/`) existe
 - [ ] **ARCH-03**: Tailwind CSS v4 est configuré avec un bloc `@theme {}` en CSS qui référence des CSS variables OKLCh déclarées en `:root` (toutes les couleurs via `var(--color-*)`, aucune couleur hardcodée dans `@theme`)
 - [ ] **ARCH-04**: Le fichier `app/globals.css` déclare les CSS variables `--color-bg`, `--color-surface`, `--color-text`, `--color-text-muted`, `--color-accent`, `--color-secondary` et applique une transition globale 400ms sur `color, background-color, border-color`
 - [ ] **ARCH-05**: shadcn/ui est initialisé via `npx shadcn@latest init`, et les 7 composants `button`, `card`, `dialog`, `slider`, `switch`, `popover`, `tabs` sont installés et utilisent les CSS variables du palette system (aliasing fait dans `globals.css`)
 - [ ] **ARCH-06**: next-intl v4.12 est configuré avec `routing.ts` + `request.ts` + `proxy.ts` (Next 16), les routes localisées `/fr/*` et `/en/*` fonctionnent, et `/` redirige vers la locale appropriée
 - [ ] **ARCH-07**: Les fichiers `messages/fr.json` et `messages/en.json` existent avec une structure complète couvrant nav, hero, about, projects, skills, contact, footer, palette switcher, 404
 - [ ] **ARCH-08**: `lib/projects.ts` expose un type discriminé `Project = TechProject | DesignProject | BIMProject` (chaque variante avec metadata domain-spécifique : Tech.stack, Design.tools, BIM.software+projectScale) et un loader `getProjects(locale)` lit les MDX via `@next/mdx` + `gray-matter` + `compileMDX`
-- [ ] **ARCH-09**: Le repo git est initialisé avec un `.gitignore` adapté (next, node_modules, .env*.local, .DS_Store, .vercel)
+- [x] **ARCH-09**: Le repo git est initialisé avec un `.gitignore` adapté (next, node_modules, .env*.local, .DS_Store, .vercel)
 
 ### Theme System (signature feature)
 
@@ -137,15 +137,15 @@ Populated by `gsd-roadmapper` on 2026-05-25.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| ARCH-01 | Phase 1 | Pending |
-| ARCH-02 | Phase 1 | Pending |
+| ARCH-01 | Phase 1 | Complete |
+| ARCH-02 | Phase 1 | Complete |
 | ARCH-03 | Phase 1 | Pending |
 | ARCH-04 | Phase 1 | Pending |
 | ARCH-05 | Phase 1 | Pending |
 | ARCH-06 | Phase 1 | Pending |
 | ARCH-07 | Phase 1 | Pending |
 | ARCH-08 | Phase 1 | Pending |
-| ARCH-09 | Phase 1 | Pending |
+| ARCH-09 | Phase 1 | Complete |
 | THEME-01 | Phase 2 | Pending |
 | THEME-02 | Phase 2 | Pending |
 | THEME-03 | Phase 2 | Pending |
