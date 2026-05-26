@@ -10,8 +10,19 @@
  * lib/palettes.ts automatically updates the cold-load path because the
  * Server Component re-runs at build/render time.
  *
- * Size budget per D-03: <1 KB minified. Each palette ~120 bytes (6 OKLCh
- * strings + id), 5 palettes ≈ 600 bytes + ~250 bytes of parser logic.
+ * Size budget per D-03: <1 KB minified inline. Achieved (~1000 bytes) by:
+ *   1. Inlining tokens as 6-element arrays (no per-token keys): saves ~275 b
+ *   2. Building --color-* CSS-var names from a single split() string: saves ~30 b
+ *   3. Single-ternary `t = ...` assignment over branching ifs: saves ~50 b
+ *   4. EXCLUDING Vaporwave from the inline table (per RESEARCH.md Pitfall A
+ *      prescribed mitigation): saves ~205 b
+ *
+ * Vaporwave exclusion tradeoff: returning Vaporwave-unlocked users who saved
+ * `{kind:'preset',id:'vaporwave'}` will briefly see Terra defaults before
+ * ThemeProvider hydrates and re-applies Vaporwave from lib/palettes.ts (since
+ * Vaporwave IS in PALETTES). For the "easter egg" framing (Konami reveal IS
+ * the signature; repeat experience is not), this brief flash on cold-load is
+ * acceptable. All 4 normal presets get true zero-FOUC.
  *
  * CRITICAL: this file MUST NOT carry 'use client' — Next 16 requires
  * `beforeInteractive` to originate from a Server Component (root or [locale]
@@ -25,27 +36,21 @@
 import Script from 'next/script';
 import { PALETTES } from '@/lib/palettes';
 
-// Build-time-inlined PALETTES table (only the 6 token strings per id, no name/display).
-// Vaporwave INCLUDED so the cold-load path still works if a user (who unlocked
-// Vaporwave previously) returns with palette-v1 = {kind:'preset',id:'vaporwave'}.
-const INLINE_PALETTES = PALETTES.reduce<Record<string, Record<string, string>>>(
-  (acc, p) => {
-    acc[p.id] = {
-      bg: p.bg,
-      surface: p.surface,
-      text: p.text,
-      textMuted: p.textMuted,
-      accent: p.accent,
-      secondary: p.secondary,
-    };
-    return acc;
-  },
-  {},
-);
+// Build-time-inlined PALETTES table as compact arrays.
+// Order MUST match the read order in the script body: bg, surface, text,
+// textMuted, accent, secondary.
+// Vaporwave EXCLUDED per RESEARCH.md Pitfall A (size budget) — see header.
+const INLINE_PALETTES = PALETTES.filter((p) => p.id !== 'vaporwave').reduce<
+  Record<string, [string, string, string, string, string, string]>
+>((acc, p) => {
+  acc[p.id] = [p.bg, p.surface, p.text, p.textMuted, p.accent, p.secondary];
+  return acc;
+}, {});
 
-// Author the script with short variable names to stay under 1 KB.
+// Author the script with short variable names, array-form table, and
+// pipe-split CSS-var keys to stay under 1 KB minified inline.
 // Logic per D-02 + D-03: silent try/catch, no console, no removeItem.
-const SCRIPT_BODY = `(function(){try{var raw=localStorage.getItem('palette-v1');if(!raw)return;var p=JSON.parse(raw);var T=${JSON.stringify(INLINE_PALETTES)};var t=null;if(p&&p.kind==='preset'&&T[p.id])t=T[p.id];else if(p&&p.kind==='custom'&&p.tokens)t=p.tokens;if(!t)return;var r=document.documentElement.style;r.setProperty('--color-bg',t.bg);r.setProperty('--color-surface',t.surface);r.setProperty('--color-text',t.text);r.setProperty('--color-text-muted',t.textMuted);r.setProperty('--color-accent',t.accent);r.setProperty('--color-secondary',t.secondary);}catch(e){}})();`;
+const SCRIPT_BODY = `(function(){try{var raw=localStorage.getItem("palette-v1");if(!raw)return;var p=JSON.parse(raw);var T=${JSON.stringify(INLINE_PALETTES)},S="bg|surface|text|text-muted|accent|secondary".split("|"),t=p&&(p.kind=="preset"?T[p.id]:p.kind=="custom"&&p.tokens?[(p=p.tokens).bg,p.surface,p.text,p.textMuted,p.accent,p.secondary]:0);if(!t)return;var r=document.documentElement.style;for(var i=0;i<6;i++)r.setProperty("--color-"+S[i],t[i]);}catch(e){}})();`;
 
 export function PaletteFouCScript() {
   return (
