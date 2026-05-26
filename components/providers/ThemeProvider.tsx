@@ -1,7 +1,7 @@
 'use client';
 
 /**
- * components/providers/ThemeProvider.tsx — Client Component (THEME-04).
+ * components/providers/ThemeProvider.tsx — Client Component (THEME-04 + THEME-12).
  *
  * Single source of truth for palette + unlock state. Uses useReducer for
  * multi-action transitions (SET_PRESET / SET_CUSTOM_FROM_PICKER / SET_HARMONIC
@@ -11,7 +11,8 @@
  *
  * Public API surface (consumed by Wave 3+ UI components via usePalette()):
  *   { palette, paletteId, isCustom, customSource, isVaporwaveUnlocked,
- *     wasAdjustedForAA, setPreset, setCustomColor, setHarmonic, unlockVaporwave }
+ *     wasAdjustedForAA, vaporwaveUnlockNonce, setPreset, setCustomColor,
+ *     setHarmonic, unlockVaporwave }
  *
  * Architecture notes:
  *   - "use client" required: useReducer + useEffect + window/document APIs
@@ -21,9 +22,15 @@
  *   - All actions wrapped in useCallback so consumers can use them in deps arrays
  *   - D-11 INVARIANT delegated to applyMatrixAdjust (lib/colors.ts): only
  *     text/textMuted shift; accent/secondary preserved
- *   - D-14 Konami unlock sequence: UNLOCK_VAPORWAVE → SET_PRESET('vaporwave')
- *     in handleUnlock so Wave 4 (confetti + Sheet auto-open) reads the
- *     post-unlock state with the new active palette already selected
+ *   - D-13 + D-14 Konami unlock sequence (Plan 06):
+ *     handleUnlock dispatches UNLOCK_VAPORWAVE (increments nonce + sets
+ *     isVaporwaveUnlocked) → SET_PRESET('vaporwave') → fires canvas-confetti
+ *     via dynamic import. Confetti gated on prefers-reduced-motion.
+ *   - vaporwaveUnlockNonce: monotonically-increasing counter on every
+ *     UNLOCK_VAPORWAVE dispatch. PaletteFab subscribes to this via useEffect
+ *     so it opens the Sheet exactly once per unlock (D-14 step 5). Avoids
+ *     the "open Sheet on every render where isVaporwaveUnlocked is true"
+ *     anti-pattern that would re-open the Sheet for returning users.
  *   - paletteId='custom' discriminates 4 user-authored palettes from 5 presets
  */
 import {
@@ -36,6 +43,7 @@ import {
   type ReactNode,
 } from 'react';
 import {
+  PALETTES,
   DEFAULT_PALETTE_ID,
   getPaletteById,
   type Palette,
@@ -45,6 +53,7 @@ import {
   applyMatrixAdjust,
   deriveDefaultTokens,
   generateHarmonic,
+  oklchToHex,
   type HarmonicMode,
 } from '@/lib/colors';
 import {
@@ -55,6 +64,7 @@ import {
   type StoredPalette,
 } from '@/lib/storage';
 import { useKonamiCode } from '@/lib/hooks/useKonamiCode';
+import { usePrefersReducedMotion } from '@/lib/hooks/usePrefersReducedMotion';
 
 // -------------------- Internal types --------------------
 
@@ -67,6 +77,7 @@ type ThemeState = {
   customSource: 'picker' | 'harmonic' | null;
   isVaporwaveUnlocked: boolean;
   wasAdjustedForAA: boolean;
+  vaporwaveUnlockNonce: number;
 };
 
 type ThemeAction =
@@ -146,7 +157,13 @@ function reducer(state: ThemeState, action: ThemeAction): ThemeState {
       };
     }
     case 'UNLOCK_VAPORWAVE': {
-      return { ...state, isVaporwaveUnlocked: true };
+      // Increment nonce on every unlock dispatch so PaletteFab can react
+      // exactly once per unlock via useEffect on the nonce value (D-14).
+      return {
+        ...state,
+        isVaporwaveUnlocked: true,
+        vaporwaveUnlockNonce: state.vaporwaveUnlockNonce + 1,
+      };
     }
     default:
       return state;
@@ -188,7 +205,48 @@ function initFromStorage(): ThemeState {
     // SET_HARMONIC actions. On rehydration from storage we start clean
     // (the persisted tokens are already the adjusted output).
     wasAdjustedForAA: false,
+    // Nonce starts at 0; only Konami dispatches inside this browser session
+    // increment it. Returning users with secrets.vaporwave === true still
+    // have nonce=0 on cold load, so PaletteFab's useEffect does NOT auto-open
+    // the Sheet — exactly the desired "open only on fresh unlock" behavior.
+    vaporwaveUnlockNonce: 0,
   };
+}
+
+// -------------------- canvas-confetti (D-13 dynamic import) --------------------
+
+/**
+ * Fire canvas-confetti dynamically on Konami unlock (D-13).
+ *
+ * The module is imported only when this function runs — zero cold-load cost
+ * for the 99% of visitors who never trigger the Konami sequence. Particle
+ * colors derived from the Vaporwave palette's accent + secondary tokens
+ * (OKLCh → hex via culori formatHex). Silent on any error: easter egg should
+ * never crash the page.
+ *
+ * Caller is responsible for gating on prefers-reduced-motion BEFORE invoking
+ * this function (handled in handleUnlock below).
+ */
+async function fireConfetti(): Promise<void> {
+  if (typeof window === 'undefined') return;
+  try {
+    const { default: confetti } = await import('canvas-confetti');
+    const vw = PALETTES.find((p) => p.id === 'vaporwave');
+    const colors: string[] = vw
+      ? [oklchToHex(vw.accent), oklchToHex(vw.secondary)]
+      : ['#ff66cc', '#66ccff'];
+    await confetti({
+      particleCount: 150,
+      spread: 80,
+      origin: { y: 0.7 },
+      colors,
+      startVelocity: 35,
+      gravity: 0.9,
+      ticks: 200,
+    });
+  } catch {
+    // D-02 spirit: silent on failure. Easter egg should never crash the page.
+  }
 }
 
 // -------------------- Context --------------------
@@ -200,6 +258,14 @@ export type PaletteContextValue = {
   customSource: 'picker' | 'harmonic' | null;
   isVaporwaveUnlocked: boolean;
   wasAdjustedForAA: boolean;
+  /**
+   * Monotonically-increasing counter incremented on every UNLOCK_VAPORWAVE
+   * dispatch. PaletteFab (Plan 06) subscribes via useEffect to open the
+   * Sheet exactly once per unlock (D-14 step 5). Returning users with a
+   * persisted secrets.vaporwave=true still see nonce=0 on cold load, so
+   * the Sheet does NOT auto-open across sessions.
+   */
+  vaporwaveUnlockNonce: number;
   setPreset: (id: PaletteId) => void;
   setCustomColor: (input: {
     bg: string;
@@ -226,6 +292,7 @@ export function usePalette(): PaletteContextValue {
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
   const [state, dispatch] = useReducer(reducer, undefined, initFromStorage);
+  const reducedMotion = usePrefersReducedMotion();
 
   // CSS variable writer — applies on every palette change.
   // Mutates document.documentElement.style for the 6 --color-* tokens only.
@@ -263,14 +330,24 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     writeSecretsV1({ vaporwave: state.isVaporwaveUnlocked });
   }, [state.isVaporwaveUnlocked]);
 
-  // D-14 Konami unlock sequence: UNLOCK_VAPORWAVE first (so Wave 4 confetti
-  // can read the *new* unlocked state), then SET_PRESET('vaporwave') so the
-  // next render shows Vaporwave with the card highlighted active. Wave 4
-  // PaletteFab also opens the Sheet after this sequence.
+  // D-14 Konami unlock sequence:
+  //   1. UNLOCK_VAPORWAVE (increments nonce + sets isVaporwaveUnlocked)
+  //   2. SET_PRESET('vaporwave') (swaps active palette)
+  //   3. fireConfetti() (D-13, gated on prefers-reduced-motion)
+  // The nonce increment in step 1 is the signal Wave 4's PaletteFab subscribes
+  // to via useEffect, so it opens the Sheet exactly once per unlock.
   const handleUnlock = useCallback(() => {
     dispatch({ type: 'UNLOCK_VAPORWAVE' });
     dispatch({ type: 'SET_PRESET', id: 'vaporwave' });
-  }, []);
+    // D-13 + Research Discretion: skip the visual burst when the user has
+    // requested reduced motion. The unlock still happens (palette swaps,
+    // Sheet opens via the nonce subscription) — only the particle animation
+    // is suppressed. Fade-only fallback is implicit since we just don't
+    // render particles.
+    if (!reducedMotion) {
+      void fireConfetti();
+    }
+  }, [reducedMotion]);
   useKonamiCode(handleUnlock);
 
   // Stable action creators (useCallback so consumers can rely on identity
@@ -304,6 +381,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
       customSource: state.customSource,
       isVaporwaveUnlocked: state.isVaporwaveUnlocked,
       wasAdjustedForAA: state.wasAdjustedForAA,
+      vaporwaveUnlockNonce: state.vaporwaveUnlockNonce,
       setPreset,
       setCustomColor,
       setHarmonic,

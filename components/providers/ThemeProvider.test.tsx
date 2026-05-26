@@ -229,6 +229,21 @@ describe('ThemeProvider — Konami unlock (THEME-12 integration, D-14)', () => {
       id: 'vaporwave',
     });
   });
+
+  it('increments vaporwaveUnlockNonce on each unlock (D-14 trigger)', () => {
+    const { result } = renderHook(() => usePalette(), { wrapper });
+    // Initial state: nonce starts at 0 on every cold mount (including for
+    // returning users whose secrets.vaporwave is already true). This is the
+    // signal PaletteFab uses to differentiate "fresh unlock now" vs "was
+    // unlocked previously" so it does NOT auto-open the Sheet on cold load.
+    expect(result.current.vaporwaveUnlockNonce).toBe(0);
+    act(() => result.current.unlockVaporwave());
+    expect(result.current.vaporwaveUnlockNonce).toBe(1);
+    // Subsequent unlocks (e.g., a user re-running the Konami code) keep
+    // incrementing — PaletteFab's useEffect re-fires and re-opens the Sheet.
+    act(() => result.current.unlockVaporwave());
+    expect(result.current.vaporwaveUnlockNonce).toBe(2);
+  });
 });
 
 // -------------------- initFromStorage rehydration --------------------
