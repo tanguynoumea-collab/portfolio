@@ -78,12 +78,16 @@ describe('useKonamiCode', () => {
   it('wrong key matching SEQUENCE[0] starts new sequence (Test 18)', () => {
     const onUnlock = vi.fn();
     renderHook(() => useKonamiCode(onUnlock));
-    // ArrowUp, ArrowUp, Space → mismatch on Space resets, but if next key
-    // matched SEQUENCE[0] (ArrowUp) progress would jump to 1.
-    // Here we exercise the Space-then-SEQUENCE-from-index-1 path: after Space
-    // resets to 0, the very next ArrowUp (SEQUENCE[0]) advances to 1 (NOT 0),
-    // and the remaining 9 keys complete the sequence.
-    pressAll(['ArrowUp', 'ArrowUp', 'Space']);
+    // Scenario: user presses ArrowUp ArrowUp ArrowUp. The third ArrowUp is
+    // "wrong" at progress=2 (expected ArrowDown), but because the wrong key
+    // EQUALS SEQUENCE[0]=ArrowUp, progress jumps to 1 (NOT 0). The user has
+    // effectively started a fresh sequence with that third ArrowUp already
+    // counted, so pressing the remaining 9 keys (SEQUENCE.slice(1)) completes
+    // the unlock. Standard Konami implementation.
+    //
+    // (Test 17 covers the "wrong key DOES NOT match SEQUENCE[0]" path — Space
+    // resets to 0.)
+    pressAll(['ArrowUp', 'ArrowUp', 'ArrowUp']);
     pressAll(SEQUENCE.slice(1));
     expect(onUnlock).toHaveBeenCalledTimes(1);
   });
