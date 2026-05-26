@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 02-00-test-infra-PLAN.md (Wave 0 done, Wave 1 ready)
-last_updated: "2026-05-26T11:17:51.612Z"
+stopped_at: Completed 02-01-lib-colors-PLAN.md (Wave 1a — parallel sibling of 02-02)
+last_updated: "2026-05-26T11:26:20.984Z"
 last_activity: 2026-05-26
 progress:
   total_phases: 7
   completed_phases: 1
   total_plans: 12
-  completed_plans: 6
+  completed_plans: 7
   percent: 0
 ---
 
@@ -26,7 +26,7 @@ See: .planning/PROJECT.md (updated 2026-05-25)
 ## Current Position
 
 Phase: 02 (palette-system) — EXECUTING
-Plan: 2 of 7
+Plan: 3 of 7
 Status: Ready to execute
 Last activity: 2026-05-26
 
@@ -58,6 +58,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 01-foundations P04 | 6m 44s | 3 tasks | 11 files |
 | Phase 01-foundations P05 | 7m 38s | 3 tasks | 7 files |
 | Phase 02-palette-system P00 | 2m 55s | 2 tasks | 4 files |
+| Phase 02-palette-system P01 | 4m 36s | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -90,6 +91,9 @@ Recent decisions affecting current work:
 - [Phase 01-foundations]: D-24 _* filter enforced at TWO points: getProjects/getProjectSlugs skip filenames starting with '_', getProjectBySlug rejects slugs starting with '_'. Defense in depth — templates never leak to homepage/sitemap. Smoke test verified both directions: getProjects() returns [], getProjectBySlug('_template') returns null.
 - [Phase 02-palette-system]: Vaporwave WCAG blocker resolved as false alarm: actual measured ratio textMuted/surface = 7.68 (well above 4.5). Bauhaus.secondary was the real failing token (was 2.45 vs 3.0 threshold) — L-adjusted 0.7 -> 0.6 preserving hue 250 + chroma 0.18, new ratio 3.63
 - [Phase 02-palette-system]: Test infrastructure ESM-first: vitest 4.1.7 + jsdom + RTL + @/* alias matching tsconfig. Standalone tsx-runnable scripts/validate-palettes.ts is canonical THEME-01 gate, decoupled from lib/colors.ts which Wave 1 will build
+- [Phase 02-palette-system]: lib/colors.ts shipped TDD: 10 exports (8 functions + CRITICAL_PAIRS const + 3 types) make 29 Vitest tests green. Pure module — NO React, NO DOM. Locks the deterministic OKLCh-WCAG-harmonic contract for all Phase 2 consumers (ThemeProvider Wave 2, UI components Wave 3, confetti Wave 4).
+- [Phase 02-palette-system]: Installed @types/culori@^4.0.1 (Rule 3 blocker): 02-RESEARCH claimed culori v4 ships native .d.ts but it does NOT. Fix resolves TS7016 in lib/colors.ts AND retroactively in pre-existing scripts/validate-palettes.ts (Wave 0 shipped with same latent issue).
+- [Phase 02-palette-system]: Test 5 fixture corrected (Rule 1 plan bug): plan asserted adjustForAA('oklch(0.5 0 0)','oklch(0.97 0 0)') triggers adjustment, but ratio is already 5.5 (>4.5). Changed input text to oklch(0.55 0 0) (ratio 4.45 — actually fails) so 'darkens until passing' semantic holds. Added precondition assertion to self-document.
 
 ### Pending Todos
 
@@ -104,6 +108,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-05-26T11:17:51.609Z
-Stopped at: Completed 02-00-test-infra-PLAN.md (Wave 0 done, Wave 1 ready)
+Last session: 2026-05-26T11:26:20.980Z
+Stopped at: Completed 02-01-lib-colors-PLAN.md (Wave 1a — parallel sibling of 02-02)
 Resume file: None
