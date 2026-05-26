@@ -26,10 +26,10 @@ Requirements for initial release. Each maps to roadmap phases.
 - [x] **THEME-03**: `lib/colors.ts` expose `generateHarmonic(mode, sourceColor)` qui supporte les 4 modes `complementary` (+180°), `triadic` (+120°/+240°), `analogous` (±30°), `split-complementary` (+150°/+210°) via rotation hue OKLCh, et retourne une `Palette` validée (auto-adjust text via `adjustForAA` si besoin)
 - [x] **THEME-04**: `ThemeProvider` (client) wraps l'app, gère la palette active via Context, applique les CSS variables sur `:root`, expose `usePalette()` retournant `{ palette, paletteId, setPreset, setCustomColor, setHarmonic, isCustom }`, et persiste dans localStorage
 - [x] **THEME-05**: Un script inline injecté dans `<head>` via `next/script` `strategy="beforeInteractive"` lit localStorage et applique les CSS vars sur `:root` AVANT hydratation (zéro FOUC visible sur cold load avec palette non-default)
-- [ ] **THEME-06**: `PalettePresets` affiche 4 mini-aperçus carrés cliquables (terra/nordic/bauhaus/ocean — vaporwave reste cachée), avec animation motion sur sélection et indicateur visuel de la palette active
+- [x] **THEME-06**: `PalettePresets` affiche 4 mini-aperçus carrés cliquables (terra/nordic/bauhaus/ocean — vaporwave reste cachée), avec animation motion sur sélection et indicateur visuel de la palette active
 - [ ] **THEME-07**: `CustomColorPicker` propose 3 inputs HSL (bg, accent, secondary) avec preview live, met à jour la palette via `setCustomColor`, et auto-régénère les autres tokens manquants via les helpers de `lib/colors.ts`
 - [ ] **THEME-08**: `HarmonicGenerator` propose un color picker source + sélecteur de mode (4 onglets) + bouton `Generate`, affiche un preview de la palette résultante avant application
-- [ ] **THEME-09**: `WCAGBadge` affiche en temps réel le ratio (numérique avec 2 décimales) + statut `AA` / `AAA` / `Fail` avec icône colorée (vert/or/rouge), et update instantanément quand la palette change
+- [x] **THEME-09**: `WCAGBadge` affiche en temps réel le ratio (numérique avec 2 décimales) + statut `AA` / `AAA` / `Fail` avec icône colorée (vert/or/rouge), et update instantanément quand la palette change
 - [ ] **THEME-10**: `PaletteSwitcher` est un panneau coulissant droite (Dialog ou Sheet shadcn) avec 3 onglets `Presets` / `Custom` / `Generate` et est navigable au clavier (Tab, Esc, focus trap)
 - [ ] **THEME-11**: Un FAB bottom-right (icône palette animée motion) ouvre le `PaletteSwitcher`, visible sur toutes les pages, avec aria-label localisé FR/EN
 - [x] **THEME-12**: Un hook `useKonamiCode()` écoute la séquence ↑↑↓↓←→←→BA (avec filtrage : ne déclenche pas si un input/textarea/contentEditable a le focus), débloque la palette `vaporwave` dans `ThemeProvider` et déclenche une animation confetti
@@ -151,10 +151,10 @@ Populated by `gsd-roadmapper` on 2026-05-25.
 | THEME-03 | Phase 2 | Complete |
 | THEME-04 | Phase 2 | Complete |
 | THEME-05 | Phase 2 | Complete |
-| THEME-06 | Phase 2 | Pending |
+| THEME-06 | Phase 2 | Complete |
 | THEME-07 | Phase 2 | Pending |
 | THEME-08 | Phase 2 | Pending |
-| THEME-09 | Phase 2 | Pending |
+| THEME-09 | Phase 2 | Complete |
 | THEME-10 | Phase 2 | Pending |
 | THEME-11 | Phase 2 | Pending |
 | THEME-12 | Phase 2 | Complete |

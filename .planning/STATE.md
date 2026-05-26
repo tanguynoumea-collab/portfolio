@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 02-03-theme-provider-fouc-PLAN.md (Wave 2 — ThemeProvider + FOUC script wired in [locale]/layout)
-last_updated: "2026-05-26T11:52:26.009Z"
+stopped_at: Completed 02-04-sheet-presets-badge-PLAN.md (Wave 3a — Sheet primitive + WCAGBadge + PalettePresets shipped)
+last_updated: "2026-05-26T12:03:09.844Z"
 last_activity: 2026-05-26
 progress:
   total_phases: 7
   completed_phases: 1
   total_plans: 12
-  completed_plans: 9
+  completed_plans: 10
   percent: 0
 ---
 
@@ -26,7 +26,7 @@ See: .planning/PROJECT.md (updated 2026-05-25)
 ## Current Position
 
 Phase: 02 (palette-system) — EXECUTING
-Plan: 5 of 7
+Plan: 6 of 7
 Status: Ready to execute
 Last activity: 2026-05-26
 
@@ -61,6 +61,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 02-palette-system P01 | 4m 36s | 2 tasks | 4 files |
 | Phase 02-palette-system P02 | 7m 36s | 3 tasks | 7 files |
 | Phase 02-palette-system P03 | 8m 31s | 4 tasks | 7 files |
+| Phase 02-palette-system P04 | 4m 54s | 3 tasks | 6 files |
 
 ## Accumulated Context
 
@@ -104,6 +105,9 @@ Recent decisions affecting current work:
 - [Phase 02-palette-system]: FOUC script (THEME-05) shipped at 1000 bytes rendered (within <1024 budget) via RESEARCH.md Pitfall A mitigation: array-form inline table + split-string CSS-var keys + single-ternary t= + Vaporwave EXCLUDED from cold-load table. Tradeoff: returning Vaporwave-unlocked users get a brief Terra flash before ThemeProvider rehydrates; acceptable per easter-egg framing. All 4 normal presets get true zero-FOUC.
 - [Phase 02-palette-system]: D-14 Konami unlock sequence locked: handleUnlock dispatches UNLOCK_VAPORWAVE FIRST then SET_PRESET('vaporwave') — order matters because Wave 4 confetti will gate on isVaporwaveUnlocked. ThemeProvider mounts INSIDE NextIntlClientProvider in app/[locale]/layout.tsx so palette UI can use useTranslations() (per 02-CONTEXT.md code_context + RESEARCH.md Discretion).
 - [Phase 02-palette-system]: ESLint @next/next/no-before-interactive-script-outside-document rule fires false-positive on App-Router beforeInteractive in [locale]/layout.tsx Server Component. Resolved with targeted eslint-disable-next-line + inline justification (Rule 3 blocker) — rule targets legacy Pages Router pattern and has not been updated for App Router architecture.
+- [Phase 02-palette-system]: WCAGBadge worst-pair heuristic uses ratio/min normalized score (not raw margin) — picks pair proportionally furthest from passing across 4.5-text vs 3.0-UI thresholds. AAA only awarded when worst pair is text-class (min=4.5) AND ratio>=7 — WCAG 2.1 has no AAA tier for UI components.
+- [Phase 02-palette-system]: Pitfall E mitigated by ADDING a scope-exclude rule (5 Radix overlay data-slot selectors get opacity 200ms + transform 250ms), NOT removing the global 400ms color transition. Original rule preserved verbatim — attribute selectors win specificity for those elements only; palette swap still animates smoothly everywhere else.
+- [Phase 02-palette-system]: PalettePresets uses motion.button with whileHover scale 1.02 + whileTap scale 0.98 (150ms ease-out). D-15 label sourcing via t('palette.presets.<id>') over palette.name — lib/palettes.ts .name remains as defensive fallback never displayed; i18n is the only display source. Card visibility filter via useMemo gated on isVaporwaveUnlocked.
 
 ### Pending Todos
 
@@ -118,6 +122,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-05-26T11:52:26.004Z
-Stopped at: Completed 02-03-theme-provider-fouc-PLAN.md (Wave 2 — ThemeProvider + FOUC script wired in [locale]/layout)
+Last session: 2026-05-26T12:02:57.338Z
+Stopped at: Completed 02-04-sheet-presets-badge-PLAN.md (Wave 3a — Sheet primitive + WCAGBadge + PalettePresets shipped)
 Resume file: None

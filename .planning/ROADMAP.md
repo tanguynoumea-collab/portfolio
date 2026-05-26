@@ -57,7 +57,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] 02-01-lib-colors-PLAN.md — Wave 1 (parallel): lib/colors.ts pure helpers (wcagContrast, adjustForAA, validateFullMatrix, generateHarmonic, deriveDefaultTokens, applyMatrixAdjust) [THEME-02, THEME-03]
 - [x] 02-02-lib-storage-hooks-PLAN.md — Wave 1 (parallel): lib/storage.ts + lib/hooks/useKonamiCode.ts + lib/hooks/usePrefersReducedMotion.ts [THEME-12]
 - [x] 02-03-theme-provider-fouc-PLAN.md — Wave 2: ThemeProvider + PaletteFouCScript + layout wiring + i18n updates (Vaporwave label, Adjusted-for-AA chip) [THEME-04, THEME-05]
-- [ ] 02-04-sheet-presets-badge-PLAN.md — Wave 3 (parallel): shadcn Sheet install + Pitfall E mitigation + WCAGBadge + PalettePresets [THEME-06, THEME-09]
+- [x] 02-04-sheet-presets-badge-PLAN.md — Wave 3 (parallel): shadcn Sheet install + Pitfall E mitigation + WCAGBadge + PalettePresets [THEME-06, THEME-09]
 - [ ] 02-05-custom-harmonic-switcher-PLAN.md — Wave 3 (parallel): CustomColorPicker + HarmonicGenerator + PaletteSwitcher shell [THEME-07, THEME-08, THEME-10]
 - [ ] 02-06-fab-konami-integration-PLAN.md — Wave 4: PaletteFab + canvas-confetti dynamic-import + Konami auto-open Sheet [THEME-11, THEME-12]
 **UI hint**: yes
