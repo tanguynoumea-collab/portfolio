@@ -49,6 +49,7 @@ const SCRIPT_BODY = `(function(){try{var raw=localStorage.getItem('palette-v1');
 
 export function PaletteFouCScript() {
   return (
+    // eslint-disable-next-line @next/next/no-before-interactive-script-outside-document -- App Router Server Component (this file is server-rendered, no 'use client'); `beforeInteractive` IS officially supported in [locale]/layout.tsx per Next 16 docs. The linter rule targets the legacy Pages Router pattern.
     <Script id="palette-fouc" strategy="beforeInteractive">
       {SCRIPT_BODY}
     </Script>
