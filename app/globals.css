@@ -167,3 +167,27 @@
     background-color 400ms ease,
     border-color 400ms ease;
 }
+
+/* ============================================================
+   Pitfall E mitigation (02-RESEARCH.md lines 793-805):
+   ------------------------------------------------------------
+   The global 400ms color transition above governs background-color
+   on every element including Sheet/Dialog/Popover surfaces, making
+   backdrop and content fades feel rubbery. Scope OUT of Radix-driven
+   overlays — they carry their own transitions via tw-animate-css
+   data-state classes (~150-250ms feel).
+
+   Attribute selectors here win specificity over the universal `*`
+   selector for matching elements only — the global rule still
+   applies to every other element on the page, so palette swaps
+   continue to animate smoothly. This is additive, not destructive.
+   ============================================================ */
+[data-slot='sheet-overlay'],
+[data-slot='sheet-content'],
+[data-slot='dialog-overlay'],
+[data-slot='dialog-content'],
+[data-slot='popover-content'] {
+  transition:
+    opacity 200ms ease,
+    transform 250ms ease;
+}
