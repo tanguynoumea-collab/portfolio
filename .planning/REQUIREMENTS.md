@@ -31,7 +31,7 @@ Requirements for initial release. Each maps to roadmap phases.
 - [ ] **THEME-08**: `HarmonicGenerator` propose un color picker source + sélecteur de mode (4 onglets) + bouton `Generate`, affiche un preview de la palette résultante avant application
 - [x] **THEME-09**: `WCAGBadge` affiche en temps réel le ratio (numérique avec 2 décimales) + statut `AA` / `AAA` / `Fail` avec icône colorée (vert/or/rouge), et update instantanément quand la palette change
 - [ ] **THEME-10**: `PaletteSwitcher` est un panneau coulissant droite (Dialog ou Sheet shadcn) avec 3 onglets `Presets` / `Custom` / `Generate` et est navigable au clavier (Tab, Esc, focus trap)
-- [ ] **THEME-11**: Un FAB bottom-right (icône palette animée motion) ouvre le `PaletteSwitcher`, visible sur toutes les pages, avec aria-label localisé FR/EN
+- [x] **THEME-11**: Un FAB bottom-right (icône palette animée motion) ouvre le `PaletteSwitcher`, visible sur toutes les pages, avec aria-label localisé FR/EN
 - [x] **THEME-12**: Un hook `useKonamiCode()` écoute la séquence ↑↑↓↓←→←→BA (avec filtrage : ne déclenche pas si un input/textarea/contentEditable a le focus), débloque la palette `vaporwave` dans `ThemeProvider` et déclenche une animation confetti
 
 ### Layout & Core Components
@@ -156,7 +156,7 @@ Populated by `gsd-roadmapper` on 2026-05-25.
 | THEME-08 | Phase 2 | Pending |
 | THEME-09 | Phase 2 | Complete |
 | THEME-10 | Phase 2 | Pending |
-| THEME-11 | Phase 2 | Pending |
+| THEME-11 | Phase 2 | Complete |
 | THEME-12 | Phase 2 | Complete |
 | LAYOUT-01 | Phase 3 | Pending |
 | LAYOUT-02 | Phase 3 | Pending |
