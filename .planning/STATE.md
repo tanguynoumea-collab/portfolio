@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: executing
-stopped_at: Completed 01-04-i18n-PLAN.md
-last_updated: "2026-05-26T06:20:28.677Z"
+status: verifying
+stopped_at: Completed 01-05-mdx-loader-PLAN.md — Phase 1 ready for verification
+last_updated: "2026-05-26T06:35:09.006Z"
 last_activity: 2026-05-26
 progress:
   total_phases: 7
-  completed_phases: 0
+  completed_phases: 1
   total_plans: 5
-  completed_plans: 4
+  completed_plans: 5
   percent: 0
 ---
 
@@ -27,7 +27,7 @@ See: .planning/PROJECT.md (updated 2026-05-25)
 
 Phase: 01 (foundations) — EXECUTING
 Plan: 5 of 5
-Status: Ready to execute
+Status: Phase complete — ready for verification
 Last activity: 2026-05-26
 
 Progress: [░░░░░░░░░░] 0%
@@ -56,6 +56,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 01-foundations P02 | 7m 21s | 1 tasks | 1 files |
 | Phase 01 P03 | 11m | 2 tasks | 12 files |
 | Phase 01-foundations P04 | 6m 44s | 3 tasks | 11 files |
+| Phase 01-foundations P05 | 7m 38s | 3 tasks | 7 files |
 
 ## Accumulated Context
 
@@ -82,6 +83,10 @@ Recent decisions affecting current work:
 - [Phase 01-foundations]: Pitfall #1 (FOUC) socket-by-structure: app/[locale]/layout.tsx ships <html lang={locale} suppressHydrationWarning> + explicit <head></head> with comment block documenting Phase 2 THEME-05 integration plan. Phase 2 can drop in <Script strategy='beforeInteractive'> without restructuring the layout.
 - [Phase 01-foundations]: Pitfall #14 (i18n parity) enforced: messages/fr.json and messages/en.json both contain 63 leaf keys across 9 ARCH-07 namespaces (nav/hero/about/projects/skills/contact/footer/palette/errors). Parity verified by Node script comparing sorted leaf-key path sets — must match before commit. global.d.ts augments IntlMessages interface from typeof messages (fr.json source of truth) for useTranslations() autocomplete.
 - [Phase 01-foundations]: Root layout migrated to passthrough (return children); <html>/<head>/<body> wrappers + setRequestLocale + getMessages + NextIntlClientProvider live in app/[locale]/layout.tsx so <html lang> is locale-aware on first paint (next-intl recommended pattern). app/page.tsx is a defensive fallback redirect to /{defaultLocale} in case proxy.ts is bypassed.
+- [Phase 01-foundations]: Turbopack MDX plugin spec: pass plugins as string tuples ['package-name', options] not function refs — Next 16 Turbopack rejects function references in loader options across worker threads. Same syntax works under Webpack.
+- [Phase 01-foundations]: Discriminated Project union (D-18..D-22) implemented in lib/projects.ts with inline TS type guards (isStringArray, isProjectScale) — no zod dependency in Phase 1; runtime frontmatter validation throws at build time on shape mismatch. Pitfall #8 (untyped MDX frontmatter) mitigated by structure.
+- [Phase 01-foundations]: Terra single canonical source-of-truth: lib/palettes.ts terra OKLCh values byte-match :root --color-* in app/globals.css. Plan verify script exit code 8 enforces this. PALETTES[0].name='Terra & Sage'. Vaporwave .name='???' until Phase 2 Konami reveal.
+- [Phase 01-foundations]: D-24 _* filter enforced at TWO points: getProjects/getProjectSlugs skip filenames starting with '_', getProjectBySlug rejects slugs starting with '_'. Defense in depth — templates never leak to homepage/sitemap. Smoke test verified both directions: getProjects() returns [], getProjectBySlug('_template') returns null.
 
 ### Pending Todos
 
@@ -96,6 +101,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-05-26T06:20:28.673Z
-Stopped at: Completed 01-04-i18n-PLAN.md
+Last session: 2026-05-26T06:35:09.002Z
+Stopped at: Completed 01-05-mdx-loader-PLAN.md — Phase 1 ready for verification
 Resume file: None

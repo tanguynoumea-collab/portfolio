@@ -16,7 +16,7 @@ Requirements for initial release. Each maps to roadmap phases.
 - [x] **ARCH-05**: shadcn/ui est initialisé via `npx shadcn@latest init`, et les 7 composants `button`, `card`, `dialog`, `slider`, `switch`, `popover`, `tabs` sont installés et utilisent les CSS variables du palette system (aliasing fait dans `globals.css`)
 - [x] **ARCH-06**: next-intl v4.12 est configuré avec `routing.ts` + `request.ts` + `proxy.ts` (Next 16), les routes localisées `/fr/*` et `/en/*` fonctionnent, et `/` redirige vers la locale appropriée
 - [x] **ARCH-07**: Les fichiers `messages/fr.json` et `messages/en.json` existent avec une structure complète couvrant nav, hero, about, projects, skills, contact, footer, palette switcher, 404
-- [ ] **ARCH-08**: `lib/projects.ts` expose un type discriminé `Project = TechProject | DesignProject | BIMProject` (chaque variante avec metadata domain-spécifique : Tech.stack, Design.tools, BIM.software+projectScale) et un loader `getProjects(locale)` lit les MDX via `@next/mdx` + `gray-matter` + `compileMDX`
+- [x] **ARCH-08**: `lib/projects.ts` expose un type discriminé `Project = TechProject | DesignProject | BIMProject` (chaque variante avec metadata domain-spécifique : Tech.stack, Design.tools, BIM.software+projectScale) et un loader `getProjects(locale)` lit les MDX via `@next/mdx` + `gray-matter` + `compileMDX`
 - [x] **ARCH-09**: Le repo git est initialisé avec un `.gitignore` adapté (next, node_modules, .env*.local, .DS_Store, .vercel)
 
 ### Theme System (signature feature)
@@ -144,7 +144,7 @@ Populated by `gsd-roadmapper` on 2026-05-25.
 | ARCH-05 | Phase 1 | Complete |
 | ARCH-06 | Phase 1 | Complete |
 | ARCH-07 | Phase 1 | Complete |
-| ARCH-08 | Phase 1 | Pending |
+| ARCH-08 | Phase 1 | Complete |
 | ARCH-09 | Phase 1 | Complete |
 | THEME-01 | Phase 2 | Pending |
 | THEME-02 | Phase 2 | Pending |
