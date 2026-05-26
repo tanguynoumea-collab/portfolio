@@ -24,8 +24,8 @@ Requirements for initial release. Each maps to roadmap phases.
 - [x] **THEME-01**: `lib/palettes.ts` exporte 5 palettes typées en OKLCh : `terra` (Terra & Sage), `nordic` (Atelier Nordique), `bauhaus` (Bauhaus Bright), `ocean` (Ocean Studio), `vaporwave` (secrète, "???") avec name + tous les tokens (bg, surface, text, textMuted, accent, secondary), toutes pré-validées WCAG AA
 - [x] **THEME-02**: `lib/colors.ts` expose `wcagContrast(c1, c2)` (ratio numérique), `adjustForAA(textColor, bgColor)` (ajuste la luminosité du text en OKLCh pour atteindre 4.5:1), et `validateFullMatrix(palette)` qui vérifie les 7 paires (text/bg, text/surface, textMuted/bg, textMuted/surface, accent/bg, accent/surface, secondary/bg) en retournant {valid, failures}
 - [x] **THEME-03**: `lib/colors.ts` expose `generateHarmonic(mode, sourceColor)` qui supporte les 4 modes `complementary` (+180°), `triadic` (+120°/+240°), `analogous` (±30°), `split-complementary` (+150°/+210°) via rotation hue OKLCh, et retourne une `Palette` validée (auto-adjust text via `adjustForAA` si besoin)
-- [ ] **THEME-04**: `ThemeProvider` (client) wraps l'app, gère la palette active via Context, applique les CSS variables sur `:root`, expose `usePalette()` retournant `{ palette, paletteId, setPreset, setCustomColor, setHarmonic, isCustom }`, et persiste dans localStorage
-- [ ] **THEME-05**: Un script inline injecté dans `<head>` via `next/script` `strategy="beforeInteractive"` lit localStorage et applique les CSS vars sur `:root` AVANT hydratation (zéro FOUC visible sur cold load avec palette non-default)
+- [x] **THEME-04**: `ThemeProvider` (client) wraps l'app, gère la palette active via Context, applique les CSS variables sur `:root`, expose `usePalette()` retournant `{ palette, paletteId, setPreset, setCustomColor, setHarmonic, isCustom }`, et persiste dans localStorage
+- [x] **THEME-05**: Un script inline injecté dans `<head>` via `next/script` `strategy="beforeInteractive"` lit localStorage et applique les CSS vars sur `:root` AVANT hydratation (zéro FOUC visible sur cold load avec palette non-default)
 - [ ] **THEME-06**: `PalettePresets` affiche 4 mini-aperçus carrés cliquables (terra/nordic/bauhaus/ocean — vaporwave reste cachée), avec animation motion sur sélection et indicateur visuel de la palette active
 - [ ] **THEME-07**: `CustomColorPicker` propose 3 inputs HSL (bg, accent, secondary) avec preview live, met à jour la palette via `setCustomColor`, et auto-régénère les autres tokens manquants via les helpers de `lib/colors.ts`
 - [ ] **THEME-08**: `HarmonicGenerator` propose un color picker source + sélecteur de mode (4 onglets) + bouton `Generate`, affiche un preview de la palette résultante avant application
@@ -149,8 +149,8 @@ Populated by `gsd-roadmapper` on 2026-05-25.
 | THEME-01 | Phase 2 | Complete |
 | THEME-02 | Phase 2 | Complete |
 | THEME-03 | Phase 2 | Complete |
-| THEME-04 | Phase 2 | Pending |
-| THEME-05 | Phase 2 | Pending |
+| THEME-04 | Phase 2 | Complete |
+| THEME-05 | Phase 2 | Complete |
 | THEME-06 | Phase 2 | Pending |
 | THEME-07 | Phase 2 | Pending |
 | THEME-08 | Phase 2 | Pending |

@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 02-02-lib-storage-hooks-PLAN.md (Wave 1b — parallel sibling of 02-01)
-last_updated: "2026-05-26T11:38:12.353Z"
+stopped_at: Completed 02-03-theme-provider-fouc-PLAN.md (Wave 2 — ThemeProvider + FOUC script wired in [locale]/layout)
+last_updated: "2026-05-26T11:52:26.009Z"
 last_activity: 2026-05-26
 progress:
   total_phases: 7
   completed_phases: 1
   total_plans: 12
-  completed_plans: 8
+  completed_plans: 9
   percent: 0
 ---
 
@@ -26,7 +26,7 @@ See: .planning/PROJECT.md (updated 2026-05-25)
 ## Current Position
 
 Phase: 02 (palette-system) — EXECUTING
-Plan: 4 of 7
+Plan: 5 of 7
 Status: Ready to execute
 Last activity: 2026-05-26
 
@@ -60,6 +60,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 02-palette-system P00 | 2m 55s | 2 tasks | 4 files |
 | Phase 02-palette-system P01 | 4m 36s | 2 tasks | 4 files |
 | Phase 02-palette-system P02 | 7m 36s | 3 tasks | 7 files |
+| Phase 02-palette-system P03 | 8m 31s | 4 tasks | 7 files |
 
 ## Accumulated Context
 
@@ -99,6 +100,10 @@ Recent decisions affecting current work:
 - [Phase 02-palette-system]: useKonamiCode uses e.code (KeyB/KeyA/ArrowUp) NOT e.key — Konami sequence works on AZERTY French keyboards (Tanguy's locale) AND QWERTY without special-casing. Plus defensive 'inside open Radix dialog' filter so PaletteSwitcher slider arrow-key nav cannot accidentally unlock Vaporwave (PITFALLS.md Pitfall D).
 - [Phase 02-palette-system]: usePrefersReducedMotion uses useSyncExternalStore not useState+useEffect+setState — React 19 lint rule react-hooks/set-state-in-effect fires on naive pattern. useSyncExternalStore is the React-blessed primitive for external mutable sources: sync getSnapshot read (no setState), automatic subscribe cleanup, true SSR via getServerSnapshot returning false unconditionally.
 - [Phase 02-palette-system]: useKonamiCode defensive contentEditable check: 't.isContentEditable || t.contentEditable === "true"' — jsdom does NOT implement isContentEditable getter (returns undefined) but real browsers do. OR-fallback makes the filter work in both environments without weakening production behavior (real browsers short-circuit on isContentEditable=true before reaching the string check).
+- [Phase 02-palette-system]: ThemeProvider (THEME-04) shipped with useReducer + 4 actions + lazy initFromStorage + useMemo-stable context value (Pitfall H mitigation): single API surface usePalette() exposes {palette, paletteId, isCustom, customSource, isVaporwaveUnlocked, wasAdjustedForAA, setPreset, setCustomColor, setHarmonic, unlockVaporwave} for all Wave 3+ UI components
+- [Phase 02-palette-system]: FOUC script (THEME-05) shipped at 1000 bytes rendered (within <1024 budget) via RESEARCH.md Pitfall A mitigation: array-form inline table + split-string CSS-var keys + single-ternary t= + Vaporwave EXCLUDED from cold-load table. Tradeoff: returning Vaporwave-unlocked users get a brief Terra flash before ThemeProvider rehydrates; acceptable per easter-egg framing. All 4 normal presets get true zero-FOUC.
+- [Phase 02-palette-system]: D-14 Konami unlock sequence locked: handleUnlock dispatches UNLOCK_VAPORWAVE FIRST then SET_PRESET('vaporwave') — order matters because Wave 4 confetti will gate on isVaporwaveUnlocked. ThemeProvider mounts INSIDE NextIntlClientProvider in app/[locale]/layout.tsx so palette UI can use useTranslations() (per 02-CONTEXT.md code_context + RESEARCH.md Discretion).
+- [Phase 02-palette-system]: ESLint @next/next/no-before-interactive-script-outside-document rule fires false-positive on App-Router beforeInteractive in [locale]/layout.tsx Server Component. Resolved with targeted eslint-disable-next-line + inline justification (Rule 3 blocker) — rule targets legacy Pages Router pattern and has not been updated for App Router architecture.
 
 ### Pending Todos
 
@@ -113,6 +118,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-05-26T11:38:12.348Z
-Stopped at: Completed 02-02-lib-storage-hooks-PLAN.md (Wave 1b — parallel sibling of 02-01)
+Last session: 2026-05-26T11:52:26.004Z
+Stopped at: Completed 02-03-theme-provider-fouc-PLAN.md (Wave 2 — ThemeProvider + FOUC script wired in [locale]/layout)
 Resume file: None
