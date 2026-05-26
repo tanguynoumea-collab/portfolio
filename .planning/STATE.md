@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 02-01-lib-colors-PLAN.md (Wave 1a — parallel sibling of 02-02)
-last_updated: "2026-05-26T11:26:20.984Z"
+stopped_at: Completed 02-02-lib-storage-hooks-PLAN.md (Wave 1b — parallel sibling of 02-01)
+last_updated: "2026-05-26T11:38:12.353Z"
 last_activity: 2026-05-26
 progress:
   total_phases: 7
   completed_phases: 1
   total_plans: 12
-  completed_plans: 7
+  completed_plans: 8
   percent: 0
 ---
 
@@ -26,7 +26,7 @@ See: .planning/PROJECT.md (updated 2026-05-25)
 ## Current Position
 
 Phase: 02 (palette-system) — EXECUTING
-Plan: 3 of 7
+Plan: 4 of 7
 Status: Ready to execute
 Last activity: 2026-05-26
 
@@ -59,6 +59,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 01-foundations P05 | 7m 38s | 3 tasks | 7 files |
 | Phase 02-palette-system P00 | 2m 55s | 2 tasks | 4 files |
 | Phase 02-palette-system P01 | 4m 36s | 2 tasks | 4 files |
+| Phase 02-palette-system P02 | 7m 36s | 3 tasks | 7 files |
 
 ## Accumulated Context
 
@@ -94,6 +95,10 @@ Recent decisions affecting current work:
 - [Phase 02-palette-system]: lib/colors.ts shipped TDD: 10 exports (8 functions + CRITICAL_PAIRS const + 3 types) make 29 Vitest tests green. Pure module — NO React, NO DOM. Locks the deterministic OKLCh-WCAG-harmonic contract for all Phase 2 consumers (ThemeProvider Wave 2, UI components Wave 3, confetti Wave 4).
 - [Phase 02-palette-system]: Installed @types/culori@^4.0.1 (Rule 3 blocker): 02-RESEARCH claimed culori v4 ships native .d.ts but it does NOT. Fix resolves TS7016 in lib/colors.ts AND retroactively in pre-existing scripts/validate-palettes.ts (Wave 0 shipped with same latent issue).
 - [Phase 02-palette-system]: Test 5 fixture corrected (Rule 1 plan bug): plan asserted adjustForAA('oklch(0.5 0 0)','oklch(0.97 0 0)') triggers adjustment, but ratio is already 5.5 (>4.5). Changed input text to oklch(0.55 0 0) (ratio 4.45 — actually fails) so 'darkens until passing' semantic holds. Added precondition assertion to self-document.
+- [Phase 02-palette-system]: lib/storage.ts D-02 silent fallback is structural (4 try/catch with empty catches, 4 SSR guards, 0 console calls, 0 removeItem). Test 13 asserts no console output across ALL failure paths simultaneously — adding a console.error to any catch breaks the test immediately. Defense-by-structure not defense-by-discipline.
+- [Phase 02-palette-system]: useKonamiCode uses e.code (KeyB/KeyA/ArrowUp) NOT e.key — Konami sequence works on AZERTY French keyboards (Tanguy's locale) AND QWERTY without special-casing. Plus defensive 'inside open Radix dialog' filter so PaletteSwitcher slider arrow-key nav cannot accidentally unlock Vaporwave (PITFALLS.md Pitfall D).
+- [Phase 02-palette-system]: usePrefersReducedMotion uses useSyncExternalStore not useState+useEffect+setState — React 19 lint rule react-hooks/set-state-in-effect fires on naive pattern. useSyncExternalStore is the React-blessed primitive for external mutable sources: sync getSnapshot read (no setState), automatic subscribe cleanup, true SSR via getServerSnapshot returning false unconditionally.
+- [Phase 02-palette-system]: useKonamiCode defensive contentEditable check: 't.isContentEditable || t.contentEditable === "true"' — jsdom does NOT implement isContentEditable getter (returns undefined) but real browsers do. OR-fallback makes the filter work in both environments without weakening production behavior (real browsers short-circuit on isContentEditable=true before reaching the string check).
 
 ### Pending Todos
 
@@ -108,6 +113,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-05-26T11:26:20.980Z
-Stopped at: Completed 02-01-lib-colors-PLAN.md (Wave 1a — parallel sibling of 02-02)
+Last session: 2026-05-26T11:38:12.348Z
+Stopped at: Completed 02-02-lib-storage-hooks-PLAN.md (Wave 1b — parallel sibling of 02-01)
 Resume file: None
