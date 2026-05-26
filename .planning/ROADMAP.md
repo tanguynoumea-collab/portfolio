@@ -53,7 +53,7 @@ Decimal phases appear between their surrounding integers in numeric order.
   4. The chosen palette persists across reloads with zero FOUC on cold load (no flash from default to stored palette during first paint)
   5. Entering the Konami sequence (when no input is focused) unlocks the Vaporwave palette with a confetti animation
 **Plans**: 7 plans (4 waves)
-- [ ] 02-00-test-infra-PLAN.md — Wave 0: Vitest + RTL + jsdom + tsx install + scripts/validate-palettes.ts gate + Vaporwave WCAG pre-validation [THEME-01]
+- [x] 02-00-test-infra-PLAN.md — Wave 0: Vitest + RTL + jsdom + tsx install + scripts/validate-palettes.ts gate + Vaporwave WCAG pre-validation [THEME-01]
 - [ ] 02-01-lib-colors-PLAN.md — Wave 1 (parallel): lib/colors.ts pure helpers (wcagContrast, adjustForAA, validateFullMatrix, generateHarmonic, deriveDefaultTokens, applyMatrixAdjust) [THEME-02, THEME-03]
 - [ ] 02-02-lib-storage-hooks-PLAN.md — Wave 1 (parallel): lib/storage.ts + lib/hooks/useKonamiCode.ts + lib/hooks/usePrefersReducedMotion.ts [THEME-12]
 - [ ] 02-03-theme-provider-fouc-PLAN.md — Wave 2: ThemeProvider + PaletteFouCScript + layout wiring + i18n updates (Vaporwave label, Adjusted-for-AA chip) [THEME-04, THEME-05]

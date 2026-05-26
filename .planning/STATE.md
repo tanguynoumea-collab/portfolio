@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: verifying
-stopped_at: Phase 2 context gathered
-last_updated: "2026-05-26T09:47:27.945Z"
+status: executing
+stopped_at: Completed 02-00-test-infra-PLAN.md (Wave 0 done, Wave 1 ready)
+last_updated: "2026-05-26T11:17:51.612Z"
 last_activity: 2026-05-26
 progress:
   total_phases: 7
   completed_phases: 1
-  total_plans: 5
-  completed_plans: 5
+  total_plans: 12
+  completed_plans: 6
   percent: 0
 ---
 
@@ -21,13 +21,13 @@ progress:
 See: .planning/PROJECT.md (updated 2026-05-25)
 
 **Core value:** Demontrer le profil creatif hybride Tech/Design/BIM via une experience web personnalisable qui prouve la maitrise technique, le sens du design et l'attention aux details.
-**Current focus:** Phase 01 — foundations
+**Current focus:** Phase 02 — palette-system
 
 ## Current Position
 
-Phase: 2
-Plan: Not started
-Status: Phase complete — ready for verification
+Phase: 02 (palette-system) — EXECUTING
+Plan: 2 of 7
+Status: Ready to execute
 Last activity: 2026-05-26
 
 Progress: [░░░░░░░░░░] 0%
@@ -57,6 +57,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 01 P03 | 11m | 2 tasks | 12 files |
 | Phase 01-foundations P04 | 6m 44s | 3 tasks | 11 files |
 | Phase 01-foundations P05 | 7m 38s | 3 tasks | 7 files |
+| Phase 02-palette-system P00 | 2m 55s | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -87,6 +88,8 @@ Recent decisions affecting current work:
 - [Phase 01-foundations]: Discriminated Project union (D-18..D-22) implemented in lib/projects.ts with inline TS type guards (isStringArray, isProjectScale) — no zod dependency in Phase 1; runtime frontmatter validation throws at build time on shape mismatch. Pitfall #8 (untyped MDX frontmatter) mitigated by structure.
 - [Phase 01-foundations]: Terra single canonical source-of-truth: lib/palettes.ts terra OKLCh values byte-match :root --color-* in app/globals.css. Plan verify script exit code 8 enforces this. PALETTES[0].name='Terra & Sage'. Vaporwave .name='???' until Phase 2 Konami reveal.
 - [Phase 01-foundations]: D-24 _* filter enforced at TWO points: getProjects/getProjectSlugs skip filenames starting with '_', getProjectBySlug rejects slugs starting with '_'. Defense in depth — templates never leak to homepage/sitemap. Smoke test verified both directions: getProjects() returns [], getProjectBySlug('_template') returns null.
+- [Phase 02-palette-system]: Vaporwave WCAG blocker resolved as false alarm: actual measured ratio textMuted/surface = 7.68 (well above 4.5). Bauhaus.secondary was the real failing token (was 2.45 vs 3.0 threshold) — L-adjusted 0.7 -> 0.6 preserving hue 250 + chroma 0.18, new ratio 3.63
+- [Phase 02-palette-system]: Test infrastructure ESM-first: vitest 4.1.7 + jsdom + RTL + @/* alias matching tsconfig. Standalone tsx-runnable scripts/validate-palettes.ts is canonical THEME-01 gate, decoupled from lib/colors.ts which Wave 1 will build
 
 ### Pending Todos
 
@@ -101,6 +104,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-05-26T09:47:27.942Z
-Stopped at: Phase 2 context gathered
-Resume file: .planning/phases/02-palette-system/02-CONTEXT.md
+Last session: 2026-05-26T11:17:51.609Z
+Stopped at: Completed 02-00-test-infra-PLAN.md (Wave 0 done, Wave 1 ready)
+Resume file: None

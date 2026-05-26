@@ -21,7 +21,7 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Theme System (signature feature)
 
-- [ ] **THEME-01**: `lib/palettes.ts` exporte 5 palettes typées en OKLCh : `terra` (Terra & Sage), `nordic` (Atelier Nordique), `bauhaus` (Bauhaus Bright), `ocean` (Ocean Studio), `vaporwave` (secrète, "???") avec name + tous les tokens (bg, surface, text, textMuted, accent, secondary), toutes pré-validées WCAG AA
+- [x] **THEME-01**: `lib/palettes.ts` exporte 5 palettes typées en OKLCh : `terra` (Terra & Sage), `nordic` (Atelier Nordique), `bauhaus` (Bauhaus Bright), `ocean` (Ocean Studio), `vaporwave` (secrète, "???") avec name + tous les tokens (bg, surface, text, textMuted, accent, secondary), toutes pré-validées WCAG AA
 - [ ] **THEME-02**: `lib/colors.ts` expose `wcagContrast(c1, c2)` (ratio numérique), `adjustForAA(textColor, bgColor)` (ajuste la luminosité du text en OKLCh pour atteindre 4.5:1), et `validateFullMatrix(palette)` qui vérifie les 7 paires (text/bg, text/surface, textMuted/bg, textMuted/surface, accent/bg, accent/surface, secondary/bg) en retournant {valid, failures}
 - [ ] **THEME-03**: `lib/colors.ts` expose `generateHarmonic(mode, sourceColor)` qui supporte les 4 modes `complementary` (+180°), `triadic` (+120°/+240°), `analogous` (±30°), `split-complementary` (+150°/+210°) via rotation hue OKLCh, et retourne une `Palette` validée (auto-adjust text via `adjustForAA` si besoin)
 - [ ] **THEME-04**: `ThemeProvider` (client) wraps l'app, gère la palette active via Context, applique les CSS variables sur `:root`, expose `usePalette()` retournant `{ palette, paletteId, setPreset, setCustomColor, setHarmonic, isCustom }`, et persiste dans localStorage
@@ -146,7 +146,7 @@ Populated by `gsd-roadmapper` on 2026-05-25.
 | ARCH-07 | Phase 1 | Complete |
 | ARCH-08 | Phase 1 | Complete |
 | ARCH-09 | Phase 1 | Complete |
-| THEME-01 | Phase 2 | Pending |
+| THEME-01 | Phase 2 | Complete |
 | THEME-02 | Phase 2 | Pending |
 | THEME-03 | Phase 2 | Pending |
 | THEME-04 | Phase 2 | Pending |
