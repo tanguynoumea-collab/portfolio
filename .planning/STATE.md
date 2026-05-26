@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 01-03-shadcn-aliasing-PLAN.md
-last_updated: "2026-05-25T21:00:40.139Z"
-last_activity: 2026-05-25
+stopped_at: Completed 01-04-i18n-PLAN.md
+last_updated: "2026-05-26T06:20:28.677Z"
+last_activity: 2026-05-26
 progress:
   total_phases: 7
   completed_phases: 0
   total_plans: 5
-  completed_plans: 3
+  completed_plans: 4
   percent: 0
 ---
 
@@ -26,9 +26,9 @@ See: .planning/PROJECT.md (updated 2026-05-25)
 ## Current Position
 
 Phase: 01 (foundations) — EXECUTING
-Plan: 4 of 5
+Plan: 5 of 5
 Status: Ready to execute
-Last activity: 2026-05-25
+Last activity: 2026-05-26
 
 Progress: [░░░░░░░░░░] 0%
 
@@ -55,6 +55,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 01-foundations P01 | 9m 9s | 2 tasks | 27 files |
 | Phase 01-foundations P02 | 7m 21s | 1 tasks | 1 files |
 | Phase 01 P03 | 11m | 2 tasks | 12 files |
+| Phase 01-foundations P04 | 6m 44s | 3 tasks | 11 files |
 
 ## Accumulated Context
 
@@ -77,6 +78,10 @@ Recent decisions affecting current work:
 - [Phase 01-foundations]: OKLCh-only color authoring established as a project-wide convention: no hex, no rgb(), no hsl() anywhere from this point forward. Aligns with Tailwind v4's color system, culori's API (Phase 2), and the harmonic palette generator's hue-rotation math.
 - [Phase 01-foundations]: shadcn 4.8.0 init: 'new-york' style renamed to 'radix-nova' (CLI evolution). Components use umbrella radix-ui@^1.4.3 package, not legacy @radix-ui/react-*. Exhaustive D-10..D-13 aliasing applied: every shadcn token in :root redirects to var(--color-*), fixed OKLCh (destructive D-12), or color-mix() (borders D-13). D-08 enforced: ZERO --radius / --chart-* / --sidebar-* in :root. .dark block removed (palette replaces dark mode).
 - [Phase 01-foundations]: Pitfall #5 (shadcn token disconnect) is now structurally impossible. The chain bg-primary -> @theme inline --color-primary -> :root --primary -> var(--color-accent) -> Terra OKLCh resolves automatically. When Phase 2 ThemeProvider mutates --color-accent, every shadcn component using bg-primary / ring-ring / etc. repaints without rebuild.
+- [Phase 01-foundations]: next-intl v4.12 wired: proxy.ts (Next 16 rename, NOT middleware.ts) + i18n/{routing,request}.ts + next.config wrapped with createNextIntlPlugin. localePrefix 'as-needed' (D-17) means default locale (fr) is served at canonical / via internal rewrite (HTTP 200 with x-middleware-rewrite: /fr header); /fr explicit form redirects to /; /en served at explicit prefix. Non-default redirects emit HTTP 307 (D-16 specified 308 — accepted deviation; next-intl v4.12 has no API to force 308; tracked as v2 follow-up).
+- [Phase 01-foundations]: Pitfall #1 (FOUC) socket-by-structure: app/[locale]/layout.tsx ships <html lang={locale} suppressHydrationWarning> + explicit <head></head> with comment block documenting Phase 2 THEME-05 integration plan. Phase 2 can drop in <Script strategy='beforeInteractive'> without restructuring the layout.
+- [Phase 01-foundations]: Pitfall #14 (i18n parity) enforced: messages/fr.json and messages/en.json both contain 63 leaf keys across 9 ARCH-07 namespaces (nav/hero/about/projects/skills/contact/footer/palette/errors). Parity verified by Node script comparing sorted leaf-key path sets — must match before commit. global.d.ts augments IntlMessages interface from typeof messages (fr.json source of truth) for useTranslations() autocomplete.
+- [Phase 01-foundations]: Root layout migrated to passthrough (return children); <html>/<head>/<body> wrappers + setRequestLocale + getMessages + NextIntlClientProvider live in app/[locale]/layout.tsx so <html lang> is locale-aware on first paint (next-intl recommended pattern). app/page.tsx is a defensive fallback redirect to /{defaultLocale} in case proxy.ts is bypassed.
 
 ### Pending Todos
 
@@ -91,6 +96,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-05-25T21:00:40.136Z
-Stopped at: Completed 01-03-shadcn-aliasing-PLAN.md
+Last session: 2026-05-26T06:20:28.673Z
+Stopped at: Completed 01-04-i18n-PLAN.md
 Resume file: None
