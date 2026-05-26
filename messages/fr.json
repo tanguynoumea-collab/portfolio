@@ -1,0 +1,107 @@
+{
+  "nav": {
+    "home": "Accueil",
+    "about": "À propos",
+    "projects": "Projets",
+    "skills": "Compétences",
+    "contact": "Contact"
+  },
+  "hero": {
+    "name": "Tanguy",
+    "role": "Tech × Design × BIM",
+    "tagline": "Profil hybride au croisement du développement, du design et de l'architecture.",
+    "cta": "Découvrir mon travail"
+  },
+  "about": {
+    "title": "À propos de moi",
+    "intro": "À compléter en Phase 4.",
+    "details": "À compléter en Phase 4."
+  },
+  "projects": {
+    "title": "Projets",
+    "filters": {
+      "all": "Tous",
+      "tech": "Tech",
+      "design": "Design",
+      "bim": "BIM"
+    },
+    "empty": "Aucun projet ne correspond à ce filtre.",
+    "viewProject": "Voir le projet"
+  },
+  "skills": {
+    "title": "Compétences",
+    "groups": {
+      "tech": "Développement",
+      "design": "Design",
+      "bim": "Architecture & BIM"
+    }
+  },
+  "contact": {
+    "title": "Me contacter",
+    "intro": "Disponible pour discuter de vos projets.",
+    "email": "Copier l'adresse email",
+    "emailCopied": "Adresse copiée !",
+    "cv": {
+      "fr": "Télécharger le CV (FR)",
+      "en": "Download CV (EN)"
+    },
+    "social": {
+      "github": "GitHub",
+      "linkedin": "LinkedIn"
+    }
+  },
+  "footer": {
+    "tagline": "Construit avec Next.js et beaucoup de café.",
+    "copyright": "© {year} Tanguy Delrieu. Tous droits réservés."
+  },
+  "palette": {
+    "title": "Palette",
+    "open": "Ouvrir le sélecteur de palette",
+    "close": "Fermer",
+    "tabs": {
+      "presets": "Préréglages",
+      "custom": "Personnalisé",
+      "generate": "Générer"
+    },
+    "presets": {
+      "terra": "Terra & Sage",
+      "nordic": "Atelier Nordique",
+      "bauhaus": "Bauhaus Bright",
+      "ocean": "Ocean Studio",
+      "vaporwave": "???"
+    },
+    "custom": {
+      "bg": "Fond",
+      "accent": "Accent",
+      "secondary": "Secondaire"
+    },
+    "generate": {
+      "source": "Couleur source",
+      "modes": {
+        "complementary": "Complémentaire",
+        "triadic": "Triadique",
+        "analogous": "Analogue",
+        "split-complementary": "Complémentaire fendue"
+      },
+      "generate": "Générer la palette"
+    },
+    "wcag": {
+      "ratio": "Contraste {ratio} — {status}",
+      "aa": "AA",
+      "aaa": "AAA",
+      "fail": "Échec"
+    }
+  },
+  "errors": {
+    "404": {
+      "title": "Page introuvable",
+      "message": "Il semble que vous vous soyez perdu dans le pixel art.",
+      "back": "Retour à l'accueil"
+    },
+    "500": {
+      "title": "Quelque chose s'est cassé",
+      "message": "Désolé, j'ai cassé quelque chose. J'enquête.",
+      "reset": "Réessayer"
+    }
+  }
+}

@@ -1,0 +1,107 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "projects": "Projects",
+    "skills": "Skills",
+    "contact": "Contact"
+  },
+  "hero": {
+    "name": "Tanguy",
+    "role": "Tech × Design × BIM",
+    "tagline": "Hybrid profile at the crossroads of development, design, and architecture.",
+    "cta": "See my work"
+  },
+  "about": {
+    "title": "About me",
+    "intro": "To be completed in Phase 4.",
+    "details": "To be completed in Phase 4."
+  },
+  "projects": {
+    "title": "Projects",
+    "filters": {
+      "all": "All",
+      "tech": "Tech",
+      "design": "Design",
+      "bim": "BIM"
+    },
+    "empty": "No project matches this filter.",
+    "viewProject": "View project"
+  },
+  "skills": {
+    "title": "Skills",
+    "groups": {
+      "tech": "Development",
+      "design": "Design",
+      "bim": "Architecture & BIM"
+    }
+  },
+  "contact": {
+    "title": "Get in touch",
+    "intro": "Available to discuss your projects.",
+    "email": "Copy email address",
+    "emailCopied": "Address copied!",
+    "cv": {
+      "fr": "Télécharger le CV (FR)",
+      "en": "Download CV (EN)"
+    },
+    "social": {
+      "github": "GitHub",
+      "linkedin": "LinkedIn"
+    }
+  },
+  "footer": {
+    "tagline": "Built with Next.js and a lot of coffee.",
+    "copyright": "© {year} Tanguy Delrieu. All rights reserved."
+  },
+  "palette": {
+    "title": "Palette",
+    "open": "Open palette switcher",
+    "close": "Close",
+    "tabs": {
+      "presets": "Presets",
+      "custom": "Custom",
+      "generate": "Generate"
+    },
+    "presets": {
+      "terra": "Terra & Sage",
+      "nordic": "Nordic Studio",
+      "bauhaus": "Bauhaus Bright",
+      "ocean": "Ocean Studio",
+      "vaporwave": "???"
+    },
+    "custom": {
+      "bg": "Background",
+      "accent": "Accent",
+      "secondary": "Secondary"
+    },
+    "generate": {
+      "source": "Source color",
+      "modes": {
+        "complementary": "Complementary",
+        "triadic": "Triadic",
+        "analogous": "Analogous",
+        "split-complementary": "Split-complementary"
+      },
+      "generate": "Generate palette"
+    },
+    "wcag": {
+      "ratio": "Contrast {ratio} — {status}",
+      "aa": "AA",
+      "aaa": "AAA",
+      "fail": "Fail"
+    }
+  },
+  "errors": {
+    "404": {
+      "title": "Page not found",
+      "message": "Looks like you got lost in the pixel art.",
+      "back": "Back to home"
+    },
+    "500": {
+      "title": "Something broke",
+      "message": "Sorry, I broke something. Investigating.",
+      "reset": "Try again"
+    }
+  }
+}
