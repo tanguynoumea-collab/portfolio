@@ -68,7 +68,7 @@
       "nordic": "Nordic Studio",
       "bauhaus": "Bauhaus Bright",
       "ocean": "Ocean Studio",
-      "vaporwave": "???"
+      "vaporwave": "Vaporwave"
     },
     "custom": {
       "bg": "Background",
@@ -89,7 +89,8 @@
       "ratio": "Contrast {ratio} — {status}",
       "aa": "AA",
       "aaa": "AAA",
-      "fail": "Fail"
+      "fail": "Fail",
+      "adjusted": "Adjusted for AA"
     }
   },
   "errors": {
