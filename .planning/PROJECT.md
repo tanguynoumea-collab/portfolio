@@ -12,22 +12,25 @@ Démontrer le profil créatif hybride Tech/Design/BIM via une expérience web pe
 
 ### Validated
 
-(None yet — ship to validate)
+**Validated in Phase 1: Foundations (2026-05-26)** — 5 plans, 15 commits, all 9 ARCH REQs satisfied, score 5/5 on phase verification.
+
+- [x] Projet **Next.js 16** (App Router + React 19.2 + TypeScript strict) initialisé via `create-next-app@latest` — `proxy.ts` (Next 16), `params` async, Turbopack par défaut [ARCH-01]
+- [x] ESLint flat config + Prettier + structure de dossiers (app, components, lib, content, messages, public) [ARCH-02]
+- [x] shadcn/ui initialisé via `npx shadcn@latest init` (style `radix-nova` en 2026, umbrella `radix-ui@^1.4.3`) avec 7 composants : button, card, dialog, slider, switch, popover, tabs [ARCH-05]
+- [x] **Tailwind CSS v4** configuré avec `@theme {}` en CSS (pas de `tailwind.config.ts`) — toutes les couleurs via `var(--color-*)` déclarées en OKLCh dans `:root` [ARCH-03]
+- [x] `globals.css` avec CSS variables de couleurs (OKLCh, palette Terra par défaut) en `:root`, références dans `@theme {}`, transition globale 400ms sur color/background-color/border-color [ARCH-04]
+- [x] next-intl v4.12 configuré avec `routing.ts` + `request.ts` + **`proxy.ts`** (Next 16) et routes localisées `/fr` et `/en` (`localePrefix: 'as-needed'`, `defaultLocale: 'fr'`) [ARCH-06]
+- [x] Fichiers de traduction `messages/fr.json` et `messages/en.json` avec 9 namespaces (nav/hero/about/projects/skills/contact/footer/palette/404), parité parfaite 63 leaf keys × 2 locales [ARCH-07]
+- [x] Type `Project` TS (union discriminée `TechProject | DesignProject | BIMProject`) + loader MDX dans `lib/projects.ts` via `@next/mdx` + `gray-matter` + `compileMDX` (zéro `any`, filter `_*` enforced) [ARCH-08]
+- [x] Repo Git initialisé avec `.gitignore` complet (Next/Node/Vercel exclusions) [ARCH-09]
+- [x] `lib/palettes.ts` avec 5 palettes typées (terra/nordic/bauhaus/ocean/vaporwave) anticipé en Phase 1 pour ground Phase 2
 
 ### Active
 
 #### Architecture & fondations
 
-- [ ] Projet **Next.js 16** (App Router + React 19.2 + TypeScript strict) initialisé via `create-next-app@latest` — Note : Next 16 utilise `proxy.ts` (renommé depuis `middleware.ts`), `cookies()`/`headers()`/`params` sont désormais async, Turbopack par défaut
-- [ ] ESLint flat config + Prettier + structure de dossiers (app, components, lib, content, messages, public)
-- [ ] Dépendances animation installées : `gsap` + `@gsap/react` + `lenis` (avec wrapper `lenis/react` inclus) + `motion` (anciennement `framer-motion`, imports via `motion/react`)
-- [ ] `culori` installé pour manipulation couleurs OKLCh et calculs WCAG
-- [ ] shadcn/ui initialisé via `npx shadcn@latest init` (auto-détecte Tailwind v4, installe `tw-animate-css`) avec composants : button, card, dialog, slider, switch, popover, tabs
-- [ ] **Tailwind CSS v4** configuré avec `@theme {}` en CSS (pas de `tailwind.config.ts`) — toutes les couleurs via `var(--color-*)` déclarées en OKLCh dans `:root`
-- [ ] `globals.css` avec CSS variables de couleurs (OKLCh) en `:root`, références dans `@theme {}`, transition globale 400ms sur color/background-color/border-color
-- [ ] next-intl v4.12 configuré avec `routing.ts` + `request.ts` + **`proxy.ts`** (Next 16) et routes localisées `/fr` et `/en`
-- [ ] Fichiers de traduction `messages/fr.json` et `messages/en.json` avec structure complète
-- [ ] Type `Project` TS (union discriminée `TechProject | DesignProject | BIMProject` avec metadata domain-spécifique : Tech=stack, Design=tools, BIM=software+projectScale) + loader MDX dans `lib/projects.ts` avec frontmatter (slug, title, category, year, cover) via `@next/mdx` + `gray-matter` + `next-mdx-remote/rsc` (PAS contentlayer, abandonné depuis 2024)
+- [ ] Dépendances animation installées : `gsap` + `@gsap/react` + `lenis` (avec wrapper `lenis/react` inclus) + `motion` (anciennement `framer-motion`, imports via `motion/react`) — *Phase 3*
+- [ ] `culori` installé pour manipulation couleurs OKLCh et calculs WCAG — *Phase 2*
 
 #### Système de palettes (feature signature)
 
@@ -181,4 +184,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-05-25 after research synthesis (corrections : Next 15→16, framer-motion→motion, lenis rename, Tailwind v4, contentlayer abandoned, GSAP free, FOUC strategy, single RAF Lenis+GSAP, WCAG full matrix, ajout CV PDF download, horizontal scroll → out of scope v1)*
+*Last updated: 2026-05-26 after Phase 1 completion (Foundations) — Next 16 + Tailwind v4 + shadcn aliasing + next-intl `/fr` `/en` + MDX loader pipeline all green, ARCH-01..09 validated*
