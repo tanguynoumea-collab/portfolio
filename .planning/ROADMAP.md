@@ -52,7 +52,14 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. The WCAGBadge always displays the live ratio (numeric, 2 decimals) and status (AA / AAA / Fail with colored icon) for the active palette
   4. The chosen palette persists across reloads with zero FOUC on cold load (no flash from default to stored palette during first paint)
   5. Entering the Konami sequence (when no input is focused) unlocks the Vaporwave palette with a confetti animation
-**Plans**: TBD
+**Plans**: 7 plans (4 waves)
+- [ ] 02-00-test-infra-PLAN.md — Wave 0: Vitest + RTL + jsdom + tsx install + scripts/validate-palettes.ts gate + Vaporwave WCAG pre-validation [THEME-01]
+- [ ] 02-01-lib-colors-PLAN.md — Wave 1 (parallel): lib/colors.ts pure helpers (wcagContrast, adjustForAA, validateFullMatrix, generateHarmonic, deriveDefaultTokens, applyMatrixAdjust) [THEME-02, THEME-03]
+- [ ] 02-02-lib-storage-hooks-PLAN.md — Wave 1 (parallel): lib/storage.ts + lib/hooks/useKonamiCode.ts + lib/hooks/usePrefersReducedMotion.ts [THEME-12]
+- [ ] 02-03-theme-provider-fouc-PLAN.md — Wave 2: ThemeProvider + PaletteFouCScript + layout wiring + i18n updates (Vaporwave label, Adjusted-for-AA chip) [THEME-04, THEME-05]
+- [ ] 02-04-sheet-presets-badge-PLAN.md — Wave 3 (parallel): shadcn Sheet install + Pitfall E mitigation + WCAGBadge + PalettePresets [THEME-06, THEME-09]
+- [ ] 02-05-custom-harmonic-switcher-PLAN.md — Wave 3 (parallel): CustomColorPicker + HarmonicGenerator + PaletteSwitcher shell [THEME-07, THEME-08, THEME-10]
+- [ ] 02-06-fab-konami-integration-PLAN.md — Wave 4: PaletteFab + canvas-confetti dynamic-import + Konami auto-open Sheet [THEME-11, THEME-12]
 **UI hint**: yes
 
 ### Phase 3: Layout & Animation Foundation
@@ -124,8 +131,8 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundations | 0/5 | Complete    | 2026-05-26 |
-| 2. Palette System | 0/TBD | Not started | - |
+| 1. Foundations | 5/5 | Complete    | 2026-05-26 |
+| 2. Palette System | 0/7 | Not started | - |
 | 3. Layout & Animation Foundation | 0/TBD | Not started | - |
 | 4. Homepage Sections | 0/TBD | Not started | - |
 | 5. Project Content Pipeline | 0/TBD | Not started | - |
