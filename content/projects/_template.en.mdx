@@ -1,0 +1,38 @@
+---
+slug: _template
+title: Tech Project Template
+year: 2025
+category: tech
+cover: /projects/_template/cover.jpg
+summary: Reusable project case-study template — duplicate it, rename it, fill in the content.
+featured: false
+stack:
+  - Next.js
+  - TypeScript
+  - Tailwind CSS
+  - Motion
+repo: https://github.com/tanguynoumea/portfolio-template
+liveUrl: https://example.com
+---
+
+# Tech Project Template
+
+This is an example MDX file used to validate the Phase 1 loader pipeline. It
+**does not appear in the project list** because its filename starts with an
+underscore (`_template.en.mdx`), and `lib/projects.ts` filters out all `_*`
+files (D-24).
+
+## How to use this template
+
+1. Duplicate `_template.fr.mdx` and `_template.en.mdx` to `my-project.fr.mdx`
+   and `my-project.en.mdx`.
+2. Adjust `slug` (must match the filename without the locale suffix and `.mdx`).
+3. Set `category` to `tech`, `design`, or `bim` — each has its own discriminated
+   set of frontmatter fields (see `lib/projects.ts`).
+4. Write the case-study content in standard MDX; you can import custom React
+   components (Phase 5 will add `<Callout>`, `<CodeBlock>`, `<Image>` with zoom).
+
+The frontmatter above exercises the full `TechProject` variant: common fields
++ `stack[]` + `repo?` + `liveUrl?`. If you change `category` to `design` or
+`bim`, you must replace `stack/repo/liveUrl` with `tools/client?` or
+`software/projectScale/location?`.

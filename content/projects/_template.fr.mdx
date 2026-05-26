@@ -1,0 +1,39 @@
+---
+slug: _template
+title: Modèle de projet Tech
+year: 2025
+category: tech
+cover: /projects/_template/cover.jpg
+summary: Modèle réutilisable de fiche projet — duplique-le, renomme-le, remplis le contenu.
+featured: false
+stack:
+  - Next.js
+  - TypeScript
+  - Tailwind CSS
+  - Motion
+repo: https://github.com/tanguynoumea/portfolio-template
+liveUrl: https://example.com
+---
+
+# Modèle de projet Tech
+
+Ceci est un fichier MDX d'exemple utilisé pour valider le pipeline de chargement
+de Phase 1. Il **n'apparaît pas dans la liste des projets** car son nom commence
+par un underscore (`_template.fr.mdx`), et `lib/projects.ts` filtre tous les
+fichiers `_*` (D-24).
+
+## Comment utiliser ce modèle
+
+1. Dupliquez `_template.fr.mdx` et `_template.en.mdx` en `mon-projet.fr.mdx` et
+   `mon-projet.en.mdx`.
+2. Adaptez `slug` (doit matcher le nom de fichier sans suffixe locale et `.mdx`).
+3. Ajustez `category` en `tech`, `design`, ou `bim` — chacun a son propre set
+   de champs frontmatter discriminés (voir `lib/projects.ts`).
+4. Écrivez le contenu de l'étude de cas en MDX standard ; vous pouvez importer
+   des composants React personnalisés (Phase 5 ajoutera `<Callout>`, `<CodeBlock>`,
+   `<Image>` avec zoom).
+
+Le frontmatter ci-dessus exerce l'intégralité de la variante `TechProject` :
+champs communs + `stack[]` + `repo?` + `liveUrl?`. Si vous changez `category`
+pour `design` ou `bim`, vous devrez remplacer `stack/repo/liveUrl` par
+`tools/client?` ou `software/projectScale/location?`.
