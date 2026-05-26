@@ -5,6 +5,7 @@ import { setRequestLocale, getMessages } from 'next-intl/server';
 import { routing } from '@/i18n/routing';
 import { PaletteFouCScript } from '@/components/theme/PaletteFouCScript';
 import { ThemeProvider } from '@/components/providers/ThemeProvider';
+import { PaletteFab } from '@/components/theme/PaletteFab';
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -47,7 +48,16 @@ export default async function LocaleLayout({
               palette UI (PalettePresets, CustomColorPicker, etc.) can use
               useTranslations() for localized card names and aria-labels.
               See 02-CONTEXT.md code_context + 02-RESEARCH.md Discretion. */}
-          <ThemeProvider>{children}</ThemeProvider>
+          <ThemeProvider>
+            {children}
+            {/* THEME-11: PaletteFab mounts as a SIBLING of {children} inside
+                ThemeProvider so it can consume usePalette() (for the
+                vaporwaveUnlockNonce subscription that powers D-14 auto-open
+                on Konami unlock) and inside NextIntlClientProvider so its
+                aria-label can be localized via useTranslations('palette').
+                Visible on every /fr/* and /en/* route. */}
+            <PaletteFab />
+          </ThemeProvider>
         </NextIntlClientProvider>
       </body>
     </html>
