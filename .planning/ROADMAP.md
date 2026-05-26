@@ -14,7 +14,7 @@ The roadmap collapses what the research SUMMARY proposed as 8 phases into **7 ph
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Foundations** - Scaffold Next 16, Tailwind v4 with OKLCh CSS variables, shadcn aliased to palette tokens, next-intl `/fr` `/en` routing, MDX loader scaffold
+- [x] **Phase 1: Foundations** - Scaffold Next 16, Tailwind v4 with OKLCh CSS variables, shadcn aliased to palette tokens, next-intl `/fr` `/en` routing, MDX loader scaffold (completed 2026-05-26)
 - [ ] **Phase 2: Palette System** - Live runtime palette switcher with presets, custom picker, harmonic generator, WCAG matrix validation, FOUC-safe persistence, and Konami easter egg
 - [ ] **Phase 3: Layout & Animation Foundation** - Root layout, LenisProvider with single-RAF GSAP integration, page transitions, Navigation, Footer, LanguageSwitcher, CustomCursor, console ASCII art
 - [ ] **Phase 4: Homepage Sections** - Hero with SplitText, About, filterable Projects grid, Skills, Contact with CV PDF downloads
@@ -124,7 +124,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundations | 0/5 | Not started | - |
+| 1. Foundations | 0/5 | Complete    | 2026-05-26 |
 | 2. Palette System | 0/TBD | Not started | - |
 | 3. Layout & Animation Foundation | 0/TBD | Not started | - |
 | 4. Homepage Sections | 0/TBD | Not started | - |
