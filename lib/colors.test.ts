@@ -49,16 +49,18 @@ describe('adjustForAA', () => {
     expect(adjusted).toBe('oklch(0.15 0 0)');
   });
   it('darkens text on light bg until passing (Test 5)', () => {
-    const { adjusted, wasAdjusted } = adjustForAA(
-      'oklch(0.5 0 0)',
-      'oklch(0.97 0 0)',
-    );
+    // Input L=0.55 on near-white gives ratio ~4.45 (fails 4.5 by hair) so
+    // adjustForAA MUST shift darker. Plan's original L=0.5 already passes
+    // (~5.5 ratio) — deviation [Rule 1 - Bug]: fixed fixture to one that
+    // actually fails AA so the "until passing" semantic is real.
+    const startText = 'oklch(0.55 0 0)';
+    const bg = 'oklch(0.97 0 0)';
+    expect(wcagContrast(startText, bg)).toBeLessThan(4.5);
+    const { adjusted, wasAdjusted } = adjustForAA(startText, bg);
     expect(wasAdjusted).toBe(true);
-    expect(wcagContrast(adjusted, 'oklch(0.97 0 0)')).toBeGreaterThanOrEqual(
-      4.5,
-    );
+    expect(wcagContrast(adjusted, bg)).toBeGreaterThanOrEqual(4.5);
     const adjL = toOklch(parse(adjusted)!)!.l;
-    expect(adjL).toBeLessThan(0.5);
+    expect(adjL).toBeLessThan(0.55);
   });
   it('lightens text on dark bg until passing (Test 6)', () => {
     const { adjusted, wasAdjusted } = adjustForAA(
