@@ -56,7 +56,6 @@ export function ConsoleArt() {
       'font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; ' +
       `color: ${accent || 'inherit'}; ` +
       'line-height: 1.3;';
-    // eslint-disable-next-line no-console
     console.log('%c' + getAsciiArt(safeLocale), styleBlock);
   }, [locale]);
 

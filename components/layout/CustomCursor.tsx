@@ -38,11 +38,18 @@
  * even at ~120Hz on a high-refresh display. `useSpring` interpolates from the
  * raw position values for a tight follow.
  */
-import { useEffect, useState } from 'react';
+import { useEffect, useSyncExternalStore } from 'react';
 import { motion, useMotionValue, useSpring } from 'motion/react';
 
 const HOVER_SELECTORS =
   'a, button, [role="button"], [data-cursor=hover], img[data-zoomable]';
+
+const GATE_QUERIES = [
+  '(pointer: fine)',
+  '(prefers-reduced-motion: reduce)',
+  '(any-pointer: coarse)',
+  '(forced-colors: active)',
+] as const;
 
 function shouldRenderCursor(): boolean {
   if (typeof window === 'undefined') return false;
@@ -55,21 +62,35 @@ function shouldRenderCursor(): boolean {
   return true;
 }
 
-export function CustomCursor() {
-  const [enabled, setEnabled] = useState(false);
+// useSyncExternalStore primitives — same idiom as lib/hooks/usePrefersReducedMotion.ts.
+// Subscribing this way avoids the React 19 react-hooks/set-state-in-effect lint
+// rule that triggers on the naive useState+useEffect+setState pattern. The
+// snapshot read is synchronous so initial render reflects live media-query
+// state on the client; server snapshot returns false (the gates are inherently
+// client-only — no native cursor exists during SSR).
+function subscribeGates(onChange: () => void): () => void {
+  if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') {
+    return () => {};
+  }
+  const queries = GATE_QUERIES.map((q) => window.matchMedia(q));
+  queries.forEach((q) => q.addEventListener('change', onChange));
+  return () => queries.forEach((q) => q.removeEventListener('change', onChange));
+}
 
-  useEffect(() => {
-    setEnabled(shouldRenderCursor());
-    const queries = [
-      window.matchMedia('(pointer: fine)'),
-      window.matchMedia('(prefers-reduced-motion: reduce)'),
-      window.matchMedia('(any-pointer: coarse)'),
-      window.matchMedia('(forced-colors: active)'),
-    ];
-    const onChange = () => setEnabled(shouldRenderCursor());
-    queries.forEach((q) => q.addEventListener('change', onChange));
-    return () => queries.forEach((q) => q.removeEventListener('change', onChange));
-  }, []);
+function getGateSnapshot(): boolean {
+  return shouldRenderCursor();
+}
+
+function getGateServerSnapshot(): boolean {
+  return false;
+}
+
+export function CustomCursor() {
+  const enabled = useSyncExternalStore(
+    subscribeGates,
+    getGateSnapshot,
+    getGateServerSnapshot,
+  );
 
   // D-30: motion values — NOT React state.
   // Updating these on every pointermove does NOT re-render React; the DOM
