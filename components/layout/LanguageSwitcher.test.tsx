@@ -40,8 +40,7 @@ vi.mock('next/navigation', () => ({
 const localeMock = vi.fn(() => 'fr');
 vi.mock('next-intl', () => ({
   useLocale: () => localeMock(),
-  useTranslations:
-    (_ns: string) =>
+  useTranslations: () =>
     (k: string, vars?: Record<string, string>) => {
       if (k === 'label')
         return localeMock() === 'fr' ? 'Changer la langue' : 'Switch language';
