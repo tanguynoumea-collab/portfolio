@@ -133,6 +133,13 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
+
+  /* D-08 / D-10 (Phase 3 LAYOUT-01): wire the Tailwind `font-sans` utility
+     to Inter via next/font's injected CSS variable on <html>. The
+     `var(--font-sans, ...)` indirection falls back to the system stack
+     if Inter ever fails to load, preserving readability. */
+  --font-sans:
+    var(--font-sans, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif);
 }
 
 /* ============================================================
