@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 04-02-about-PLAN.md (parallel Wave 1)
-last_updated: "2026-05-27T18:53:43.779Z"
+stopped_at: Completed 04-04-skills-PLAN.md (parallel wave)
+last_updated: "2026-05-27T18:54:43.511Z"
 last_activity: 2026-05-27
 progress:
   total_phases: 7
   completed_phases: 3
   total_plans: 24
-  completed_plans: 20
+  completed_plans: 21
   percent: 0
 ---
 
@@ -70,6 +70,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 03-layout-animation-foundation P03 | 8m 22s | 4 tasks | 8 files |
 | Phase 04-homepage-sections P00 | 8m | 7 tasks | 33 files |
 | Phase 04 P02 | 4min | 2 tasks | 2 files |
+| Phase 04-homepage-sections P04 | 3m 33s | 2 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -133,6 +134,7 @@ Recent decisions affecting current work:
 - [Phase 04-homepage-sections]: RED TDD harness pattern: each of 8 test files uses dynamic 'await import(./ComponentName)' so vitest reports 'Failed to resolve import' at runtime (not parse error). Files parse cleanly under lint+vitest discover, but every test FAILS until Wave 1+2 ships the named-export component file. Confirmed via 'npm test components/sections/' showing 'Test Files 8 failed (8)'.
 - [Phase 04]: About section uses side-effect-only 'gsap/ScrollTrigger' import for TS type merging — LenisProvider owns the actual registerPlugin (Phase 3 module-load contract)
 - [Phase 04]: MatchMediaController Vitest pattern: capture matchMedia callback for deterministic dual-branch testing of gsap.matchMedia reduced-motion gates — reusable for any ScrollTrigger-revealed section
+- [Phase 04-homepage-sections]: Skills (HOME-06): GroupKey ReadonlyArray + variantFor() narrowing → 3-group GROUPS.map iteration with shadcn Badge category-{tech,design,bim} CVA variants from Wave 0; useGSAP({ scope: skillsRef }) + gsap.matchMedia full/reduced branches; ScrollTrigger timeline (start 'top 75%', toggleActions 'play none none reverse') with per-group tl.from() at position=idx*0.15 and intra-stagger 0.05s; reduced-motion calls gsap.set('[data-skill-badge]') snap-to-final; next-intl t.raw('groups.{key}.items') with Array.isArray + as unknown as string[] narrowing; outer <span data-skill-badge data-group> wraps Badge so GSAP selector stays stable across shadcn upgrades; Vitest mocks use native chai matchers (not jest-dom) matching Phase 3 setupFiles:[] precedent; 3 deviations auto-fixed in Wave 0 harness (Badge mock returning raw object, jest-dom matchers, vi.fn() generic inference)
 
 ### Pending Todos
 
@@ -147,6 +149,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-05-27T18:53:42.256Z
-Stopped at: Completed 04-02-about-PLAN.md (parallel Wave 1)
+Last session: 2026-05-27T18:54:34.515Z
+Stopped at: Completed 04-04-skills-PLAN.md (parallel wave)
 Resume file: None
