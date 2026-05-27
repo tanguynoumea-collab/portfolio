@@ -36,7 +36,7 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Layout & Core Components
 
-- [ ] **LAYOUT-01**: `app/[locale]/layout.tsx` (Server Component) wraps les pages avec le ThemeProvider (Client) + LenisProvider (Client) + IntlProvider (Client) + font custom via `next/font/google` (e.g. Inter ou Geist) + métadonnées de base
+- [x] **LAYOUT-01**: `app/[locale]/layout.tsx` (Server Component) wraps les pages avec le ThemeProvider (Client) + LenisProvider (Client) + IntlProvider (Client) + font custom via `next/font/google` (e.g. Inter ou Geist) + métadonnées de base
 - [x] **LAYOUT-02**: `LenisProvider` (client) initialise Lenis avec `autoRaf: false`, l'enregistre dans `gsap.ticker` (un seul rAF partagé Lenis + GSAP), appelle `ScrollTrigger.refresh()` après changements de layout, et expose le scroll natif pour les éléments avec `data-lenis-prevent` (modales/dialogs)
 - [ ] **LAYOUT-03**: `Navigation` fixe en haut avec logo, liens vers sections (#about, #projects, #contact) traduits, et `LanguageSwitcher` — le PaletteSwitcher est en FAB séparé (pas dans la nav)
 - [ ] **LAYOUT-04**: `Footer` bilingue avec liens sociaux (GitHub, LinkedIn, email avec `mailto:`), copyright dynamique avec année, et mention "Built with Next.js + ❤️"
@@ -158,7 +158,7 @@ Populated by `gsd-roadmapper` on 2026-05-25.
 | THEME-10 | Phase 2 | Complete |
 | THEME-11 | Phase 2 | Complete |
 | THEME-12 | Phase 2 | Complete |
-| LAYOUT-01 | Phase 3 | Pending |
+| LAYOUT-01 | Phase 3 | Complete |
 | LAYOUT-02 | Phase 3 | Complete |
 | LAYOUT-03 | Phase 3 | Pending |
 | LAYOUT-04 | Phase 3 | Pending |

@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 03-01-lenis-provider-PLAN.md
-last_updated: "2026-05-27T07:07:50.429Z"
+stopped_at: Completed 03-02-root-layout-font-PLAN.md
+last_updated: "2026-05-27T07:17:39.151Z"
 last_activity: 2026-05-27
 progress:
   total_phases: 7
   completed_phases: 2
   total_plans: 18
-  completed_plans: 14
+  completed_plans: 15
   percent: 0
 ---
 
@@ -26,7 +26,7 @@ See: .planning/PROJECT.md (updated 2026-05-25)
 ## Current Position
 
 Phase: 3 (Layout & Animation Foundation) — EXECUTING
-Plan: 3 of 6
+Plan: 4 of 6
 Status: Ready to execute
 Last activity: 2026-05-27
 
@@ -65,6 +65,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 02-palette-system P06 | 7m 6s | 3 tasks | 5 files |
 | Phase 03-layout-animation-foundation P00 | 1m 32s | 1 tasks | 2 files |
 | Phase 03-layout-animation-foundation P01 | 4m 15s | 2 tasks | 2 files |
+| Phase 03-layout-animation-foundation P02 | 5m 7s | 3 tasks | 7 files |
 
 ## Accumulated Context
 
@@ -117,6 +118,9 @@ Recent decisions affecting current work:
 - [Phase 02-palette-system]: Phase 2 COMPLETE — all 12 THEME requirements (THEME-01..THEME-12) delivered across plans 00-06. THEME-11 (FAB visible bottom-right + localized aria-label + Lucide palette icon + motion hover/rotate) + THEME-12 (Konami unlocks Vaporwave + confetti via dynamic import + Sheet auto-opens on Presets tab with Vaporwave as 5th preset card). 94/94 Vitest tests green; npm run build exit 0; lint clean; all 5 palettes pass 7-pair WCAG matrix. usePalette() context exposes the full API surface for Phase 3+ consumers.
 - [Phase 03-layout-animation-foundation]: Caret-prefix locked at ^3.13/^2.1.2/^1.3 per D-01; npm resolved to gsap@3.15.0 + @gsap/react@2.1.2 + lenis@1.3.23. Wave 0 install gate cleared; motion@^12.40 preserved unchanged from Phase 2 W0; no @studio-freight/* legacy packages.
 - [Phase 03-layout-animation-foundation]: LenisProvider uses vanilla Lenis class + ref-holder accessor pattern: useLenis() returns Lenis|null via stable useMemo({ getLenis: () => lenisRef.current }, []) instead of useState — same React 19 react-hooks/set-state-in-effect avoidance idiom as Phase 2 PaletteFab. autoRaf:false + gsap.ticker.add bridge + gsap.ticker.lagSmoothing(0). ScrollTrigger.refresh 450ms debounce on paletteId change (rAF + setTimeout). Module-level gsap.registerPlugin(ScrollTrigger). All useEffects early-return under usePrefersReducedMotion.
+- [Phase 03-layout-animation-foundation]: Plan 03-02 used stub-first wave decoupling: 4 'return null' stub components (Navigation, Footer, CustomCursor, ConsoleArt) shipped in components/layout/ during Wave 1's layout edit so Wave 2/3 plans Edit only the component bodies, never touch app/[locale]/layout.tsx. Eliminates wave merge conflicts on the shared layout file.
+- [Phase 03-layout-animation-foundation]: Inter via next/font/google with subsets=['latin','latin-ext'], variable='--font-sans', display='swap', preload=true, no explicit weight array (variable font ships all weights 100-900 in single woff2 per unicode-range). Tailwind v4 @theme inline wires --font-sans: var(--font-sans, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif) so the font-sans utility resolves to Inter at runtime with graceful fallback if Inter fails to load. Build emits 7 woff2 subsets in .next/static/media/.
+- [Phase 03-layout-animation-foundation]: D-11 Phase 3 provider tree assembled in app/[locale]/layout.tsx as Server Component (no 'use client'): NextIntlClientProvider > ThemeProvider > LenisProvider > [ConsoleArt + Navigation + <main>{children}</main> + Footer year={server-rendered new Date().getFullYear()} + CustomCursor + PaletteFab]. PaletteFab stays LAST child inside LenisProvider (unchanged from Phase 2, just relocated one level deeper). <main> landmark owned by layout — page.tsx renders only <section> tree as fragment.
 
 ### Pending Todos
 
@@ -131,6 +135,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-05-27T07:07:50.425Z
-Stopped at: Completed 03-01-lenis-provider-PLAN.md
+Last session: 2026-05-27T07:17:39.147Z
+Stopped at: Completed 03-02-root-layout-font-PLAN.md
 Resume file: None
