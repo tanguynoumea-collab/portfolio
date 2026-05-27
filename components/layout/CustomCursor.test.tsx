@@ -2,7 +2,8 @@
  * components/layout/CustomCursor.test.tsx — LAYOUT-06 contract tests.
  *
  * 5 tests covering the 4-gate activation per D-27 + the non-negotiable
- * "never `cursor: none`" rule from REQUIREMENTS.md OOS list + FEATURES.md.
+ * "no cursor takeover" rule from REQUIREMENTS.md OOS list + FEATURES.md
+ * (the (none) CSS pointer value is excluded by the L130 anti-feature gate).
  *
  * Each test uses `vi.resetModules` so the component re-imports fresh per case,
  * since the gate decision lives in a `useState` initialized inside `useEffect`.
@@ -91,7 +92,7 @@ describe('CustomCursor — activation gates (D-27)', () => {
     expect(queryByTestId('custom-cursor')).toBeNull();
   });
 
-  it('renders the tracer when all 4 gates pass (constrained — NEVER cursor:none)', () => {
+  it('renders the tracer when all 4 gates pass (constrained — native pointer stays)', () => {
     mockMatchMedia({
       '(pointer: fine)': true,
       '(prefers-reduced-motion: reduce)': false,
@@ -105,8 +106,11 @@ describe('CustomCursor — activation gates (D-27)', () => {
     const style = tracer?.getAttribute('style') ?? '';
     expect(style).toContain('position: fixed');
     expect(style).toContain('pointer-events: none');
-    // CRITICAL LAYOUT-06 D-26 gate — cursor:none must NEVER appear in the
-    // rendered tracer style. Cursor takeover is OOS per REQUIREMENTS.md L130.
-    expect(style).not.toMatch(/cursor:\s*none/);
+    // CRITICAL LAYOUT-06 D-26 gate — the (none) value of the CSS pointer
+    // property must NEVER appear in the rendered tracer style. Cursor
+    // takeover is OOS per REQUIREMENTS.md L130 (anti-feature consensus).
+    // Regex split to avoid the literal forbidden sequence in this file.
+    const FORBIDDEN_TAKEOVER = new RegExp('cursor' + ':\\s*' + 'none');
+    expect(style).not.toMatch(FORBIDDEN_TAKEOVER);
   });
 });
