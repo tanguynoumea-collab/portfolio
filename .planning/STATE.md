@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 04-04-skills-PLAN.md (parallel wave)
-last_updated: "2026-05-27T18:54:43.511Z"
+stopped_at: Completed 04-01-hero-PLAN.md (Wave 1 parallel)
+last_updated: "2026-05-27T18:55:31.759Z"
 last_activity: 2026-05-27
 progress:
   total_phases: 7
   completed_phases: 3
   total_plans: 24
-  completed_plans: 21
+  completed_plans: 23
   percent: 0
 ---
 
@@ -71,6 +71,8 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 04-homepage-sections P00 | 8m | 7 tasks | 33 files |
 | Phase 04 P02 | 4min | 2 tasks | 2 files |
 | Phase 04-homepage-sections P04 | 3m 33s | 2 tasks | 2 files |
+| Phase 04-homepage-sections P01 | 4m 5s | 2 tasks | 3 files |
+| Phase 04-homepage-sections P05 | 4min | 2 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -135,6 +137,10 @@ Recent decisions affecting current work:
 - [Phase 04]: About section uses side-effect-only 'gsap/ScrollTrigger' import for TS type merging — LenisProvider owns the actual registerPlugin (Phase 3 module-load contract)
 - [Phase 04]: MatchMediaController Vitest pattern: capture matchMedia callback for deterministic dual-branch testing of gsap.matchMedia reduced-motion gates — reusable for any ScrollTrigger-revealed section
 - [Phase 04-homepage-sections]: Skills (HOME-06): GroupKey ReadonlyArray + variantFor() narrowing → 3-group GROUPS.map iteration with shadcn Badge category-{tech,design,bim} CVA variants from Wave 0; useGSAP({ scope: skillsRef }) + gsap.matchMedia full/reduced branches; ScrollTrigger timeline (start 'top 75%', toggleActions 'play none none reverse') with per-group tl.from() at position=idx*0.15 and intra-stagger 0.05s; reduced-motion calls gsap.set('[data-skill-badge]') snap-to-final; next-intl t.raw('groups.{key}.items') with Array.isArray + as unknown as string[] narrowing; outer <span data-skill-badge data-group> wraps Badge so GSAP selector stays stable across shadcn upgrades; Vitest mocks use native chai matchers (not jest-dom) matching Phase 3 setupFiles:[] precedent; 3 deviations auto-fixed in Wave 0 harness (Badge mock returning raw object, jest-dom matchers, vi.fn() generic inference)
+- [Phase 04-homepage-sections]: [Phase 04-homepage-sections] HOME-01 Hero shipped — Pattern 1 (useGSAP scope + dependencies + matchMedia + SplitText) precedent established. Pitfall 4-A mitigated structurally via deps array [t('name'), t('role')] forcing matchMedia re-run on locale switch. Pitfall 4-D mitigated by ScrollTrigger.refresh() in SplitText.onSplit so downstream About/Skills triggers see Hero's post-split height. CTA: useLenis().scrollTo with offset -64 + scrollIntoView fallback. ChevronDown bounce y:[0,8,0] 2s gated by usePrefersReducedMotion. 11/11 tests, lint clean, zero color literals. Hero is leaf div not section (parent page.tsx owns the landmark).
+- [Phase 04-homepage-sections]: 04-05: Contact uses AnimatePresence mode='wait' for Copy↔Check icon swap; popLayout reserved for ProjectGrid (04-03).
+- [Phase 04-homepage-sections]: 04-05: Clipboard rejection is silent (empty catch) per Phase 2 D-02 silent-fallback precedent; recruiter still has mailto: + visible email as fallback.
+- [Phase 04-homepage-sections]: 04-05: Reused Phase 3 D-23 lucide brand-icon substitutions (Code2/Briefcase/Mail) in Contact to avoid lucide-react downgrade cascade.
 
 ### Pending Todos
 
@@ -149,6 +155,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-05-27T18:54:34.515Z
-Stopped at: Completed 04-04-skills-PLAN.md (parallel wave)
+Last session: 2026-05-27T18:55:21.912Z
+Stopped at: Completed 04-01-hero-PLAN.md (Wave 1 parallel)
 Resume file: None
