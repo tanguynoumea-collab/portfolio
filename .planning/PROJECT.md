@@ -44,20 +44,17 @@ Démontrer le profil créatif hybride Tech/Design/BIM via une expérience web pe
 - [x] **Vaporwave WCAG pré-validation** : `scripts/validate-palettes.ts` (THEME-01 gate) confirme Vaporwave passe les 7 paires sans ajustement (worst pair textMuted/surface = 7.68). Bauhaus.secondary auto-ajustée 0.7→0.6 L au build pour passer le seuil 3.0 UI [resolves STATE.md blocker]
 - [x] **Pitfall E mitigated** : règle scope-exclude dans `app/globals.css` pour `[data-slot='sheet-overlay'|'sheet-content'|'dialog-overlay'|'dialog-content'|'popover-content']` — la transition globale 400ms color/bg ne fight plus l'animation Sheet
 
-### Active
+**Validated in Phase 3: Layout & Animation Foundation (2026-05-27)** — 6 plans, 137/137 Vitest tests green (94 Phase 2 baseline + 43 net new), all 8 LAYOUT/ANIM/EGG REQs satisfied, automated verification 5/5 ROADMAP success criteria + 10/10 critical gates; 17 manual browser-only checks tracked in `03-HUMAN-UAT.md`.
 
-#### Architecture & fondations
-
-- [ ] Dépendances animation installées : `gsap` + `@gsap/react` + `lenis` (avec wrapper `lenis/react` inclus) + `motion` (anciennement `framer-motion`, imports via `motion/react`) — *Phase 3*
-
-#### Layout & composants core
-
-- [ ] Layout racine `app/layout.tsx` avec ThemeProvider, IntlProvider et police custom
-- [ ] `LenisProvider` client wrappant l'app pour smooth scroll, avec `autoRaf: false` et intégration au **`gsap.ticker`** (un seul RAF partagé entre Lenis et GSAP pour éviter le desync ScrollTrigger ↔ Lenis), `ScrollTrigger.refresh()` après changements de layout (notamment swap de palette)
-- [ ] Navigation fixe avec logo, liens sections, switcher langue (palette switcher en FAB séparé)
-- [ ] Footer avec liens sociaux (GitHub, LinkedIn, email) et copyright bilingue
-- [ ] `LanguageSwitcher` animé Framer Motion (toggle FR/EN)
-- [ ] `CustomCursor` desktop (suit la souris, change selon accent color)
+- [x] Dépendances animation installées : `gsap@^3.15.0` + `@gsap/react@^2.1.2` + `lenis@^1.3.23` ; `motion@^12.40.0` préservé de Phase 2 ; aucun paquet legacy `@studio-freight/*` introduit [Phase 3 Wave 0]
+- [x] Layout racine `app/[locale]/layout.tsx` (Server Component) wraps les pages avec **Inter** via `next/font/google` (`subsets: ['latin', 'latin-ext']`, `display: 'swap'`, `preload: true`, fallback `system-ui, -apple-system, "Segoe UI", Roboto, sans-serif`) + provider tree D-11 : `NextIntlClientProvider → ThemeProvider → LenisProvider → [ConsoleArt, Navigation, main, Footer, CustomCursor, PaletteFab]` + `generateMetadata` (title + tagline localisés, hreflang alternates) [LAYOUT-01]
+- [x] `LenisProvider` client component (226 LOC, 4 unit tests) avec single-RAF `autoRaf: false` + bridge `gsap.ticker.add((t) => lenis.raf(t * 1000))` + `gsap.ticker.lagSmoothing(0)` + `gsap.registerPlugin(ScrollTrigger)` au module scope, `anchors: true`, `prevent: data-lenis-prevent` pour Radix overlays, `document.fonts.ready` re-refresh, debounce 450ms ScrollTrigger.refresh après `paletteId` change, mobile input-focus pause (`<768px` + focusin/focusout), reduced-motion skip total, exporte `LenisProvider` + `useLenis()` (returns null avant l'effet ou sous reduced-motion — consumers must null-check) [LAYOUT-02]
+- [x] `Navigation` fixe top, transparent → `bg-background/80 backdrop-blur-md border-b` après >50px scroll, logo wordmark "Tanguy" `text-primary`, section anchors (#home/#about/#projects/#skills/#contact), `LanguageSwitcher` far-right, hamburger mobile `<Sheet side="left" data-lenis-prevent>` (réutilise la primitive shadcn Phase 2). PaletteFab **PAS** dans Nav (sibling séparé). Hook `useActiveSection` (IntersectionObserver `rootMargin: -40% 0px -40% 0px`) drive l'`aria-current` [LAYOUT-03]
+- [x] `Footer` (`<footer>` semantic landmark) compact single-row → mobile 2-row stack, copyright dynamique `t('copyright', { year: new Date().getFullYear() })` server-side, tagline existante préservée (FR : "Construit avec Next.js et beaucoup de café." / EN : "Built with Next.js and a lot of coffee."), 3 social links lucide-react (`Code2` pour GitHub, `Briefcase` pour LinkedIn — substitution forcée par la suppression des icônes brand-trademarked en lucide-react v1.0 ; accessibilité préservée via i18n labels — `Mail` inchangé), `target="_blank" rel="noopener noreferrer"`, `mailto:`, GitHub link vers `tanguynoumea/portfolio` [LAYOUT-04]
+- [x] `LanguageSwitcher` segmented control FR|EN avec `<motion.span layoutId="lang-indicator">` driving l'active background, `useRouter` + `usePathname` de `@/i18n/navigation` (locale-stripped), `document.documentElement.lang` imperative update via `useEffect([locale])`, scroll preservation via `lenis?.actualScroll` capture + `requestAnimationFrame(() => lenis.scrollTo(scrollY, { immediate: true }))` après `router.replace`, `aria-pressed={active}` + `aria-label` localisé via nouveaux keys `nav.lang.label` + `nav.lang.switchTo` (parité FR/EN vérifiée). PAS de drapeaux. [LAYOUT-05]
+- [x] `CustomCursor` strictement contraint (anti-pattern "cursor takeover" interdit par REQUIREMENTS.md OOS) : 4 activation gates via `useSyncExternalStore` (`pointer:fine` AND `!prefers-reduced-motion` AND `!any-pointer:coarse` AND `!forced-colors:active`) — renders `null` si une gate fail. `useMotionValue` + `useSpring` (mass 0.3, stiffness 800) — zéro re-render React à 120Hz. Event-delegated `pointerover`/`pointerout` sur `'a, button, [role=button], [data-cursor=hover], img[data-zoomable]'` → scale 4× sur hover. `backgroundColor: var(--color-accent)` direct CSS variable (auto-recolore sur palette swap, zéro JS subscription). `mixBlendMode: difference`. **ZÉRO `cursor: none` dans le repo (grep gate)** — pointeur OS natif toujours visible [LAYOUT-06]
+- [x] `app/template.tsx` (Client, `'use client'` line 1) avec `AnimatePresence mode="popLayout" initial={false}` (NOT `wait`) keyed par `usePathname()` de **`next/navigation`** (full path, pas la version locale-stripped) + variants fade + 8px Y-translate `duration: 0.3 easeOut` sous motion normale / opacity-only `duration: 0.1` sous reduced-motion via `useReducedMotion()` de motion/react [ANIM-01]
+- [x] Console ASCII art bilingue : `lib/ascii.ts` exporte `getAsciiArt(locale)` avec wordmark FIGlet "Calvin S" pour "Tanguy" + intro FR/EN ("Profil hybride — Tech × Design × BIM" / "Hybrid profile — Tech × Design × BIM") + GitHub URL `https://github.com/tanguynoumea/portfolio` + Konami hint `// ↑ ↑ ↓ ↓ ← → ← → B A`. `ConsoleArt` (`'use client'`) avec module-level `let printed = false` qui survit React 19 Strict Mode + remount routes, NODE_ENV=test skip + SSR guard, accent sourced via `getComputedStyle(:root).getPropertyValue('--color-accent')`, single-shot `console.log('%c' + ascii, styleBlock)` au mount [EGG-01]
 
 #### Sections homepage
 
@@ -77,14 +74,12 @@ Démontrer le profil créatif hybride Tech/Design/BIM via une expérience web pe
 
 #### Animations avancées
 
-- [ ] Transitions de page via `app/template.tsx` avec motion `AnimatePresence mode="popLayout"` (popLayout > wait pour les transitions de filter sur la grille Projects)
 - [ ] ~~Scroll horizontal sur section Projects en desktop (GSAP pin)~~ → **DÉPLACÉ vers Out of Scope v1** : conflits avec AnimatePresence du filter + casse les gestures mobile. Reconsidérer en v2 si valeur ajoutée prouvée
-- [ ] Parallaxe douce sur images projet via GSAP ScrollTrigger
+- [ ] Parallaxe douce sur images projet via GSAP ScrollTrigger — *Phase 5*
 
 #### Easter eggs & personnalité
 
-- [ ] ASCII art bilingue dans la console navigateur au chargement (avec hint Konami code)
-- [ ] Page 404 personnalisée avec animation et lien retour humoristique bilingue
+- [ ] Page 404 personnalisée avec animation et lien retour humoristique bilingue — *Phase 6*
 
 #### SEO, accessibilité, robustesse
 
@@ -185,4 +180,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-05-27 after Phase 2 completion (Palette System) — signature feature live: 4 presets + custom picker + harmonic generator (4 modes) + live WCAG 7-pair badge + Konami unlock for Vaporwave + zero-FOUC FOUC script (1000 bytes) + sticky-footer Adjusted-for-AA chip + shadcn Sheet right-anchored + canvas-confetti dynamic-imported. 94/94 Vitest tests green. THEME-01..12 all validated (5 manual browser checks tracked in 02-HUMAN-UAT.md).*
+*Last updated: 2026-05-27 after Phase 3 completion (Layout & Animation Foundation) — persistent UI shell live: Inter via next/font/google + provider tree D-11 (NextIntl → Theme → Lenis → chrome) + LenisProvider single-RAF gsap.ticker bridge + ScrollTrigger.refresh debounced on palette swap + reduced-motion skip + mobile input pause + Navigation transparent→blur after 50px + segmented FR|EN LanguageSwitcher with motion layoutId + scroll preservation + imperative html.lang + Footer compact-row with lucide social icons (Code2/Briefcase/Mail substituted for brand-removed Github/Linkedin) + 4-gate constrained CustomCursor (native cursor stays visible — zero `cursor: none` in repo) + app/template.tsx AnimatePresence popLayout fade+Y / 300ms normal / 100ms reduced + bilingual console ASCII art with FIGlet wordmark + GitHub link + Konami hint. 137/137 Vitest tests green (94 Phase 2 + 43 net new). LAYOUT-01..06 + ANIM-01 + EGG-01 all validated automatically; 17 manual browser checks tracked in 03-HUMAN-UAT.md.*
