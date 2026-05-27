@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 03-02-root-layout-font-PLAN.md
-last_updated: "2026-05-27T07:17:39.151Z"
+stopped_at: Completed 03-04-footer-PLAN.md
+last_updated: "2026-05-27T07:28:57.964Z"
 last_activity: 2026-05-27
 progress:
   total_phases: 7
   completed_phases: 2
   total_plans: 18
-  completed_plans: 15
+  completed_plans: 16
   percent: 0
 ---
 
@@ -26,7 +26,7 @@ See: .planning/PROJECT.md (updated 2026-05-25)
 ## Current Position
 
 Phase: 3 (Layout & Animation Foundation) — EXECUTING
-Plan: 4 of 6
+Plan: 5 of 6
 Status: Ready to execute
 Last activity: 2026-05-27
 
@@ -66,6 +66,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 03-layout-animation-foundation P00 | 1m 32s | 1 tasks | 2 files |
 | Phase 03-layout-animation-foundation P01 | 4m 15s | 2 tasks | 2 files |
 | Phase 03-layout-animation-foundation P02 | 5m 7s | 3 tasks | 7 files |
+| Phase 03-layout-animation-foundation P04 | 7m 0s | 2 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -121,6 +122,8 @@ Recent decisions affecting current work:
 - [Phase 03-layout-animation-foundation]: Plan 03-02 used stub-first wave decoupling: 4 'return null' stub components (Navigation, Footer, CustomCursor, ConsoleArt) shipped in components/layout/ during Wave 1's layout edit so Wave 2/3 plans Edit only the component bodies, never touch app/[locale]/layout.tsx. Eliminates wave merge conflicts on the shared layout file.
 - [Phase 03-layout-animation-foundation]: Inter via next/font/google with subsets=['latin','latin-ext'], variable='--font-sans', display='swap', preload=true, no explicit weight array (variable font ships all weights 100-900 in single woff2 per unicode-range). Tailwind v4 @theme inline wires --font-sans: var(--font-sans, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif) so the font-sans utility resolves to Inter at runtime with graceful fallback if Inter fails to load. Build emits 7 woff2 subsets in .next/static/media/.
 - [Phase 03-layout-animation-foundation]: D-11 Phase 3 provider tree assembled in app/[locale]/layout.tsx as Server Component (no 'use client'): NextIntlClientProvider > ThemeProvider > LenisProvider > [ConsoleArt + Navigation + <main>{children}</main> + Footer year={server-rendered new Date().getFullYear()} + CustomCursor + PaletteFab]. PaletteFab stays LAST child inside LenisProvider (unchanged from Phase 2, just relocated one level deeper). <main> landmark owned by layout — page.tsx renders only <section> tree as fragment.
+- [Phase 03-layout-animation-foundation]: lucide-react@^1.16.0 ships without Github/Linkedin brand icons (removed in v1.0 upstream release). Footer.tsx substitutes Code2 (for GitHub link) + Briefcase (for LinkedIn link) + Mail. Accessible names preserved via tSocial('github'/'linkedin'). Pattern to watch: any future Phase 3+ component that imports lucide brand icons must substitute or pin a downgraded version.
+- [Phase 03-layout-animation-foundation]: Footer mailto: anchor omits target=_blank/rel by design — mailto: hands off to the OS mail client; target=_blank causes a blank-window flash in Chrome. aria-label='Email' provides accessible name. Pattern: external https → full target+rel security; mailto: → aria-label only.
 
 ### Pending Todos
 
@@ -135,6 +138,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-05-27T07:17:39.147Z
-Stopped at: Completed 03-02-root-layout-font-PLAN.md
+Last session: 2026-05-27T07:28:57.958Z
+Stopped at: Completed 03-04-footer-PLAN.md
 Resume file: None
