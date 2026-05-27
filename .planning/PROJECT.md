@@ -25,29 +25,30 @@ Démontrer le profil créatif hybride Tech/Design/BIM via une expérience web pe
 - [x] Repo Git initialisé avec `.gitignore` complet (Next/Node/Vercel exclusions) [ARCH-09]
 - [x] `lib/palettes.ts` avec 5 palettes typées (terra/nordic/bauhaus/ocean/vaporwave) anticipé en Phase 1 pour ground Phase 2
 
+**Validated in Phase 2: Palette System (2026-05-27)** — 7 plans, 94/94 Vitest tests green, all 12 THEME REQs satisfied, automated verification 5/5 ROADMAP success criteria; 5 manual browser-only checks tracked in `02-HUMAN-UAT.md`.
+
+- [x] `culori` installé pour manipulation couleurs OKLCh et calculs WCAG, plus `canvas-confetti` (dynamic-imported uniquement sur Konami) et `motion` (déjà installé en W0) [THEME-01..12]
+- [x] `lib/colors.ts` complet : `wcagContrast`, `adjustForAA` (binary search OKLCh L), `validateFullMatrix` (7 paires), `generateHarmonic` (4 modes via rotation hue OKLCh), `pickTextOnAccent`, `deriveDefaultTokens` (D-10), `applyMatrixAdjust`, `oklchToHex`, `CRITICAL_PAIRS` — 29 tests green [THEME-02, THEME-03]
+- [x] `ThemeProvider` (client, 368 LOC) avec useReducer + Context + CSS-var writer (ne touche QUE les 6 `--color-*`, jamais les alias shadcn) + persistance localStorage + intégration Konami via `useKonamiCode` + `vaporwaveUnlockNonce` counter — 16 tests green [THEME-04]
+- [x] `PaletteFouCScript` Server Component (1000 bytes minifié, sous le budget 1024) avec `<Script strategy="beforeInteractive">` et PALETTES inlined au build (Vaporwave exclu per Pitfall A) — élimine FOUC sur cold load [THEME-05]
+- [x] **Aliasing shadcn** (déjà fait en Phase 1, D-10..D-13) reste l'ancrage : ThemeProvider mute `--color-*` → chain `var()` propage automatiquement à `--primary`, `--background`, etc. — verifié par grep zéro mutation d'alias shadcn
+- [x] Persistance localStorage : `palette-v1` (D-01 discriminated `{kind:'preset',id} | {kind:'custom',tokens,source}`) + `palette-secrets-v1` (D-02 silent fallback) — 12 tests green
+- [x] Hook `usePalette()` exposant `{ palette, paletteId, isCustom, isVaporwaveUnlocked, wasAdjustedForAA, setPreset, setCustomColor, setHarmonic, unlockVaporwave }`
+- [x] `PalettePresets` : 4 cartes pré-unlock, 5 post-unlock via `PALETTES.filter(p => p.id !== 'vaporwave' || isVaporwaveUnlocked)` (D-15), animation motion sur sélection, i18n via `useTranslations('palette')` — 6 tests green [THEME-06]
+- [x] `CustomColorPicker` : 3 inputs natifs `<input type="color">` (bg, accent, secondary) avec conversion hex → OKLCh via culori à la frontière (D-09), `setCustomColor` déclenche derivation déterministe surface/text/textMuted (D-10) — 3 tests green [THEME-07]
+- [x] `HarmonicGenerator` : source color picker + 4 modes (complementary/triadic/analogous/split-complementary) + inline 6-swatch preview avec "Aa" overlay (D-12) + Apply commits — 4 tests green [THEME-08]
+- [x] `WCAGBadge` : ratio worst-pair (numérique 2 décimales) + statut AA/AAA/Fail avec icône Lucide verte/dorée/rouge + chip "Adjusted for AA" (D-06, D-11) gated sur `wasAdjustedForAA` flag — 5 tests green [THEME-09]
+- [x] `PaletteSwitcher` : shadcn Sheet droite (D-04, side='right') + 3 onglets `defaultValue="presets"` (D-07) + sticky footer WCAGBadge visible sur tous les onglets — focus trap + Esc + Tab cycle via Radix (à valider manuellement) [THEME-10]
+- [x] `PaletteFab` bottom-right (Lucide palette icon, motion hover scale + rotate 200ms, rotation 180deg + crossfade vers X à l'ouverture, prefers-reduced-motion gate opacity-only) avec aria-label localisé FR/EN, monté en sibling de `{children}` dans le layout [THEME-11]
+- [x] `useKonamiCode` hook (sequence ArrowUp×2 ArrowDown×2 ArrowLeft ArrowRight ArrowLeft ArrowRight KeyB KeyA via `e.code`, filtre INPUT/TEXTAREA/SELECT/contentEditable per D-16) intégré dans ThemeProvider, débloque Vaporwave, déclenche `canvas-confetti` (dynamic-import, particules colorées via Vaporwave.accent + secondary) avec prefers-reduced-motion gate, Sheet auto-opens sur Presets tab (D-14) — 11 tests green [THEME-12]
+- [x] **Vaporwave WCAG pré-validation** : `scripts/validate-palettes.ts` (THEME-01 gate) confirme Vaporwave passe les 7 paires sans ajustement (worst pair textMuted/surface = 7.68). Bauhaus.secondary auto-ajustée 0.7→0.6 L au build pour passer le seuil 3.0 UI [resolves STATE.md blocker]
+- [x] **Pitfall E mitigated** : règle scope-exclude dans `app/globals.css` pour `[data-slot='sheet-overlay'|'sheet-content'|'dialog-overlay'|'dialog-content'|'popover-content']` — la transition globale 400ms color/bg ne fight plus l'animation Sheet
+
 ### Active
 
 #### Architecture & fondations
 
 - [ ] Dépendances animation installées : `gsap` + `@gsap/react` + `lenis` (avec wrapper `lenis/react` inclus) + `motion` (anciennement `framer-motion`, imports via `motion/react`) — *Phase 3*
-- [ ] `culori` installé pour manipulation couleurs OKLCh et calculs WCAG — *Phase 2*
-
-#### Système de palettes (feature signature)
-
-- [ ] `lib/palettes.ts` avec 5 palettes prédéfinies typées (terra, nordic, bauhaus, ocean, vaporwave secrète)
-- [ ] `lib/colors.ts` avec helpers culori : `wcagContrast()`, `generateHarmonic(mode, source)` (~30 LOC custom car culori ne ship pas de générateur harmonique, rotation hue en OKLCh : complementary +180°, triadic +120°/+240°, analogous ±30°, split-complementary +150°/+210°), `adjustForAA(text, bg)`, **validateFullMatrix(palette)** vérifiant les 7 paires : text/bg, text/surface, textMuted/bg, textMuted/surface, accent/bg, accent/surface, secondary/bg
-- [ ] `ThemeProvider` client component avec Context, état palette, application des CSS variables sur `:root`
-- [ ] **Script bloquant FOUC** injecté dans `<head>` via `next/script` (`strategy="beforeInteractive"`) qui lit localStorage et applique les CSS vars sur `:root` AVANT hydratation — évite le flash de couleurs au premier paint
-- [ ] **Aliasing shadcn** : remplacer `--primary`, `--background`, `--foreground`, `--accent`, `--muted`, `--secondary` dans `globals.css` par des références `var(--color-*)` vers les tokens du palette system (évite que les composants shadcn ignorent le palette switcher)
-- [ ] Persistance localStorage dans ThemeProvider avec sync au mount (gestion hydration mismatch)
-- [ ] Hook `usePalette()` exposant : palette, setPalette, setPreset, setCustomColor, setHarmonic, isCustom
-- [ ] `PalettePresets` : 4 mini-aperçus carrés cliquables (animation Framer Motion sur sélection)
-- [ ] `CustomColorPicker` : 3 inputs HSL (bg, accent, secondary) avec preview live
-- [ ] `HarmonicGenerator` : color picker source + sélecteur de mode (4 options) + bouton Generate
-- [ ] `WCAGBadge` : ratio temps réel + statut AA/AAA avec icône colorée
-- [ ] `PaletteSwitcher` principal : panneau coulissant droite avec onglets Presets / Custom / Generate
-- [ ] FAB bottom-right ouvrant le PaletteSwitcher (icône palette animée)
-- [ ] Konami code dans ThemeProvider débloquant la palette secrète Vaporwave (animation confetti)
 
 #### Layout & composants core
 
@@ -184,4 +185,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-05-26 after Phase 1 completion (Foundations) — Next 16 + Tailwind v4 + shadcn aliasing + next-intl `/fr` `/en` + MDX loader pipeline all green, ARCH-01..09 validated*
+*Last updated: 2026-05-27 after Phase 2 completion (Palette System) — signature feature live: 4 presets + custom picker + harmonic generator (4 modes) + live WCAG 7-pair badge + Konami unlock for Vaporwave + zero-FOUC FOUC script (1000 bytes) + sticky-footer Adjusted-for-AA chip + shadcn Sheet right-anchored + canvas-confetti dynamic-imported. 94/94 Vitest tests green. THEME-01..12 all validated (5 manual browser checks tracked in 02-HUMAN-UAT.md).*
