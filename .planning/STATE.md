@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Phase 4 context gathered (auto mode)
-last_updated: "2026-05-27T13:20:24.642Z"
+stopped_at: Completed 04-00-assets-and-stubs-PLAN.md
+last_updated: "2026-05-27T18:46:20.849Z"
 last_activity: 2026-05-27
 progress:
   total_phases: 7
   completed_phases: 3
-  total_plans: 18
-  completed_plans: 18
+  total_plans: 24
+  completed_plans: 19
   percent: 0
 ---
 
@@ -21,12 +21,12 @@ progress:
 See: .planning/PROJECT.md (updated 2026-05-25)
 
 **Core value:** Demontrer le profil creatif hybride Tech/Design/BIM via une experience web personnalisable qui prouve la maitrise technique, le sens du design et l'attention aux details.
-**Current focus:** Phase 3 — Layout & Animation Foundation
+**Current focus:** Phase 4 — Homepage Sections
 
 ## Current Position
 
-Phase: 4
-Plan: Not started
+Phase: 4 (Homepage Sections) — EXECUTING
+Plan: 2 of 6
 Status: Ready to execute
 Last activity: 2026-05-27
 
@@ -68,6 +68,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 03-layout-animation-foundation P02 | 5m 7s | 3 tasks | 7 files |
 | Phase 03-layout-animation-foundation P04 | 7m 0s | 2 tasks | 2 files |
 | Phase 03-layout-animation-foundation P03 | 8m 22s | 4 tasks | 8 files |
+| Phase 04-homepage-sections P00 | 8m | 7 tasks | 33 files |
 
 ## Accumulated Context
 
@@ -126,6 +127,9 @@ Recent decisions affecting current work:
 - [Phase 03-layout-animation-foundation]: lucide-react@^1.16.0 ships without Github/Linkedin brand icons (removed in v1.0 upstream release). Footer.tsx substitutes Code2 (for GitHub link) + Briefcase (for LinkedIn link) + Mail. Accessible names preserved via tSocial('github'/'linkedin'). Pattern to watch: any future Phase 3+ component that imports lucide brand icons must substitute or pin a downgraded version.
 - [Phase 03-layout-animation-foundation]: Footer mailto: anchor omits target=_blank/rel by design — mailto: hands off to the OS mail client; target=_blank causes a blank-window flash in Chrome. aria-label='Email' provides accessible name. Pattern: external https → full target+rel security; mailto: → aria-label only.
 - [Phase 03-layout-animation-foundation]: Navigation LAYOUT-03 + LanguageSwitcher LAYOUT-05 + useActiveSection IntersectionObserver hook + i18n/navigation barrel: 4 TDD tasks (10 commits) shipped 9/9 tests green, build/lint clean. Mobile hamburger via shadcn Sheet side='left' with data-lenis-prevent on SheetContent root (D-04+D-16). LanguageSwitcher imports useRouter/usePathname from @/i18n/navigation (locale-aware, NOT next/navigation) — the structural disambiguation locked by test asserting router.replace({pathname,params}, {locale:target}) call shape. Motion layoutId='lang-indicator' shared-element indicator. Scroll preservation: lenis.actualScroll captured before navigation, lenis.scrollTo(savedY, {immediate:true}) on next rAF. nav.lang.* keys added to both messages files preserving 66-leaf-key parity. 3 deviations (all acceptance-grep literal compliance: jest-dom matcher swap, PaletteFab/cursor:none literals in doc comments).
+- [Phase 04-homepage-sections]: Wave 0 dependency-gate complete: 9 assets + 12 MDX stubs + 3 fixed --color-category-* tokens (palette-independent, D-13) + shadcn Badge with category-{tech,design,bim} variants + i18n parity at 72 paths (skills.groups restructured string -> {label,items[]}) + page.tsx async Server Component composing 5 sections + 8 RED TDD harnesses ready for Wave 1+2 to GREEN.
+- [Phase 04-homepage-sections]: Wave 0 build is intentionally RED — page.tsx imports 5 section components from components/sections/ that don't exist until Wave 1 (Hero/About/Skills/Contact) and Wave 2 (CategoryFilter/ProjectCard/ProjectGrid/ProjectsSection) ship them. This is the dependency-gate design: Wave 0 isolates all foundation work (CSS tokens, i18n keys, MDX stubs, Badge variants), Wave 1+2 then execute in parallel without file-conflict risk.
+- [Phase 04-homepage-sections]: RED TDD harness pattern: each of 8 test files uses dynamic 'await import(./ComponentName)' so vitest reports 'Failed to resolve import' at runtime (not parse error). Files parse cleanly under lint+vitest discover, but every test FAILS until Wave 1+2 ships the named-export component file. Confirmed via 'npm test components/sections/' showing 'Test Files 8 failed (8)'.
 
 ### Pending Todos
 
@@ -140,6 +144,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-05-27T13:20:24.638Z
-Stopped at: Phase 4 context gathered (auto mode)
-Resume file: .planning/phases/04-homepage-sections/04-CONTEXT.md
+Last session: 2026-05-27T18:46:20.845Z
+Stopped at: Completed 04-00-assets-and-stubs-PLAN.md
+Resume file: None

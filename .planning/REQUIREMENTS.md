@@ -45,13 +45,13 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Homepage Sections
 
-- [ ] **HOME-01**: Section `Hero` avec révélation de texte via GSAP SplitText (chars stagger), nom + role bilingue ("Tech × Design × BIM" / "Tech × Design × BIM"), visible au-dessus du fold, dans un `useGSAP()` hook avec scope et cleanup auto
-- [ ] **HOME-02**: Section `About` avec photo (next/image), bio bilingue (2-3 paragraphes), révélation au scroll via ScrollTrigger (fade + translate-y), respecte `prefers-reduced-motion`
-- [ ] **HOME-03**: `CategoryFilter` propose 4 boutons (`All` / `Tech` / `Design` / `BIM`) localisés, gère l'état actif via React state, met à jour la grille Projects via prop
-- [ ] **HOME-04**: `ProjectCard` affiche cover + title + year + category badge color-coded par domaine, avec hover motion (scale subtil + image reveal + couleur accent animée), lien vers la page détail `/{locale}/projects/{slug}`
-- [ ] **HOME-05**: Section `Projects` rend une grille filtrable de `ProjectCard` avec motion `AnimatePresence mode="popLayout"` pour les transitions de filter, layout shift fluide, et empty state si aucun projet ne match
-- [ ] **HOME-06**: Section `Skills` affiche des badges groupés par domaine (Tech/Design/BIM) avec stagger GSAP au scroll, badges color-coded par catégorie
-- [ ] **HOME-07**: Section `Contact` propose email avec copy-to-clipboard animé (motion feedback), liens GitHub + LinkedIn, **et 2 boutons de téléchargement du CV PDF** (FR + EN) pointant vers `/cv-fr.pdf` et `/cv-en.pdf`
+- [x] **HOME-01**: Section `Hero` avec révélation de texte via GSAP SplitText (chars stagger), nom + role bilingue ("Tech × Design × BIM" / "Tech × Design × BIM"), visible au-dessus du fold, dans un `useGSAP()` hook avec scope et cleanup auto
+- [x] **HOME-02**: Section `About` avec photo (next/image), bio bilingue (2-3 paragraphes), révélation au scroll via ScrollTrigger (fade + translate-y), respecte `prefers-reduced-motion`
+- [x] **HOME-03**: `CategoryFilter` propose 4 boutons (`All` / `Tech` / `Design` / `BIM`) localisés, gère l'état actif via React state, met à jour la grille Projects via prop
+- [x] **HOME-04**: `ProjectCard` affiche cover + title + year + category badge color-coded par domaine, avec hover motion (scale subtil + image reveal + couleur accent animée), lien vers la page détail `/{locale}/projects/{slug}`
+- [x] **HOME-05**: Section `Projects` rend une grille filtrable de `ProjectCard` avec motion `AnimatePresence mode="popLayout"` pour les transitions de filter, layout shift fluide, et empty state si aucun projet ne match
+- [x] **HOME-06**: Section `Skills` affiche des badges groupés par domaine (Tech/Design/BIM) avec stagger GSAP au scroll, badges color-coded par catégorie
+- [x] **HOME-07**: Section `Contact` propose email avec copy-to-clipboard animé (motion feedback), liens GitHub + LinkedIn, **et 2 boutons de téléchargement du CV PDF** (FR + EN) pointant vers `/cv-fr.pdf` et `/cv-en.pdf`
 
 ### Project Content (MDX)
 
@@ -164,13 +164,13 @@ Populated by `gsd-roadmapper` on 2026-05-25.
 | LAYOUT-04 | Phase 3 | Complete |
 | LAYOUT-05 | Phase 3 | Complete |
 | LAYOUT-06 | Phase 3 | Pending |
-| HOME-01 | Phase 4 | Pending |
-| HOME-02 | Phase 4 | Pending |
-| HOME-03 | Phase 4 | Pending |
-| HOME-04 | Phase 4 | Pending |
-| HOME-05 | Phase 4 | Pending |
-| HOME-06 | Phase 4 | Pending |
-| HOME-07 | Phase 4 | Pending |
+| HOME-01 | Phase 4 | Complete |
+| HOME-02 | Phase 4 | Complete |
+| HOME-03 | Phase 4 | Complete |
+| HOME-04 | Phase 4 | Complete |
+| HOME-05 | Phase 4 | Complete |
+| HOME-06 | Phase 4 | Complete |
+| HOME-07 | Phase 4 | Complete |
 | CONTENT-01 | Phase 5 | Pending |
 | CONTENT-02 | Phase 5 | Pending |
 | CONTENT-03 | Phase 5 | Pending |

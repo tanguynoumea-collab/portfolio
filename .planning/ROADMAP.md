@@ -17,7 +17,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 1: Foundations** - Scaffold Next 16, Tailwind v4 with OKLCh CSS variables, shadcn aliased to palette tokens, next-intl `/fr` `/en` routing, MDX loader scaffold (completed 2026-05-26)
 - [ ] **Phase 2: Palette System** - Live runtime palette switcher with presets, custom picker, harmonic generator, WCAG matrix validation, FOUC-safe persistence, and Konami easter egg
 - [x] **Phase 3: Layout & Animation Foundation** - Root layout, LenisProvider with single-RAF GSAP integration, page transitions, Navigation, Footer, LanguageSwitcher, CustomCursor, console ASCII art (completed 2026-05-27)
-- [ ] **Phase 4: Homepage Sections** - Hero with SplitText, About, filterable Projects grid, Skills, Contact with CV PDF downloads
+- [ ] **Phase 4: Homepage Sections** - Hero with SplitText, About, filterable Projects grid, Skills, and Contact with CV PDF downloads
 - [ ] **Phase 5: Project Content Pipeline** - 12 MDX files (6 projects x 2 locales), discriminated Project type, project detail pages with galleries and parallax
 - [ ] **Phase 6: SEO, Accessibility & Polish** - Metadata, sitemap, robots, loading/error states, a11y audit, reduced-motion, palette stress test, Lighthouse 90+, custom 404
 - [ ] **Phase 7: Deployment** - Git + GitHub repo, Vercel auto-deploy, Analytics + Speed Insights
@@ -91,7 +91,13 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. ProjectCards show domain-coded badges and a hover micro-interaction (scale + image reveal + accent color animation), linking to `/{locale}/projects/{slug}`
   4. The About and Skills sections reveal at scroll via ScrollTrigger with respect for `prefers-reduced-motion`
   5. The Contact section copies email to clipboard with motion feedback and offers two download buttons for `/cv-fr.pdf` and `/cv-en.pdf`
-**Plans**: TBD
+**Plans**: 6 plans (3 waves)
+- [x] 04-00-assets-and-stubs-PLAN.md — Wave 0: git-mv CV PDF + placeholder photo + 6 stub MDX projects (12 files) + 6 placeholder covers + lib/constants.ts + shadcn badge install with 3 category-* CVA variants + 3 fixed --color-category-* tokens in globals.css + new i18n keys (about.paragraphs, skills.groups.*.items, hero.scrollCue) + i18n FR/EN parity gate script + page.tsx wired (server-loads getProjects + composes 5 sections) + 8 TDD test harnesses [HOME-01..07 dep gate]
+- [ ] 04-01-hero-PLAN.md — Wave 1 (parallel): components/sections/Hero.tsx + Hero.test.tsx — useGSAP scope, SplitText char stagger (name + role + tagline + CTA + cue cascade), CTA scroll via useLenis with scrollIntoView fallback, ChevronDown bouncing scroll cue, gsap.matchMedia reduced-motion gate, ScrollTrigger.refresh in onSplit (Pitfall 4-D), i18n dependencies (Pitfall 4-A) [HOME-01]
+- [ ] 04-02-about-PLAN.md — Wave 1 (parallel): components/sections/About.tsx + About.test.tsx — 2-col desktop / stacked mobile, next/image 400x500 lazy+blur, 2 paragraphs from about.paragraphs.{1,2}, useGSAP ScrollTrigger (start='top 75%', toggleActions='play none none reverse'), photo slide-from-x:-40 + bio paragraph stagger y:30, gsap.matchMedia reduced-motion gate [HOME-02]
+- [ ] 04-03-projects-PLAN.md — Wave 2: components/sections/CategoryFilter.tsx + ProjectCard.tsx + ProjectGrid.tsx + ProjectsSection.tsx (+ 4 test files) — motion layoutId='filter-indicator' filter + shadcn Card + dual-overlay badges + locale-aware Link from @/i18n/navigation + motion whileHover with reducedMotion===true gate + AnimatePresence mode='popLayout' + outer motion.div layout + empty state + useState/useMemo lifted state [HOME-03, HOME-04, HOME-05]
+- [ ] 04-04-skills-PLAN.md — Wave 1 (parallel): components/sections/Skills.tsx + Skills.test.tsx — 3 group sub-headings from skills.groups.*.label + flex-wrap shadcn Badge with category-{tech,design,bim} variants + useGSAP ScrollTrigger timeline with intra-group stagger 0.05s + group cascade 0.15s + gsap.matchMedia reduced-motion gate + t.raw for array reads [HOME-06]
+- [ ] 04-05-contact-PLAN.md — Wave 1 (parallel): components/sections/Contact.tsx + Contact.test.tsx — email button + navigator.clipboard.writeText silent try/catch + motion AnimatePresence Copy<->Check icon swap + 1.5s revert + 3 social links (Code2/Briefcase/Mail) + 2 CV download buttons (Button asChild + a href download FR primary / EN outline) [HOME-07]
 **UI hint**: yes
 
 ### Phase 5: Project Content Pipeline
@@ -140,7 +146,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7
 | 1. Foundations | 5/5 | Complete    | 2026-05-26 |
 | 2. Palette System | 0/7 | Not started | - |
 | 3. Layout & Animation Foundation | 0/6 | Complete    | 2026-05-27 |
-| 4. Homepage Sections | 0/TBD | Not started | - |
+| 4. Homepage Sections | 0/6 | Not started | - |
 | 5. Project Content Pipeline | 0/TBD | Not started | - |
 | 6. SEO, Accessibility & Polish | 0/TBD | Not started | - |
 | 7. Deployment | 0/TBD | Not started | - |
