@@ -14,12 +14,17 @@
     "name": "Tanguy",
     "role": "Tech × Design × BIM",
     "tagline": "Profil hybride au croisement du développement, du design et de l'architecture.",
-    "cta": "Découvrir mon travail"
+    "cta": "Découvrir mon travail",
+    "scrollCue": "Faire défiler vers les projets"
   },
   "about": {
     "title": "À propos de moi",
     "intro": "À compléter en Phase 4.",
-    "details": "À compléter en Phase 4."
+    "details": "À compléter en Phase 4.",
+    "paragraphs": {
+      "1": "Je suis Tanguy, profil hybride au croisement du développement web, du design graphique et de l'architecture BIM. Mon parcours mêle des projets de gestion de textures procédurales pour la 3D temps réel, des refontes d'identité visuelle complètes et des études conceptuelles d'architecture résidentielle écologique.",
+      "2": "Ce portfolio est lui-même une démonstration : système de palettes interactif WCAG-compliant, animations GSAP soignées, contenu MDX bilingue. Chaque détail vise à prouver la maîtrise technique, le sens du design et l'attention portée à l'utilisateur. Je suis disponible pour discuter de projets qui croisent ces trois disciplines."
+    }
   },
   "projects": {
     "title": "Projets",
@@ -35,9 +40,18 @@
   "skills": {
     "title": "Compétences",
     "groups": {
-      "tech": "Développement",
-      "design": "Design",
-      "bim": "Architecture & BIM"
+      "tech": {
+        "label": "Développement",
+        "items": ["TypeScript", "React", "Next.js", "Node.js", "Tailwind", "GSAP", "Three.js"]
+      },
+      "design": {
+        "label": "Design",
+        "items": ["Figma", "Photoshop", "Illustrator", "InDesign", "Design System", "Branding", "Typography"]
+      },
+      "bim": {
+        "label": "Architecture & BIM",
+        "items": ["Revit", "ArchiCAD", "Rhino", "Grasshopper", "AutoCAD", "Twinmotion", "Lumion"]
+      }
     }
   },
   "contact": {

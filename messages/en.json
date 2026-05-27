@@ -14,12 +14,17 @@
     "name": "Tanguy",
     "role": "Tech × Design × BIM",
     "tagline": "Hybrid profile at the crossroads of development, design, and architecture.",
-    "cta": "See my work"
+    "cta": "See my work",
+    "scrollCue": "Scroll to projects"
   },
   "about": {
     "title": "About me",
     "intro": "To be completed in Phase 4.",
-    "details": "To be completed in Phase 4."
+    "details": "To be completed in Phase 4.",
+    "paragraphs": {
+      "1": "I'm Tanguy, a hybrid profile at the crossroads of web development, graphic design, and BIM architecture. My work spans procedural texture management tools for real-time 3D, full visual identity redesigns, and conceptual studies of ecological residential architecture.",
+      "2": "This portfolio is itself a demonstration: an interactive WCAG-compliant palette system, polished GSAP animations, bilingual MDX content. Every detail aims to prove technical mastery, design sensibility, and attention to user experience. I'm available to discuss projects that bridge these three disciplines."
+    }
   },
   "projects": {
     "title": "Projects",
@@ -35,9 +40,18 @@
   "skills": {
     "title": "Skills",
     "groups": {
-      "tech": "Development",
-      "design": "Design",
-      "bim": "Architecture & BIM"
+      "tech": {
+        "label": "Development",
+        "items": ["TypeScript", "React", "Next.js", "Node.js", "Tailwind", "GSAP", "Three.js"]
+      },
+      "design": {
+        "label": "Design",
+        "items": ["Figma", "Photoshop", "Illustrator", "InDesign", "Design System", "Branding", "Typography"]
+      },
+      "bim": {
+        "label": "Architecture & BIM",
+        "items": ["Revit", "ArchiCAD", "Rhino", "Grasshopper", "AutoCAD", "Twinmotion", "Lumion"]
+      }
     }
   },
   "contact": {
