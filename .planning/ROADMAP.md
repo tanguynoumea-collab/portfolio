@@ -17,7 +17,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 1: Foundations** - Scaffold Next 16, Tailwind v4 with OKLCh CSS variables, shadcn aliased to palette tokens, next-intl `/fr` `/en` routing, MDX loader scaffold (completed 2026-05-26)
 - [ ] **Phase 2: Palette System** - Live runtime palette switcher with presets, custom picker, harmonic generator, WCAG matrix validation, FOUC-safe persistence, and Konami easter egg
 - [x] **Phase 3: Layout & Animation Foundation** - Root layout, LenisProvider with single-RAF GSAP integration, page transitions, Navigation, Footer, LanguageSwitcher, CustomCursor, console ASCII art (completed 2026-05-27)
-- [ ] **Phase 4: Homepage Sections** - Hero with SplitText, About, filterable Projects grid, Skills, and Contact with CV PDF downloads
+- [x] **Phase 4: Homepage Sections** - Hero with SplitText, About, filterable Projects grid, Skills, and Contact with CV PDF downloads (completed 2026-05-27)
 - [ ] **Phase 5: Project Content Pipeline** - 12 MDX files (6 projects x 2 locales), discriminated Project type, project detail pages with galleries and parallax
 - [ ] **Phase 6: SEO, Accessibility & Polish** - Metadata, sitemap, robots, loading/error states, a11y audit, reduced-motion, palette stress test, Lighthouse 90+, custom 404
 - [ ] **Phase 7: Deployment** - Git + GitHub repo, Vercel auto-deploy, Analytics + Speed Insights
@@ -146,7 +146,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7
 | 1. Foundations | 5/5 | Complete    | 2026-05-26 |
 | 2. Palette System | 0/7 | Not started | - |
 | 3. Layout & Animation Foundation | 0/6 | Complete    | 2026-05-27 |
-| 4. Homepage Sections | 0/6 | Not started | - |
+| 4. Homepage Sections | 0/6 | Complete    | 2026-05-27 |
 | 5. Project Content Pipeline | 0/TBD | Not started | - |
 | 6. SEO, Accessibility & Polish | 0/TBD | Not started | - |
 | 7. Deployment | 0/TBD | Not started | - |
