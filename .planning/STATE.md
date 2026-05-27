@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Phase 3 context gathered (auto mode)
-last_updated: "2026-05-27T06:09:45.603Z"
+stopped_at: Completed 03-00-install-deps-PLAN.md
+last_updated: "2026-05-27T07:00:04.262Z"
 last_activity: 2026-05-27
 progress:
   total_phases: 7
   completed_phases: 2
-  total_plans: 12
-  completed_plans: 12
+  total_plans: 18
+  completed_plans: 13
   percent: 0
 ---
 
@@ -21,12 +21,12 @@ progress:
 See: .planning/PROJECT.md (updated 2026-05-25)
 
 **Core value:** Demontrer le profil creatif hybride Tech/Design/BIM via une experience web personnalisable qui prouve la maitrise technique, le sens du design et l'attention aux details.
-**Current focus:** Phase 02 — palette-system
+**Current focus:** Phase 3 — Layout & Animation Foundation
 
 ## Current Position
 
-Phase: 3
-Plan: Not started
+Phase: 3 (Layout & Animation Foundation) — EXECUTING
+Plan: 2 of 6
 Status: Ready to execute
 Last activity: 2026-05-27
 
@@ -63,6 +63,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 02-palette-system P03 | 8m 31s | 4 tasks | 7 files |
 | Phase 02-palette-system P04 | 4m 54s | 3 tasks | 6 files |
 | Phase 02-palette-system P06 | 7m 6s | 3 tasks | 5 files |
+| Phase 03-layout-animation-foundation P00 | 1m 32s | 1 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -113,6 +114,7 @@ Recent decisions affecting current work:
 - [Phase 02-palette-system]: canvas-confetti dynamic-imported inside fireConfetti() (ThemeProvider) — zero top-level imports verified by grep. ~4KB gzipped chunk loaded only when Konami fires (1% of visitors). Colors sourced from oklchToHex(Vaporwave.accent + secondary) via Wave 1 helper. Silent try/catch (D-02 spirit) — easter egg should never crash.
 - [Phase 02-palette-system]: PaletteFab D-14 auto-open uses React 19 derive-during-render pattern (useState prev-nonce + comparison in render body) instead of plan-specified useEffect — React 19's react-hooks/set-state-in-effect lint rule blocks the naive setState-in-effect approach. Same idiom Wave 1 used for usePrefersReducedMotion (useSyncExternalStore) and CustomColorPicker (useMemo). useEffectEvent (React 19.2 stable) was tried but the lint rule sees through it; the derive-in-render approach is the React-blessed alternative per react.dev/reference/react/useState#storing-information-from-previous-renders.
 - [Phase 02-palette-system]: Phase 2 COMPLETE — all 12 THEME requirements (THEME-01..THEME-12) delivered across plans 00-06. THEME-11 (FAB visible bottom-right + localized aria-label + Lucide palette icon + motion hover/rotate) + THEME-12 (Konami unlocks Vaporwave + confetti via dynamic import + Sheet auto-opens on Presets tab with Vaporwave as 5th preset card). 94/94 Vitest tests green; npm run build exit 0; lint clean; all 5 palettes pass 7-pair WCAG matrix. usePalette() context exposes the full API surface for Phase 3+ consumers.
+- [Phase 03-layout-animation-foundation]: Caret-prefix locked at ^3.13/^2.1.2/^1.3 per D-01; npm resolved to gsap@3.15.0 + @gsap/react@2.1.2 + lenis@1.3.23. Wave 0 install gate cleared; motion@^12.40 preserved unchanged from Phase 2 W0; no @studio-freight/* legacy packages.
 
 ### Pending Todos
 
@@ -127,6 +129,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-05-27T06:09:45.598Z
-Stopped at: Phase 3 context gathered (auto mode)
-Resume file: .planning/phases/03-layout-animation-foundation/03-CONTEXT.md
+Last session: 2026-05-27T07:00:04.258Z
+Stopped at: Completed 03-00-install-deps-PLAN.md
+Resume file: None
