@@ -1,53 +1,61 @@
-import { useTranslations } from 'next-intl';
-
 /*
- * app/[locale]/page.tsx — Phase 3 LAYOUT-01.
+ * app/[locale]/page.tsx — Phase 4 HOME-01..HOME-07 composition root.
  *
- * Ships 5 placeholder <section id="…"> shells with the canonical IDs the
- * Plan 03-03 Navigation IntersectionObserver will observe: home, about,
- * projects, skills, contact. The IDs match the `nav.*` i18n keys 1:1.
+ * Server Component (no client directive). Wraps the 5 homepage sections:
+ *   - Hero       (HOME-01)
+ *   - About      (HOME-02)
+ *   - Projects   (HOME-03+04+05 — CategoryFilter + ProjectGrid + ProjectsSection)
+ *   - Skills     (HOME-06)
+ *   - Contact    (HOME-07)
  *
- * Each section is intentionally minimal:
- *   - id="<canonical>" — the IntersectionObserver target (D-15).
- *   - min-h-screen — gives each section enough vertical extent that the
- *     observer fires distinct enter/leave events as the user scrolls.
- *   - One <h1>/<h2> with the localized nav label so the section announces
- *     itself to screen readers and to anyone smoke-testing the build.
+ * Server-side data loading per 04-RESEARCH.md anti-pattern guard:
+ * lib/projects.ts uses node:fs and CANNOT be imported by Client Components.
+ * We resolve projects here (Server) and pass as a serialized prop to
+ * <ProjectsSection> (Client). The discriminated Project union serializes
+ * cleanly via React's RSC boundary.
  *
- * Phase 4 (HOME-01..HOME-06) fills the section bodies with real content:
- *   - home → Hero (HOME-01)
- *   - about → About (HOME-02)
- *   - projects → ProjectGrid + filters (HOME-03..HOME-05)
- *   - skills → SkillsGrid (HOME-06)
- *   - contact → Contact (HOME-07)
+ * Section IDs (home/about/projects/skills/contact) are PRESERVED from
+ * Phase 3 so Navigation's useActiveSection IntersectionObserver continues
+ * to work without modification.
  *
- * The outer main element wrapper now lives in app/[locale]/layout.tsx per
- * Plan 03-02 Task 2 (D-11 provider tree). This page renders only its
- * section tree as a fragment — the layout owns the landmark.
+ * The outer <main> wrapper is owned by app/[locale]/layout.tsx (Phase 3
+ * D-11 provider tree). This page returns a fragment of <section> children.
+ *
+ * NOTE: This file imports 5 components that Wave 1+2 of Phase 4 ship.
+ * Build will be RED at the end of Wave 0 until Wave 1's first plan
+ * (Hero, About, Skills, Contact) and Wave 2 (ProjectsSection family)
+ * ship the named exports. This is intentional per the Wave 0 dependency-gate
+ * design.
  */
-export default function HomePage() {
-  const tNav = useTranslations('nav');
+import { getProjects, type Locale } from '@/lib/projects';
+import { Hero } from '@/components/sections/Hero';
+import { About } from '@/components/sections/About';
+import { ProjectsSection } from '@/components/sections/ProjectsSection';
+import { Skills } from '@/components/sections/Skills';
+import { Contact } from '@/components/sections/Contact';
+
+type Params = Promise<{ locale: string }>;
+
+export default async function HomePage({ params }: { params: Params }) {
+  const { locale } = await params;
+  const projects = await getProjects(locale as Locale);
+
   return (
     <>
       <section id="home" className="flex min-h-screen items-center justify-center">
-        <div className="space-y-2 text-center">
-          <h1 className="text-4xl font-semibold">{tNav('home')}</h1>
-          <p className="text-muted-foreground text-sm">
-            Phase 4 — Hero placeholder
-          </p>
-        </div>
+        <Hero />
       </section>
-      <section id="about" className="flex min-h-screen items-center justify-center">
-        <h2 className="text-3xl font-semibold">{tNav('about')}</h2>
+      <section id="about" className="flex min-h-screen items-center justify-center px-4">
+        <About />
       </section>
-      <section id="projects" className="flex min-h-screen items-center justify-center">
-        <h2 className="text-3xl font-semibold">{tNav('projects')}</h2>
+      <section id="projects" className="flex min-h-screen items-center justify-center px-4 py-16">
+        <ProjectsSection projects={projects} />
       </section>
-      <section id="skills" className="flex min-h-screen items-center justify-center">
-        <h2 className="text-3xl font-semibold">{tNav('skills')}</h2>
+      <section id="skills" className="flex min-h-screen items-center justify-center px-4 py-16">
+        <Skills />
       </section>
-      <section id="contact" className="flex min-h-screen items-center justify-center">
-        <h2 className="text-3xl font-semibold">{tNav('contact')}</h2>
+      <section id="contact" className="flex min-h-screen items-center justify-center px-4 py-16">
+        <Contact />
       </section>
     </>
   );
