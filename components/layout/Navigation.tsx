@@ -13,14 +13,15 @@
  *     LenisProvider bridge). Under reduced-motion, Lenis is skipped entirely
  *     and the listener attaches to the native scroll directly.
  *   - D-14: logo left, section links centered (md+), LanguageSwitcher always
- *     on the right. PaletteFab is NOT here — it stays a sibling FAB so it
- *     can float above all chrome (THEME-11 contract).
+ *     on the right. The palette FAB is NOT here — it stays a sibling
+ *     floating button so it can float above all chrome (THEME-11 contract).
  *   - D-15: section links are plain <a href="#id"> — Lenis `anchors: true`
  *     (Plan 01 D-03) handles the smooth-scroll. No JS click handler, no
  *     preventDefault. Active link gets aria-current="true" via useActiveSection.
  *   - D-16: below md, section links collapse into a Sheet side="left" (we
- *     pick left so it does not collide with PaletteFab's right-anchored Sheet
- *     from Phase 2). SheetContent root carries data-lenis-prevent per D-04
+ *     pick left so it does not collide with the palette switcher's
+ *     right-anchored Sheet from Phase 2). SheetContent root carries
+ *     data-lenis-prevent per D-04
  *     so Lenis virtualization skips the menu's internal scroll.
  *   - D-17: wordmark "Tanguy" in text-primary (= var(--color-accent) through
  *     the shadcn alias chain). Clicks navigate to /{locale} via next/link
@@ -138,8 +139,8 @@ export function Navigation() {
             </SheetTrigger>
             {/* D-04 + D-16: data-lenis-prevent on the SheetContent root so
                 Lenis virtualization skips the menu's internal scroll. side=
-                "left" so it does not collide with PaletteFab's right-anchored
-                Sheet (Phase 2 D-04). */}
+                "left" so it does not collide with the palette switcher's
+                right-anchored Sheet (Phase 2 D-04). */}
             <SheetContent side="left" data-lenis-prevent>
               <SheetHeader>
                 <SheetTitle>Tanguy</SheetTitle>
