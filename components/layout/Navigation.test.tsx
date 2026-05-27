@@ -64,7 +64,8 @@ describe('Navigation (LAYOUT-03)', () => {
         .filter((a) => a.getAttribute('href') === `#${id}`);
       expect(links.length).toBeGreaterThan(0);
     });
-    expect(screen.getByTestId('lang-switcher')).toBeInTheDocument();
+    // getByTestId throws if the element is not in the document.
+    expect(screen.getByTestId('lang-switcher')).toBeTruthy();
   });
 
   it('does NOT include a PaletteFab button', () => {
