@@ -69,6 +69,11 @@
   --destructive: oklch(0.6 0.22 25);
   --destructive-foreground: oklch(0.98 0.01 80);
 
+  /* Phase 4 D-13: fixed category tokens (palette-independent, follows D-12 --destructive precedent) */
+  --color-category-tech: oklch(0.55 0.15 240); /* cool blue */
+  --color-category-design: oklch(0.65 0.2 330); /* magenta/pink */
+  --color-category-bim: oklch(0.6 0.13 60); /* warm amber */
+
   /* D-13: borders/inputs via color-mix on text-muted at 30% */
   --border: color-mix(in oklch, var(--color-text-muted) 30%, transparent);
   --input: color-mix(in oklch, var(--color-text-muted) 30%, transparent);
@@ -133,6 +138,11 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
+
+  /* Phase 4 D-13: expose fixed category tokens to Tailwind utilities */
+  --color-category-tech: var(--color-category-tech);
+  --color-category-design: var(--color-category-design);
+  --color-category-bim: var(--color-category-bim);
 
   /* D-08 / D-10 (Phase 3 LAYOUT-01): wire the Tailwind `font-sans` utility
      to Inter via next/font's injected CSS variable on <html>. The
