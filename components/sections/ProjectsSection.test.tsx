@@ -1,31 +1,275 @@
 /**
- * ProjectsSection.test.tsx — RED harness for HOME-05 (lifted state).
+ * ProjectsSection.test.tsx — HOME-05 acceptance suite (lifted state).
  *
- * Wave 2 (04-03-projects-PLAN) creates ProjectsSection.tsx and makes these pass.
+ * Wave 0 shipped a RED harness with a trivial assertion. Wave 2
+ * (04-03-projects-PLAN.md Task 3) expands the suite to cover the lifted
+ * state contract:
+ *   1. Default active='all' → ProjectGrid receives ALL projects
+ *   2. Renders CategoryFilter with active prop
+ *   3. Renders ProjectGrid with filtered projects prop
+ *   4. Clicking CategoryFilter onChange callback (simulated via mock's
+ *      exposed handler) updates active state → ProjectGrid re-renders
+ *      with filtered subset
+ *   5. useMemo filter selector handles all category branches
+ *      (tech / design / bim / all)
+ *   6. Empty filter results (e.g., projects=[]) pass empty array to grid
+ *   7. h2 title from projects.title i18n
+ *
+ * Mock strategy:
+ *   - next-intl returns plain strings
+ *   - CategoryFilter stubbed as a div with data-active + a hidden button
+ *     that exposes onChange so tests can simulate filter changes
+ *   - ProjectGrid stubbed as a div with data-count + data-slugs (CSV) so
+ *     tests can assert WHICH projects were passed through the filter
  */
+
+import React from 'react';
 import { describe, it, expect, vi } from 'vitest';
-import { render } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import type { Project } from '@/lib/projects';
 
-vi.mock('next-intl', () => ({ useTranslations: () => (k: string) => k }));
-vi.mock('./CategoryFilter', () => ({
-  CategoryFilter: ({ active }: { active: string }) =>
-    ({ type: 'div', props: { 'data-active': active } }) as unknown as React.ReactElement,
-}));
-vi.mock('./ProjectGrid', () => ({
-  ProjectGrid: ({ projects }: { projects: Project[] }) =>
-    ({
-      type: 'div',
-      props: { 'data-count': String(projects.length) },
-    }) as unknown as React.ReactElement,
+vi.mock('next-intl', () => ({
+  useTranslations: () => (k: string) => {
+    const map: Record<string, string> = {
+      title: 'Projects',
+    };
+    return map[k] ?? k;
+  },
 }));
 
-describe('ProjectsSection (HOME-05) — RED until Wave 2 ships', () => {
-  it('default active filter is "all" and renders all projects', async () => {
+// CategoryFilter stub — exposes a button that fires onChange so tests can
+// simulate user interaction without coupling to the real CategoryFilter UI.
+vi.mock('./CategoryFilter', () => ({
+  CategoryFilter: ({
+    active,
+    onChange,
+  }: {
+    active: string;
+    onChange: (v: 'all' | 'tech' | 'design' | 'bim') => void;
+  }) =>
+    React.createElement(
+      'div',
+      { 'data-active': active } as Record<string, unknown>,
+      React.createElement(
+        'button',
+        {
+          'data-test': 'set-tech',
+          onClick: () => onChange('tech'),
+        } as Record<string, unknown>,
+        'set tech',
+      ),
+      React.createElement(
+        'button',
+        {
+          'data-test': 'set-design',
+          onClick: () => onChange('design'),
+        } as Record<string, unknown>,
+        'set design',
+      ),
+      React.createElement(
+        'button',
+        {
+          'data-test': 'set-bim',
+          onClick: () => onChange('bim'),
+        } as Record<string, unknown>,
+        'set bim',
+      ),
+      React.createElement(
+        'button',
+        {
+          'data-test': 'set-all',
+          onClick: () => onChange('all'),
+        } as Record<string, unknown>,
+        'set all',
+      ),
+    ),
+}));
+
+// ProjectGrid stub — exposes count + slugs through data attributes
+vi.mock('./ProjectGrid', () => ({
+  ProjectGrid: ({ projects }: { projects: Project[] }) =>
+    React.createElement(
+      'div',
+      {
+        'data-count': String(projects.length),
+        'data-slugs': projects.map((p) => p.slug).join(','),
+      } as Record<string, unknown>,
+      String(projects.length),
+    ),
+}));
+
+// ----- Fixtures -----
+
+const fakeProjects: Project[] = [
+  {
+    slug: 'tech-1',
+    title: 'Tech 1',
+    year: 2024,
+    category: 'tech',
+    cover: '/c.jpg',
+    summary: '.',
+    featured: true,
+    stack: ['TS'],
+  },
+  {
+    slug: 'tech-2',
+    title: 'Tech 2',
+    year: 2024,
+    category: 'tech',
+    cover: '/c.jpg',
+    summary: '.',
+    featured: false,
+    stack: ['TS'],
+  },
+  {
+    slug: 'design-1',
+    title: 'Design 1',
+    year: 2023,
+    category: 'design',
+    cover: '/c.jpg',
+    summary: '.',
+    featured: false,
+    tools: ['Figma'],
+  },
+  {
+    slug: 'design-2',
+    title: 'Design 2',
+    year: 2023,
+    category: 'design',
+    cover: '/c.jpg',
+    summary: '.',
+    featured: false,
+    tools: ['Figma'],
+  },
+  {
+    slug: 'bim-1',
+    title: 'BIM 1',
+    year: 2022,
+    category: 'bim',
+    cover: '/c.jpg',
+    summary: '.',
+    featured: false,
+    software: ['Revit'],
+    projectScale: 'urban',
+  },
+  {
+    slug: 'bim-2',
+    title: 'BIM 2',
+    year: 2022,
+    category: 'bim',
+    cover: '/c.jpg',
+    summary: '.',
+    featured: false,
+    software: ['Revit'],
+    projectScale: 'residential',
+  },
+];
+
+describe('ProjectsSection (HOME-05) — initial render', () => {
+  it('renders title (h2) from projects.title i18n', async () => {
     const { ProjectsSection } = await import('./ProjectsSection');
-    const fakeProjects = [] as unknown as Project[];
     render(<ProjectsSection projects={fakeProjects} />);
-    // structural — implementation will fill the assertion
-    expect(true).toBe(true);
+    const h2 = screen.getByRole('heading', { level: 2 });
+    expect(h2.textContent).toBe('Projects');
+  });
+
+  it('default active filter is "all"', async () => {
+    const { ProjectsSection } = await import('./ProjectsSection');
+    const { container } = render(<ProjectsSection projects={fakeProjects} />);
+    const filter = container.querySelector('[data-active]');
+    expect(filter?.getAttribute('data-active')).toBe('all');
+  });
+
+  it('default state passes ALL projects to ProjectGrid', async () => {
+    const { ProjectsSection } = await import('./ProjectsSection');
+    const { container } = render(<ProjectsSection projects={fakeProjects} />);
+    const grid = container.querySelector('[data-count]');
+    expect(grid?.getAttribute('data-count')).toBe('6');
+  });
+});
+
+describe('ProjectsSection (HOME-05) — useMemo filter selector', () => {
+  it('clicking set-tech filters ProjectGrid to tech projects only', async () => {
+    const { ProjectsSection } = await import('./ProjectsSection');
+    const { container } = render(<ProjectsSection projects={fakeProjects} />);
+    const setTech = container.querySelector(
+      '[data-test="set-tech"]',
+    ) as HTMLButtonElement;
+    fireEvent.click(setTech);
+    const grid = container.querySelector('[data-count]');
+    expect(grid?.getAttribute('data-count')).toBe('2');
+    expect(grid?.getAttribute('data-slugs')).toBe('tech-1,tech-2');
+  });
+
+  it('clicking set-design filters ProjectGrid to design projects only', async () => {
+    const { ProjectsSection } = await import('./ProjectsSection');
+    const { container } = render(<ProjectsSection projects={fakeProjects} />);
+    const setDesign = container.querySelector(
+      '[data-test="set-design"]',
+    ) as HTMLButtonElement;
+    fireEvent.click(setDesign);
+    const grid = container.querySelector('[data-count]');
+    expect(grid?.getAttribute('data-count')).toBe('2');
+    expect(grid?.getAttribute('data-slugs')).toBe('design-1,design-2');
+  });
+
+  it('clicking set-bim filters ProjectGrid to bim projects only', async () => {
+    const { ProjectsSection } = await import('./ProjectsSection');
+    const { container } = render(<ProjectsSection projects={fakeProjects} />);
+    const setBim = container.querySelector(
+      '[data-test="set-bim"]',
+    ) as HTMLButtonElement;
+    fireEvent.click(setBim);
+    const grid = container.querySelector('[data-count]');
+    expect(grid?.getAttribute('data-count')).toBe('2');
+    expect(grid?.getAttribute('data-slugs')).toBe('bim-1,bim-2');
+  });
+
+  it('clicking set-all restores all projects', async () => {
+    const { ProjectsSection } = await import('./ProjectsSection');
+    const { container } = render(<ProjectsSection projects={fakeProjects} />);
+    // First filter to tech
+    fireEvent.click(
+      container.querySelector('[data-test="set-tech"]') as HTMLButtonElement,
+    );
+    // Then back to all
+    fireEvent.click(
+      container.querySelector('[data-test="set-all"]') as HTMLButtonElement,
+    );
+    const grid = container.querySelector('[data-count]');
+    expect(grid?.getAttribute('data-count')).toBe('6');
+  });
+
+  it('filter state propagates to CategoryFilter active prop', async () => {
+    const { ProjectsSection } = await import('./ProjectsSection');
+    const { container } = render(<ProjectsSection projects={fakeProjects} />);
+    fireEvent.click(
+      container.querySelector('[data-test="set-design"]') as HTMLButtonElement,
+    );
+    const filter = container.querySelector('[data-active]');
+    expect(filter?.getAttribute('data-active')).toBe('design');
+  });
+});
+
+describe('ProjectsSection (HOME-05) — empty edge cases', () => {
+  it('empty projects array passes [] to ProjectGrid (empty state delegated)', async () => {
+    const { ProjectsSection } = await import('./ProjectsSection');
+    const { container } = render(<ProjectsSection projects={[]} />);
+    const grid = container.querySelector('[data-count]');
+    expect(grid?.getAttribute('data-count')).toBe('0');
+  });
+
+  it('filtering for category with zero matches passes [] to ProjectGrid', async () => {
+    const techOnlyProjects = fakeProjects.filter((p) => p.category === 'tech');
+    const { ProjectsSection } = await import('./ProjectsSection');
+    const { container } = render(
+      <ProjectsSection projects={techOnlyProjects} />,
+    );
+    // Filter to design — no matches
+    fireEvent.click(
+      container.querySelector('[data-test="set-design"]') as HTMLButtonElement,
+    );
+    const grid = container.querySelector('[data-count]');
+    expect(grid?.getAttribute('data-count')).toBe('0');
   });
 });
