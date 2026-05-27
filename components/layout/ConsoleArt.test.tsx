@@ -14,6 +14,12 @@
  * the module-level guard between cases. The component is re-imported via
  * `vi.resetModules` + dynamic import inside each NODE_ENV=development case
  * so the runtime branch is evaluated against the freshly-mocked env value.
+ *
+ * Vitest 4.x notes:
+ *   - `vi.stubEnv('NODE_ENV', 'development')` is the canonical way to change
+ *     env vars per test; direct Object.defineProperty(process.env, ...) is
+ *     blocked because Node 24's process.env property is non-configurable.
+ *     vi.unstubAllEnvs() restores the original snapshot per afterEach.
  */
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { render } from '@testing-library/react';
@@ -39,6 +45,7 @@ beforeEach(async () => {
 
 afterEach(() => {
   logSpy.mockRestore();
+  vi.unstubAllEnvs();
 });
 
 describe('ConsoleArt (EGG-01) — one-shot guarded print', () => {
@@ -49,64 +56,44 @@ describe('ConsoleArt (EGG-01) — one-shot guarded print', () => {
   });
 
   it('calls console.log exactly once when NODE_ENV is not test', async () => {
-    const prev = process.env.NODE_ENV;
-    Object.defineProperty(process.env, 'NODE_ENV', { value: 'development', configurable: true });
-    try {
-      vi.resetModules();
-      const mod = await import('./ConsoleArt');
-      mod.__resetConsoleArt();
-      render(<mod.ConsoleArt />);
-      expect(logSpy).toHaveBeenCalledTimes(1);
-    } finally {
-      Object.defineProperty(process.env, 'NODE_ENV', { value: prev, configurable: true });
-    }
+    vi.stubEnv('NODE_ENV', 'development');
+    vi.resetModules();
+    const mod = await import('./ConsoleArt');
+    mod.__resetConsoleArt();
+    render(<mod.ConsoleArt />);
+    expect(logSpy).toHaveBeenCalledTimes(1);
   });
 
   it('module-level flag prevents a second print on remount', async () => {
-    const prev = process.env.NODE_ENV;
-    Object.defineProperty(process.env, 'NODE_ENV', { value: 'development', configurable: true });
-    try {
-      vi.resetModules();
-      const mod = await import('./ConsoleArt');
-      mod.__resetConsoleArt();
-      const { unmount } = render(<mod.ConsoleArt />);
-      unmount();
-      render(<mod.ConsoleArt />);
-      expect(logSpy).toHaveBeenCalledTimes(1);
-    } finally {
-      Object.defineProperty(process.env, 'NODE_ENV', { value: prev, configurable: true });
-    }
+    vi.stubEnv('NODE_ENV', 'development');
+    vi.resetModules();
+    const mod = await import('./ConsoleArt');
+    mod.__resetConsoleArt();
+    const { unmount } = render(<mod.ConsoleArt />);
+    unmount();
+    render(<mod.ConsoleArt />);
+    expect(logSpy).toHaveBeenCalledTimes(1);
   });
 
   it('dispatches by locale — FR variant contains French intro', async () => {
-    const prev = process.env.NODE_ENV;
-    Object.defineProperty(process.env, 'NODE_ENV', { value: 'development', configurable: true });
-    try {
-      vi.resetModules();
-      const mod = await import('./ConsoleArt');
-      mod.__resetConsoleArt();
-      localeMock.mockReturnValue('fr');
-      render(<mod.ConsoleArt />);
-      const firstArg = logSpy.mock.calls[0]?.[0] as string;
-      expect(firstArg).toMatch(/Profil hybride/);
-    } finally {
-      Object.defineProperty(process.env, 'NODE_ENV', { value: prev, configurable: true });
-    }
+    vi.stubEnv('NODE_ENV', 'development');
+    vi.resetModules();
+    const mod = await import('./ConsoleArt');
+    mod.__resetConsoleArt();
+    localeMock.mockReturnValue('fr');
+    render(<mod.ConsoleArt />);
+    const firstArg = logSpy.mock.calls[0]?.[0] as string;
+    expect(firstArg).toMatch(/Profil hybride/);
   });
 
   it('dispatches by locale — EN variant contains English intro', async () => {
-    const prev = process.env.NODE_ENV;
-    Object.defineProperty(process.env, 'NODE_ENV', { value: 'development', configurable: true });
-    try {
-      vi.resetModules();
-      const mod = await import('./ConsoleArt');
-      mod.__resetConsoleArt();
-      localeMock.mockReturnValue('en');
-      render(<mod.ConsoleArt />);
-      const firstArg = logSpy.mock.calls[0]?.[0] as string;
-      expect(firstArg).toMatch(/Hybrid profile/i);
-    } finally {
-      Object.defineProperty(process.env, 'NODE_ENV', { value: prev, configurable: true });
-    }
+    vi.stubEnv('NODE_ENV', 'development');
+    vi.resetModules();
+    const mod = await import('./ConsoleArt');
+    mod.__resetConsoleArt();
+    localeMock.mockReturnValue('en');
+    render(<mod.ConsoleArt />);
+    const firstArg = logSpy.mock.calls[0]?.[0] as string;
+    expect(firstArg).toMatch(/Hybrid profile/i);
   });
 });
