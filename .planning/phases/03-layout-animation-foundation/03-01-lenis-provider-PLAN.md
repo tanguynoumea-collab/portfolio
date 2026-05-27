@@ -19,6 +19,7 @@ must_haves:
     - "LenisProvider schedules ScrollTrigger.refresh() ~450ms after every paletteId change"
     - "LenisProvider pauses Lenis on input focus and resumes on blur when viewport ≤768px wide"
     - "LenisProvider exposes Lenis instance via useLenis() hook (returns null until effect has run)"
+    - "useLenis() returns null when prefers-reduced-motion is reduce OR before the effect has run; consumers must null-check before calling instance methods."
     - "Vitest suite covers all four behaviors (mount, skip, cleanup, palette-refresh) and exits 0"
   artifacts:
     - path: "components/providers/LenisProvider.tsx"
@@ -306,6 +307,7 @@ ScrollTrigger.refresh(safe?: boolean): void;    // recompute positions
     - File contains the literal string `usePalette` (subscribes to ThemeProvider).
     - File contains the literal string `usePrefersReducedMotion` (reduced-motion gate import).
     - File contains the literal string `ScrollTrigger.refresh` (D-05 palette-refresh).
+    - File contains the literal string "document.fonts" (font-load ScrollTrigger.refresh per 03-RESEARCH.md §2).
     - File contains the literal substring `450` (the debounce ms).
     - File contains the literal string `(max-width: 768px)` (D-07 mobile input pause threshold).
     - File contains the literal string `focusin` AND `focusout` (D-07 listeners).

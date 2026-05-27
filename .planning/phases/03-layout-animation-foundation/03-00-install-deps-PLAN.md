@@ -99,7 +99,7 @@ Output: package.json + package-lock.json updated with the three deps, all existi
     4. Run `npm test` — must exit 0 with 94/94 Phase 2 baseline tests still green (no test regression from peer dep changes).
 
     No source code changes in this task. package.json + package-lock.json edits ONLY.
-  </read_first>
+  </action>
   <verify>
     <automated>npm install gsap@^3.13.0 @gsap/react@^2.1.2 lenis@^1.3.0 && npm run lint && npm run build && npm test</automated>
   </verify>

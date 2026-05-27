@@ -299,7 +299,7 @@ From messages/{fr,en}.json existing keys (verified):
 
     If the parity check FAILS, identify the missing key and ADD it to the lacking file with an appropriate translation. Do not modify any pre-existing value.
 
-    No source file edits are expected in this task — it is a verification gate. If a parity script under `scripts/` exists (the Phase 1 STATE.md mentions one), run that instead.
+    No source file edits are expected in this task — it is a verification gate. Phase 1 did NOT ship a dedicated i18n parity script under `scripts/` (only `scripts/validate-palettes.ts` exists). Phase 3 uses the inline `node -e` parity check above as the canonical gate — that inline script IS the contract for this task, and no external script is referenced or required.
 
     NB: Plan 03 Task 1 already added `nav.lang.label` and `nav.lang.switchTo` to BOTH files — those are accounted for and parity is preserved.
   </action>

@@ -540,7 +540,8 @@ From browser globals (for ConsoleArt):
     - File contains the literal string `usePathname` imported from `'next/navigation'` (FULL path).
     - File DOES NOT contain `from '@/i18n/navigation'` (this would be the locale-stripped pathname — wrong here).
     - File contains the literal string `key={pathname}` (D-33 — pathname-keyed motion.div).
-    - File contains the literal string `0.3` (300ms duration under normal motion) AND `0.1` (100ms under reduced motion).
+    - File contains the literal string `duration: 0.3` (300ms normal-motion page transition per D-32).
+    - File contains the literal string `duration: 0.1` (100ms reduced-motion page transition per D-32).
     - File contains the literal string `export default function Template` (or `export default function Template(`).
     - File DOES NOT contain `'use server'` (must be Client Component).
     - File DOES NOT contain `cursor: none`.

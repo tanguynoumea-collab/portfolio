@@ -828,11 +828,11 @@ import { Menu, X } from 'lucide-react';  // hamburger + close icons
       });
 
       it('imperatively sets document.documentElement.lang on locale change', () => {
-        render(<LanguageSwitcher />);
+        const { rerender } = render(<LanguageSwitcher />);
         expect(document.documentElement.lang).toBe('fr');
         localeMock.mockReturnValue('en');
-        // Trigger a re-render via rerender — for this test we re-render via screen.rerender or unmount+mount
-        // Simpler: assert the initial sync, then test the effect by re-rendering with the new mocked locale
+        rerender(<LanguageSwitcher />);
+        expect(document.documentElement.lang).toBe('en');
       });
 
       it('calls lenis.scrollTo with saved scroll position after route change', () => {
