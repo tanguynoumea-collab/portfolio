@@ -4,7 +4,11 @@
     "about": "About",
     "projects": "Projects",
     "skills": "Skills",
-    "contact": "Contact"
+    "contact": "Contact",
+    "lang": {
+      "label": "Switch language",
+      "switchTo": "Switch to {target}"
+    }
   },
   "hero": {
     "name": "Tanguy",
