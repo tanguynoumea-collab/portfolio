@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 04-00-assets-and-stubs-PLAN.md
-last_updated: "2026-05-27T18:46:20.849Z"
+stopped_at: Completed 04-02-about-PLAN.md (parallel Wave 1)
+last_updated: "2026-05-27T18:53:43.779Z"
 last_activity: 2026-05-27
 progress:
   total_phases: 7
   completed_phases: 3
   total_plans: 24
-  completed_plans: 19
+  completed_plans: 20
   percent: 0
 ---
 
@@ -69,6 +69,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 03-layout-animation-foundation P04 | 7m 0s | 2 tasks | 2 files |
 | Phase 03-layout-animation-foundation P03 | 8m 22s | 4 tasks | 8 files |
 | Phase 04-homepage-sections P00 | 8m | 7 tasks | 33 files |
+| Phase 04 P02 | 4min | 2 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -130,6 +131,8 @@ Recent decisions affecting current work:
 - [Phase 04-homepage-sections]: Wave 0 dependency-gate complete: 9 assets + 12 MDX stubs + 3 fixed --color-category-* tokens (palette-independent, D-13) + shadcn Badge with category-{tech,design,bim} variants + i18n parity at 72 paths (skills.groups restructured string -> {label,items[]}) + page.tsx async Server Component composing 5 sections + 8 RED TDD harnesses ready for Wave 1+2 to GREEN.
 - [Phase 04-homepage-sections]: Wave 0 build is intentionally RED — page.tsx imports 5 section components from components/sections/ that don't exist until Wave 1 (Hero/About/Skills/Contact) and Wave 2 (CategoryFilter/ProjectCard/ProjectGrid/ProjectsSection) ship them. This is the dependency-gate design: Wave 0 isolates all foundation work (CSS tokens, i18n keys, MDX stubs, Badge variants), Wave 1+2 then execute in parallel without file-conflict risk.
 - [Phase 04-homepage-sections]: RED TDD harness pattern: each of 8 test files uses dynamic 'await import(./ComponentName)' so vitest reports 'Failed to resolve import' at runtime (not parse error). Files parse cleanly under lint+vitest discover, but every test FAILS until Wave 1+2 ships the named-export component file. Confirmed via 'npm test components/sections/' showing 'Test Files 8 failed (8)'.
+- [Phase 04]: About section uses side-effect-only 'gsap/ScrollTrigger' import for TS type merging — LenisProvider owns the actual registerPlugin (Phase 3 module-load contract)
+- [Phase 04]: MatchMediaController Vitest pattern: capture matchMedia callback for deterministic dual-branch testing of gsap.matchMedia reduced-motion gates — reusable for any ScrollTrigger-revealed section
 
 ### Pending Todos
 
@@ -144,6 +147,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-05-27T18:46:20.845Z
-Stopped at: Completed 04-00-assets-and-stubs-PLAN.md
+Last session: 2026-05-27T18:53:42.256Z
+Stopped at: Completed 04-02-about-PLAN.md (parallel Wave 1)
 Resume file: None
