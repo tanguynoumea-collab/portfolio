@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 04-05-contact-PLAN.md (Wave 1 — parallel with 04-01/02/04)
-last_updated: "2026-05-27T18:55:37.208Z"
+stopped_at: "Completed 04-03-projects-PLAN.md (Wave 2) — Phase 4 COMPLETE: all 7 HOME-* requirements shipped, 222/222 tests, build green"
+last_updated: "2026-05-27T19:08:58.776Z"
 last_activity: 2026-05-27
 progress:
   total_phases: 7
-  completed_phases: 3
+  completed_phases: 4
   total_plans: 24
-  completed_plans: 23
+  completed_plans: 24
   percent: 0
 ---
 
@@ -26,7 +26,7 @@ See: .planning/PROJECT.md (updated 2026-05-25)
 ## Current Position
 
 Phase: 4 (Homepage Sections) — EXECUTING
-Plan: 2 of 6
+Plan: 3 of 6
 Status: Ready to execute
 Last activity: 2026-05-27
 
@@ -73,6 +73,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 04-homepage-sections P04 | 3m 33s | 2 tasks | 2 files |
 | Phase 04-homepage-sections P01 | 4m 5s | 2 tasks | 3 files |
 | Phase 04-homepage-sections P05 | 4min | 2 tasks | 2 files |
+| Phase 04-homepage-sections P03 | 7m 30s | 3 tasks | 8 files |
 
 ## Accumulated Context
 
@@ -141,6 +142,11 @@ Recent decisions affecting current work:
 - [Phase 04-homepage-sections]: 04-05: Contact uses AnimatePresence mode='wait' for Copy↔Check icon swap; popLayout reserved for ProjectGrid (04-03).
 - [Phase 04-homepage-sections]: 04-05: Clipboard rejection is silent (empty catch) per Phase 2 D-02 silent-fallback precedent; recruiter still has mailto: + visible email as fallback.
 - [Phase 04-homepage-sections]: 04-05: Reused Phase 3 D-23 lucide brand-icon substitutions (Code2/Briefcase/Mail) in Contact to avoid lucide-react downgrade cascade.
+- [Phase 04-homepage-sections]: HOME-03 CategoryFilter: motion layoutId='filter-indicator' shared-element pattern reused verbatim from Phase 3 LanguageSwitcher D-18; only identifier string differs. Lifted state via active+onChange props (parent ProjectsSection owns). aria-pressed on each button. 4 OPTIONS const ['all','tech','design','bim']
+- [Phase 04-homepage-sections]: HOME-04 ProjectCard: motion.div whileHover > Link from @/i18n/navigation > shadcn Card stack (Pitfall 4-I — motion OUTSIDE Link or pointer-enter never fires). useReducedMotion === true explicit check (Pitfall 4-B — null SSR state defaults to motion-enabled, avoids hover flicker during hydration). Discriminated metadata footer: tech.stack[0..2] / design.tools[0..2] / bim.software[0..1]+projectScale via metadataBadges(project) switch on project.category. Category badge uses categoryVariant() helper -> Wave 0 Badge variants (category-tech/design/bim, palette-independent fixed tokens). aria-label includes viewProject + title. ArrowUpRight icon with hover translate (x:4 y:-4) gated by same reducedMotion check
+- [Phase 04-homepage-sections]: HOME-05 ProjectGrid: BOTH AnimatePresence mode='popLayout' AND outer motion.div with layout prop are required (Pitfall 4-C — popLayout removes exiting cards from layout flow as position:absolute; outer layout prop transitions parent height smoothly during exit states). initial={false} on AnimatePresence suppresses initial mount animation (cards visible immediately on page load; only filter changes trigger enter/exit). Empty state: SearchX lucide icon + projects.empty i18n + motion fade-in. Per-card motion.div key={slug} layout initial={opacity:0,scale:0.9} animate={opacity:1,scale:1} exit={opacity:0,scale:0.9} duration 0.3 easeOut
+- [Phase 04-homepage-sections]: HOME-05 ProjectsSection: Server -> Client RSC boundary pattern. page.tsx (Server Component) calls await getProjects(locale) and passes the serialized discriminated Project union as a prop to <ProjectsSection projects={projects} /> (Client). ProjectsSection owns useState<FilterValue>('all') default + useMemo selector keyed [projects, active] for stable identity (avoids running AnimatePresence reconciliation unnecessarily across unrelated re-renders). Renders h2 title + CategoryFilter (with active+onChange) + ProjectGrid (with filtered). max-w-6xl container with md:flex-row title+filter layout
+- [Phase 04-homepage-sections]: Test mock pattern correction: Wave 0 RED harnesses returned plain {type, props} objects which fail React reconciliation ('Objects are not valid as a React child'). Task 3 expanded harnesses use React.createElement(...) instead — matches Contact.test.tsx Wave 1 convention. Result: 42 new GREEN tests across 4 files. Full suite 222/222 (180 baseline + 42 new). motion.div/span/AnimatePresence mocks serialize whileHover/layout/mode props as data attributes so behavior is verifiable without running the actual motion engine in jsdom
 
 ### Pending Todos
 
@@ -155,6 +161,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-05-27T18:55:37.204Z
-Stopped at: Completed 04-05-contact-PLAN.md (Wave 1 — parallel with 04-01/02/04)
+Last session: 2026-05-27T19:08:58.771Z
+Stopped at: Completed 04-03-projects-PLAN.md (Wave 2) — Phase 4 COMPLETE: all 7 HOME-* requirements shipped, 222/222 tests, build green
 Resume file: None
