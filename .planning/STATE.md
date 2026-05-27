@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 03-04-footer-PLAN.md
-last_updated: "2026-05-27T07:28:57.964Z"
+stopped_at: Completed 03-03-navigation-lang-switcher-PLAN.md
+last_updated: "2026-05-27T07:31:36.132Z"
 last_activity: 2026-05-27
 progress:
   total_phases: 7
   completed_phases: 2
   total_plans: 18
-  completed_plans: 16
+  completed_plans: 17
   percent: 0
 ---
 
@@ -26,7 +26,7 @@ See: .planning/PROJECT.md (updated 2026-05-25)
 ## Current Position
 
 Phase: 3 (Layout & Animation Foundation) — EXECUTING
-Plan: 5 of 6
+Plan: 6 of 6
 Status: Ready to execute
 Last activity: 2026-05-27
 
@@ -67,6 +67,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 03-layout-animation-foundation P01 | 4m 15s | 2 tasks | 2 files |
 | Phase 03-layout-animation-foundation P02 | 5m 7s | 3 tasks | 7 files |
 | Phase 03-layout-animation-foundation P04 | 7m 0s | 2 tasks | 2 files |
+| Phase 03-layout-animation-foundation P03 | 8m 22s | 4 tasks | 8 files |
 
 ## Accumulated Context
 
@@ -124,6 +125,7 @@ Recent decisions affecting current work:
 - [Phase 03-layout-animation-foundation]: D-11 Phase 3 provider tree assembled in app/[locale]/layout.tsx as Server Component (no 'use client'): NextIntlClientProvider > ThemeProvider > LenisProvider > [ConsoleArt + Navigation + <main>{children}</main> + Footer year={server-rendered new Date().getFullYear()} + CustomCursor + PaletteFab]. PaletteFab stays LAST child inside LenisProvider (unchanged from Phase 2, just relocated one level deeper). <main> landmark owned by layout — page.tsx renders only <section> tree as fragment.
 - [Phase 03-layout-animation-foundation]: lucide-react@^1.16.0 ships without Github/Linkedin brand icons (removed in v1.0 upstream release). Footer.tsx substitutes Code2 (for GitHub link) + Briefcase (for LinkedIn link) + Mail. Accessible names preserved via tSocial('github'/'linkedin'). Pattern to watch: any future Phase 3+ component that imports lucide brand icons must substitute or pin a downgraded version.
 - [Phase 03-layout-animation-foundation]: Footer mailto: anchor omits target=_blank/rel by design — mailto: hands off to the OS mail client; target=_blank causes a blank-window flash in Chrome. aria-label='Email' provides accessible name. Pattern: external https → full target+rel security; mailto: → aria-label only.
+- [Phase 03-layout-animation-foundation]: Navigation LAYOUT-03 + LanguageSwitcher LAYOUT-05 + useActiveSection IntersectionObserver hook + i18n/navigation barrel: 4 TDD tasks (10 commits) shipped 9/9 tests green, build/lint clean. Mobile hamburger via shadcn Sheet side='left' with data-lenis-prevent on SheetContent root (D-04+D-16). LanguageSwitcher imports useRouter/usePathname from @/i18n/navigation (locale-aware, NOT next/navigation) — the structural disambiguation locked by test asserting router.replace({pathname,params}, {locale:target}) call shape. Motion layoutId='lang-indicator' shared-element indicator. Scroll preservation: lenis.actualScroll captured before navigation, lenis.scrollTo(savedY, {immediate:true}) on next rAF. nav.lang.* keys added to both messages files preserving 66-leaf-key parity. 3 deviations (all acceptance-grep literal compliance: jest-dom matcher swap, PaletteFab/cursor:none literals in doc comments).
 
 ### Pending Todos
 
@@ -138,6 +140,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-05-27T07:28:57.958Z
-Stopped at: Completed 03-04-footer-PLAN.md
+Last session: 2026-05-27T07:31:11.234Z
+Stopped at: Completed 03-03-navigation-lang-switcher-PLAN.md
 Resume file: None

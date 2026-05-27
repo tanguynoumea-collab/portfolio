@@ -38,9 +38,9 @@ Requirements for initial release. Each maps to roadmap phases.
 
 - [x] **LAYOUT-01**: `app/[locale]/layout.tsx` (Server Component) wraps les pages avec le ThemeProvider (Client) + LenisProvider (Client) + IntlProvider (Client) + font custom via `next/font/google` (e.g. Inter ou Geist) + métadonnées de base
 - [x] **LAYOUT-02**: `LenisProvider` (client) initialise Lenis avec `autoRaf: false`, l'enregistre dans `gsap.ticker` (un seul rAF partagé Lenis + GSAP), appelle `ScrollTrigger.refresh()` après changements de layout, et expose le scroll natif pour les éléments avec `data-lenis-prevent` (modales/dialogs)
-- [ ] **LAYOUT-03**: `Navigation` fixe en haut avec logo, liens vers sections (#about, #projects, #contact) traduits, et `LanguageSwitcher` — le PaletteSwitcher est en FAB séparé (pas dans la nav)
+- [x] **LAYOUT-03**: `Navigation` fixe en haut avec logo, liens vers sections (#about, #projects, #contact) traduits, et `LanguageSwitcher` — le PaletteSwitcher est en FAB séparé (pas dans la nav)
 - [x] **LAYOUT-04**: `Footer` bilingue avec liens sociaux (GitHub, LinkedIn, email avec `mailto:`), copyright dynamique avec année, et mention "Built with Next.js + ❤️"
-- [ ] **LAYOUT-05**: `LanguageSwitcher` toggle FR/EN avec labels natifs ("FR" / "EN", pas de drapeaux), animation motion, met à jour l'URL via `router.replace` + le `<html lang>` attribute imperativement, avec `aria-label` localisé
+- [x] **LAYOUT-05**: `LanguageSwitcher` toggle FR/EN avec labels natifs ("FR" / "EN", pas de drapeaux), animation motion, met à jour l'URL via `router.replace` + le `<html lang>` attribute imperativement, avec `aria-label` localisé
 - [ ] **LAYOUT-06**: `CustomCursor` (desktop only, `pointer: fine` + non-touch + non-reduced-motion) suit la souris en motion, change de couleur en fonction de `--color-accent`, et se cache automatiquement sur les zones interactives nativement
 
 ### Homepage Sections
@@ -160,9 +160,9 @@ Populated by `gsd-roadmapper` on 2026-05-25.
 | THEME-12 | Phase 2 | Complete |
 | LAYOUT-01 | Phase 3 | Complete |
 | LAYOUT-02 | Phase 3 | Complete |
-| LAYOUT-03 | Phase 3 | Pending |
+| LAYOUT-03 | Phase 3 | Complete |
 | LAYOUT-04 | Phase 3 | Complete |
-| LAYOUT-05 | Phase 3 | Pending |
+| LAYOUT-05 | Phase 3 | Complete |
 | LAYOUT-06 | Phase 3 | Pending |
 | HOME-01 | Phase 4 | Pending |
 | HOME-02 | Phase 4 | Pending |

@@ -76,7 +76,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] 03-00-install-deps-PLAN.md — Wave 0: install gsap@^3.13 + @gsap/react@^2.1.2 + lenis@^1.3 [LAYOUT-02 dep gate]
 - [x] 03-01-lenis-provider-PLAN.md — Wave 1: components/providers/LenisProvider.tsx (single-RAF + gsap.ticker bridge + data-lenis-prevent + ScrollTrigger.refresh on palette swap + reduced-motion skip + mobile input pause) + Vitest spec [LAYOUT-02]
 - [x] 03-02-root-layout-font-PLAN.md — Wave 1 (sequential w/ 01 — same layout.tsx): next/font/google Inter wiring + Tailwind @theme inline --font-sans + D-11 provider tree + generateMetadata + 4 stub component files + 5 section placeholders in [locale]/page.tsx [LAYOUT-01]
-- [ ] 03-03-navigation-lang-switcher-PLAN.md — Wave 2 (parallel): Navigation.tsx + LanguageSwitcher.tsx + lib/hooks/useActiveSection.ts + i18n/navigation.ts + nav.lang.* i18n keys + tests [LAYOUT-03, LAYOUT-05]
+- [x] 03-03-navigation-lang-switcher-PLAN.md — Wave 2 (parallel): Navigation.tsx + LanguageSwitcher.tsx + lib/hooks/useActiveSection.ts + i18n/navigation.ts + nav.lang.* i18n keys + tests [LAYOUT-03, LAYOUT-05]
 - [x] 03-04-footer-PLAN.md — Wave 2 (parallel): Footer.tsx (compact-row, lucide social icons, server-rendered year, mailto, FR/EN parity check) + test [LAYOUT-04]
 - [ ] 03-05-cursor-transitions-ascii-PLAN.md — Wave 3: CustomCursor.tsx (4-gate constrained tracer, no cursor:none) + app/template.tsx (motion AnimatePresence popLayout) + ConsoleArt.tsx + lib/ascii.ts + tests [LAYOUT-06, ANIM-01, EGG-01]
 **UI hint**: yes
