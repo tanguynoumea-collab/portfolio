@@ -10,6 +10,7 @@ export default defineConfig({
       'lib/**/*.{test,spec}.{ts,tsx}',
       'components/**/*.{test,spec}.{ts,tsx}',
       'scripts/**/*.{test,spec}.{ts,tsx}',
+      'app/**/*.{test,spec}.{ts,tsx}',
     ],
     css: false,
   },
