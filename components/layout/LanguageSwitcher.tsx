@@ -30,7 +30,8 @@
  * text-muted-foreground). The motion indicator is `bg-primary` — auto-recolors
  * via the shadcn alias chain when ThemeProvider mutates --color-accent.
  *
- * No `cursor: none`. No color literals.
+ * No color literals. The native cursor stays visible (per CustomCursor
+ * takeover anti-feature exclusion in REQUIREMENTS.md L130).
  */
 
 import { useEffect, useTransition } from 'react';

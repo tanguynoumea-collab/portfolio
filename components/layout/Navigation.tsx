@@ -29,7 +29,9 @@
  *
  * Colors are all routed through Tailwind utilities backed by --color-* tokens
  * (bg-background, text-foreground, text-muted-foreground, border-border,
- * text-primary). No hex/rgb/hsl/oklch literals. No cursor: none.
+ * text-primary). No hex/rgb/hsl/oklch literals. The native cursor stays
+ * visible everywhere (the CustomCursor takeover anti-feature is excluded
+ * by REQUIREMENTS.md L130).
  */
 
 import { useEffect, useState } from 'react';
