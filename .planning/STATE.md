@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 03-00-install-deps-PLAN.md
-last_updated: "2026-05-27T07:00:04.262Z"
+stopped_at: Completed 03-01-lenis-provider-PLAN.md
+last_updated: "2026-05-27T07:07:50.429Z"
 last_activity: 2026-05-27
 progress:
   total_phases: 7
   completed_phases: 2
   total_plans: 18
-  completed_plans: 13
+  completed_plans: 14
   percent: 0
 ---
 
@@ -26,7 +26,7 @@ See: .planning/PROJECT.md (updated 2026-05-25)
 ## Current Position
 
 Phase: 3 (Layout & Animation Foundation) — EXECUTING
-Plan: 2 of 6
+Plan: 3 of 6
 Status: Ready to execute
 Last activity: 2026-05-27
 
@@ -64,6 +64,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 02-palette-system P04 | 4m 54s | 3 tasks | 6 files |
 | Phase 02-palette-system P06 | 7m 6s | 3 tasks | 5 files |
 | Phase 03-layout-animation-foundation P00 | 1m 32s | 1 tasks | 2 files |
+| Phase 03-layout-animation-foundation P01 | 4m 15s | 2 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -115,6 +116,7 @@ Recent decisions affecting current work:
 - [Phase 02-palette-system]: PaletteFab D-14 auto-open uses React 19 derive-during-render pattern (useState prev-nonce + comparison in render body) instead of plan-specified useEffect — React 19's react-hooks/set-state-in-effect lint rule blocks the naive setState-in-effect approach. Same idiom Wave 1 used for usePrefersReducedMotion (useSyncExternalStore) and CustomColorPicker (useMemo). useEffectEvent (React 19.2 stable) was tried but the lint rule sees through it; the derive-in-render approach is the React-blessed alternative per react.dev/reference/react/useState#storing-information-from-previous-renders.
 - [Phase 02-palette-system]: Phase 2 COMPLETE — all 12 THEME requirements (THEME-01..THEME-12) delivered across plans 00-06. THEME-11 (FAB visible bottom-right + localized aria-label + Lucide palette icon + motion hover/rotate) + THEME-12 (Konami unlocks Vaporwave + confetti via dynamic import + Sheet auto-opens on Presets tab with Vaporwave as 5th preset card). 94/94 Vitest tests green; npm run build exit 0; lint clean; all 5 palettes pass 7-pair WCAG matrix. usePalette() context exposes the full API surface for Phase 3+ consumers.
 - [Phase 03-layout-animation-foundation]: Caret-prefix locked at ^3.13/^2.1.2/^1.3 per D-01; npm resolved to gsap@3.15.0 + @gsap/react@2.1.2 + lenis@1.3.23. Wave 0 install gate cleared; motion@^12.40 preserved unchanged from Phase 2 W0; no @studio-freight/* legacy packages.
+- [Phase 03-layout-animation-foundation]: LenisProvider uses vanilla Lenis class + ref-holder accessor pattern: useLenis() returns Lenis|null via stable useMemo({ getLenis: () => lenisRef.current }, []) instead of useState — same React 19 react-hooks/set-state-in-effect avoidance idiom as Phase 2 PaletteFab. autoRaf:false + gsap.ticker.add bridge + gsap.ticker.lagSmoothing(0). ScrollTrigger.refresh 450ms debounce on paletteId change (rAF + setTimeout). Module-level gsap.registerPlugin(ScrollTrigger). All useEffects early-return under usePrefersReducedMotion.
 
 ### Pending Todos
 
@@ -129,6 +131,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-05-27T07:00:04.258Z
-Stopped at: Completed 03-00-install-deps-PLAN.md
+Last session: 2026-05-27T07:07:50.425Z
+Stopped at: Completed 03-01-lenis-provider-PLAN.md
 Resume file: None
