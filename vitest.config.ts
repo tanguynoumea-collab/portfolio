@@ -11,6 +11,9 @@ export default defineConfig({
       'components/**/*.{test,spec}.{ts,tsx}',
       'scripts/**/*.{test,spec}.{ts,tsx}',
       'app/**/*.{test,spec}.{ts,tsx}',
+      // Root-level tests (e.g. mdx-components.test.tsx — the @next/mdx registry
+      // lives at the project root per App Router convention, so its test does too).
+      '*.{test,spec}.{ts,tsx}',
     ],
     css: false,
   },
