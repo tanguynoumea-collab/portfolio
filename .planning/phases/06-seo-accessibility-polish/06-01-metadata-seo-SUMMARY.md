@@ -88,7 +88,7 @@ Each task was committed atomically:
 2. **Task 2: Expand root + project generateMetadata (metadataBase, OG, twitter, hreflang)** - `db89a57` (feat)
 3. **Task 3: app/sitemap.ts + app/robots.ts + tests** - `534ff1f` (feat)
 
-**Plan metadata:** _(this commit)_ (docs: complete plan)
+**Plan metadata:** `b1342dd` (docs: complete plan)
 
 ## Files Created/Modified
 - `lib/og.tsx` - Shared Satori-safe `OgCard` + `OG_COLORS` (Terra OKLCh→hex via `oklchToHex`) + `OG_SIZE` (1200×630). No raw hex literals.
