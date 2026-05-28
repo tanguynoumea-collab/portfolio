@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 06-03-palette-stress-test-PLAN.md
-last_updated: "2026-05-28T12:13:30.981Z"
+stopped_at: Completed 06-04-a11y-audit-PLAN.md
+last_updated: "2026-05-28T12:28:16.998Z"
 last_activity: 2026-05-28
 progress:
   total_phases: 7
   completed_phases: 5
   total_plans: 34
-  completed_plans: 32
+  completed_plans: 33
   percent: 0
 ---
 
@@ -26,7 +26,7 @@ See: .planning/PROJECT.md (updated 2026-05-25)
 ## Current Position
 
 Phase: 06 (seo-accessibility-polish) — EXECUTING
-Plan: 5 of 6
+Plan: 6 of 6
 Status: Ready to execute
 Last activity: 2026-05-28
 
@@ -82,6 +82,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 06-seo-accessibility-polish P01 | 9min | 3 tasks | 12 files |
 | Phase 06-seo-accessibility-polish P02 | 4min | 3 tasks | 7 files |
 | Phase 06-seo-accessibility-polish P03 | 4m 30s | 2 tasks | 4 files |
+| Phase 06-seo-accessibility-polish P04 | 13min | 3 tasks | 17 files |
 
 ## Accumulated Context
 
@@ -171,6 +172,8 @@ Recent decisions affecting current work:
 - [Phase 06-seo-accessibility-polish]: 06-02: route-state trio at app/[locale]/ wires EXISTING errors.404/errors.500 keys verbatim (no new keys, parity stays 94 leaf paths). error.tsx is 'use client' + framework reset() prop (NOT a Server Action, D-08 lock; kept reset() over Next 16.2 unstable_retry). not-found.tsx motion entry gates on useReducedMotion → opacity-only (no scale) when reduced. loading.tsx is a Server Component role=status spinner with motion-safe:animate-pulse (static dot under reduced motion); project route re-exports it via export { default } from '../../loading'. Doc comments reworded to avoid acceptance-grep literals ('use client'/'use server'/next-intl/server) — same Rule-3 deviation class as Phases 3/4/5.
 - [Phase 06-seo-accessibility-polish]: 06-03: A11Y-07 seeded stress test (lib/colors.stress.test.ts, Mulberry32 0xC0FFEE) drives 10 random sources x 4 modes = 40 palettes, each valid via validateFullMatrix after applyMatrixAdjust + all 6 tokens parse OKLCh no-NaN; re-asserts all 5 PALETTES. tsx gate scripts/stress-test-palettes.ts (npm run test:stress) mirrors it with the same seed, exit-1 on failure. Deterministic (same seed -> same pass).
 - [Phase 06-seo-accessibility-polish]: 06-03: Fixed a real A11Y-07 defect in generateHarmonic — pale/high-L sources yielded accent/secondary below the 3.0 UI contrast threshold against the derived light bg (as low as 1.22), and applyMatrixAdjust (D-11) can't fix them (only shifts text/textMuted). Added clampUiContrast (L-only shift, hue+chroma preserved) clamping accent/secondary against bg + surface at generation time. D-11 invariant + Test 27 intact; harmonic hue offsets preserved.
+- [Phase 06-seo-accessibility-polish]: 06-04: A11Y-04/05/06 audit shipped — 8 vitest-axe surfaces (color-contrast disabled ONLY) incl. PaletteFab icon-only accessible-name proof; global :focus-visible ring via var(--ring); check-reduced-motion.ts + check-image-audit.ts executable gates (exit 0). Suite 336 green.
+- [Phase 06-seo-accessibility-polish]: 06-04: reduced-motion gate caught 5 real ungated motion animations (CategoryFilter/LanguageSwitcher layoutId morph, Contact/CodeBlock icon swap, ProjectGrid filter+layout) — each now gates on useReducedMotion; their test mocks gained useReducedMotion:()=>false. Dropped a dotAll s regex flag in check-image-audit (es2018 vs ES2017 target broke next build TS check).
 
 ### Pending Todos
 
@@ -185,6 +188,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-05-28T12:13:16.655Z
-Stopped at: Completed 06-03-palette-stress-test-PLAN.md
+Last session: 2026-05-28T12:28:16.993Z
+Stopped at: Completed 06-04-a11y-audit-PLAN.md
 Resume file: None
