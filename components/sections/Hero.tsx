@@ -147,7 +147,7 @@ export function Hero() {
 
   return (
     <div ref={heroRef} className="w-full">
-      <div className="mx-auto max-w-4xl space-y-6 text-center">
+      <div className="mx-auto max-w-5xl space-y-6 text-center">
         <h1
           data-hero-name
           className="text-foreground text-7xl font-bold tracking-tight md:text-8xl lg:text-9xl"
