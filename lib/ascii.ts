@@ -28,7 +28,7 @@ const WORDMARK = String.raw`
   ║ ├─┤││││ ┬│ │└┬┘
   ╩ ┴ ┴┘└┘└─┘└─┘ ┴`;
 
-const GITHUB_URL = 'https://github.com/tanguynoumea/portfolio';
+const GITHUB_URL = 'https://github.com/tanguynoumea-collab/portfolio';
 
 // D-34: Konami hint with UTF-8 arrow glyphs. Comment-prefix `//` makes the
 // line look like a source code annotation in the console — the discoverability

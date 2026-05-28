@@ -35,7 +35,7 @@
  *   from the plan; only the visual glyph differs. The accessible name
  *   ("GitHub" / "LinkedIn") still resolves correctly via tSocial(...).
  *
- *   - GitHub points to https://github.com/tanguynoumea/portfolio per
+ *   - GitHub points to https://github.com/tanguynoumea-collab/portfolio per
  *     FEATURES.md research recommendation (invites code review).
  *   - LinkedIn points to a personal profile URL.
  *   - Email uses mailto: protocol.
@@ -64,7 +64,7 @@
 import { useTranslations } from 'next-intl';
 import { Code2, Briefcase, Mail } from 'lucide-react';
 
-const PORTFOLIO_REPO = 'https://github.com/tanguynoumea/portfolio';
+const PORTFOLIO_REPO = 'https://github.com/tanguynoumea-collab/portfolio';
 const LINKEDIN_URL = 'https://www.linkedin.com/in/tanguy-delrieu';
 const CONTACT_EMAIL = 'mailto:contact@tanguy-delrieu.dev';
 

@@ -12,7 +12,7 @@
  * import from this file too — not in scope for Phase 4).
  */
 export const EMAIL = 'tanguy@example.com';
-export const GITHUB_URL = 'https://github.com/tanguynoumea/portfolio';
+export const GITHUB_URL = 'https://github.com/tanguynoumea-collab/portfolio';
 export const LINKEDIN_URL = 'https://www.linkedin.com/in/tanguy-delrieu';
 
 /**

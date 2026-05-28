@@ -62,7 +62,7 @@ describe('Footer — 3 social anchors (D-23)', () => {
     const github = screen.getByLabelText('GitHub') as HTMLAnchorElement;
     expect(github).not.toBeNull();
     expect(github.tagName).toBe('A');
-    expect(github.href).toBe('https://github.com/tanguynoumea/portfolio');
+    expect(github.href).toBe('https://github.com/tanguynoumea-collab/portfolio');
   });
 
   it('renders LinkedIn anchor pointing to a linkedin.com URL', () => {

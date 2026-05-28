@@ -48,7 +48,7 @@ vi.mock('motion/react', () => ({
 
 vi.mock('@/lib/constants', () => ({
   EMAIL: 'tanguy@example.com',
-  GITHUB_URL: 'https://github.com/tanguynoumea/portfolio',
+  GITHUB_URL: 'https://github.com/tanguynoumea-collab/portfolio',
   LINKEDIN_URL: 'https://www.linkedin.com/in/tanguy-delrieu',
 }));
 

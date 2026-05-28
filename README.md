@@ -29,7 +29,7 @@ A personal portfolio that doubles as a living demo of what I build — a complem
 ## Local development
 
 ```bash
-git clone https://github.com/tanguynoumea/portfolio
+git clone https://github.com/tanguynoumea-collab/portfolio
 cd portfolio
 npm install
 npm run dev

@@ -82,7 +82,7 @@ vi.mock('motion/react', () => ({
 
 vi.mock('@/lib/constants', () => ({
   EMAIL: 'tanguy@example.com',
-  GITHUB_URL: 'https://github.com/tanguynoumea/portfolio',
+  GITHUB_URL: 'https://github.com/tanguynoumea-collab/portfolio',
   LINKEDIN_URL: 'https://www.linkedin.com/in/tanguy-delrieu',
 }));
 
@@ -172,7 +172,7 @@ describe('Contact (HOME-07) — 3 social links', () => {
     const a = screen.getByLabelText('GitHub') as HTMLAnchorElement;
     expect(a).not.toBeNull();
     expect(a.tagName).toBe('A');
-    expect(a.href).toBe('https://github.com/tanguynoumea/portfolio');
+    expect(a.href).toBe('https://github.com/tanguynoumea-collab/portfolio');
     expect(a.getAttribute('target')).toBe('_blank');
     const rel = a.getAttribute('rel') ?? '';
     expect(rel).toMatch(/noopener/);

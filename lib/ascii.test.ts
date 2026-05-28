@@ -4,7 +4,7 @@
  *
  * Pure-module tests (no React, no DOM). Asserts the substrings the planner
  * locked in plan 03-05 acceptance criteria:
- *   - GitHub URL exactly https://github.com/tanguynoumea/portfolio
+ *   - GitHub URL exactly https://github.com/tanguynoumea-collab/portfolio
  *   - UTF-8 arrow glyphs (↑ ↓ ← →) in the Konami hint
  *   - 'B A' terminal-pair of the Konami sequence
  *   - FR variant carries the French intro keyword
@@ -31,9 +31,9 @@ describe('lib/ascii (EGG-01) — bilingual signature content', () => {
   });
 
   it('contains the portfolio GitHub URL exactly', () => {
-    expect(ASCII_GITHUB_URL).toBe('https://github.com/tanguynoumea/portfolio');
-    expect(getAsciiArt('fr')).toContain('https://github.com/tanguynoumea/portfolio');
-    expect(getAsciiArt('en')).toContain('https://github.com/tanguynoumea/portfolio');
+    expect(ASCII_GITHUB_URL).toBe('https://github.com/tanguynoumea-collab/portfolio');
+    expect(getAsciiArt('fr')).toContain('https://github.com/tanguynoumea-collab/portfolio');
+    expect(getAsciiArt('en')).toContain('https://github.com/tanguynoumea-collab/portfolio');
   });
 
   it('contains the Konami arrow-glyph hint with terminal B A pair', () => {
