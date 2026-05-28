@@ -143,7 +143,9 @@ Decimal phases appear between their surrounding integers in numeric order.
   1. The repo `tanguynoumea/portfolio` exists on GitHub with a baseline README, and `main` carries the production-ready code
   2. Vercel auto-deploys every `main` push and the production URL is publicly reachable
   3. Vercel Analytics and Speed Insights collect Web Vitals from real traffic with no leaks of sensitive `NEXT_PUBLIC_*` env vars
-**Plans**: TBD
+**Plans**: 2 plans (2 waves)
+- [ ] 07-00-deploy-prep-PLAN.md — Wave 1 (autonomous): install + mount @vercel/analytics + @vercel/speed-insights (/next); rewrite README; add .github/workflows/ci.yml; rename master->main; 3 gate scripts (check-analytics/check-env-leak/check-readme) + PRE-DEPLOY-CHECKLIST.md; full-suite + build green [DEPLOY-01, DEPLOY-03]
+- [ ] 07-01-go-live-PLAN.md — Wave 2 (checkpoint-heavy, autonomous: false): D-02 GitHub owner decision + gh repo create/push; HUMAN-ACTION Vercel connect + env + deploy + enable Analytics/Speed Insights; HUMAN-UAT verify URL + beaconing + deployed Lighthouse >=90 (D-09); finalize SITE_URL/GITHUB_URL [DEPLOY-01, DEPLOY-02, DEPLOY-03]
 **UI hint**: no
 
 ## Progress
@@ -159,4 +161,4 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7
 | 4. Homepage Sections | 0/6 | Complete    | 2026-05-27 |
 | 5. Project Content Pipeline | 0/4 | Not started | - |
 | 6. SEO, Accessibility & Polish | 0/6 | Not started | - |
-| 7. Deployment | 0/TBD | Not started | - |
+| 7. Deployment | 0/2 | Not started | - |
