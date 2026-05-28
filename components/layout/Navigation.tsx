@@ -114,7 +114,7 @@ export function Navigation() {
           href={`/${locale}`}
           className="text-primary text-lg font-semibold tracking-tight"
         >
-          Tanguy
+          Tanguy Delrieu
         </Link>
 
         {/* D-14: desktop section links centered (md+). Below md the inner
@@ -145,7 +145,7 @@ export function Navigation() {
                 right-anchored Sheet (Phase 2 D-04). */}
             <SheetContent side="left" data-lenis-prevent>
               <SheetHeader>
-                <SheetTitle>Tanguy</SheetTitle>
+                <SheetTitle>Tanguy Delrieu</SheetTitle>
               </SheetHeader>
               <nav
                 className="mt-6 flex flex-col gap-4 px-4"

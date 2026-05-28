@@ -55,8 +55,8 @@ beforeEach(async () => {
 describe('Navigation (LAYOUT-03)', () => {
   it('renders the wordmark + 5 section anchor links + LanguageSwitcher', () => {
     render(<NavigationComponent />);
-    // Wordmark appears (logo + likely SheetTitle, both render "Tanguy")
-    expect(screen.getAllByText('Tanguy').length).toBeGreaterThan(0);
+    // Wordmark appears (logo + likely SheetTitle, both render "Tanguy Delrieu")
+    expect(screen.getAllByText('Tanguy Delrieu').length).toBeGreaterThan(0);
     // 5 section anchor hrefs are present on at least one anchor each
     ['home', 'about', 'projects', 'skills', 'contact'].forEach((id) => {
       const links = screen
