@@ -43,7 +43,7 @@ if (!/Tailwind|next-intl|GSAP/.test(readme)) {
 const OWNER_REPO_RE = /github\.com\/([\w-]+\/[\w.-]+?)(?:["'`\s)/]|\.git|$)/;
 function ownerRepo(file: string): string | null {
   const m = readFileSync(file, 'utf8').match(OWNER_REPO_RE);
-  return m ? m[1] : null;
+  return m?.[1] ?? null;
 }
 
 const constantsRepo = ownerRepo('lib/constants.ts');
