@@ -56,7 +56,7 @@ Requirements for initial release. Each maps to roadmap phases.
 ### Project Content (MDX)
 
 - [x] **CONTENT-01**: 6 projets × 2 locales = 12 fichiers MDX dans `content/projects/` au format `{slug}.{fr|en}.mdx` (2 Tech : ex. `texture-manager`, `agora` ; 2 Design : à définir ; 2 BIM : à définir), avec frontmatter discriminé par catégorie
-- [ ] **CONTENT-02**: La page projet `app/[locale]/projects/[slug]/page.tsx` rend le MDX via `compileMDX`, génère statiquement via `generateStaticParams(locale × slug)`, et affiche le frontmatter (title, year, category, metadata domain-spécifique) + galerie d'images + contenu MDX
+- [x] **CONTENT-02**: La page projet `app/[locale]/projects/[slug]/page.tsx` rend le MDX via `compileMDX`, génère statiquement via `generateStaticParams(locale × slug)`, et affiche le frontmatter (title, year, category, metadata domain-spécifique) + galerie d'images + contenu MDX
 - [x] **CONTENT-03**: `mdx-components.tsx` fournit les composants custom : `Image` (avec zoom modal), `CodeBlock` (highlighting via rehype-pretty-code), `Callout` (variants info/warning/note avec border-left coloré par variant)
 
 ### Animations Avancées
@@ -172,7 +172,7 @@ Populated by `gsd-roadmapper` on 2026-05-25.
 | HOME-06 | Phase 4 | Complete |
 | HOME-07 | Phase 4 | Complete |
 | CONTENT-01 | Phase 5 | Complete |
-| CONTENT-02 | Phase 5 | Pending |
+| CONTENT-02 | Phase 5 | Complete |
 | CONTENT-03 | Phase 5 | Complete |
 | ANIM-01 | Phase 3 | Pending |
 | ANIM-02 | Phase 5 | Complete |

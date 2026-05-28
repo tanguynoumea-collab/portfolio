@@ -113,7 +113,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] 05-00-content-and-assets-PLAN.md — Wave 0: gallery? type extension + 12 MDX case-study bodies + 24 placeholder images + projects.detail.* i18n + check-mdx-structure.ts gate [CONTENT-01]
 - [x] 05-01-mdx-components-PLAN.md — Wave 1 (parallel): Image (Dialog zoom) + CodeBlock (pre override + copy) + Callout (3 variants) + mdx-components.tsx wiring [CONTENT-03]
 - [x] 05-02-parallax-hook-PLAN.md — Wave 1 (parallel): lib/hooks/useParallax.ts (matchMedia dual-branch, no re-register) [ANIM-02]
-- [ ] 05-03-project-page-PLAN.md — Wave 2: app/[locale]/projects/[slug]/page.tsx (relative dynamic import + generateStaticParams + notFound + cover parallax + metadata strip + gallery + prev/next) + ProjectCover island [CONTENT-02, ANIM-02]
+- [x] 05-03-project-page-PLAN.md — Wave 2: app/[locale]/projects/[slug]/page.tsx (relative dynamic import + generateStaticParams + notFound + cover parallax + metadata strip + gallery + prev/next) + ProjectCover island [CONTENT-02, ANIM-02]
 **UI hint**: yes
 
 ### Phase 6: SEO, Accessibility & Polish

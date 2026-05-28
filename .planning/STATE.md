@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: executing
-stopped_at: Completed 05-02-parallax-hook-PLAN.md
-last_updated: "2026-05-28T05:22:49.197Z"
+status: verifying
+stopped_at: Completed 05-03-project-page-PLAN.md
+last_updated: "2026-05-28T05:32:35.771Z"
 last_activity: 2026-05-28
 progress:
   total_phases: 7
-  completed_phases: 4
+  completed_phases: 5
   total_plans: 28
-  completed_plans: 27
+  completed_plans: 28
   percent: 0
 ---
 
@@ -27,7 +27,7 @@ See: .planning/PROJECT.md (updated 2026-05-25)
 
 Phase: 05 (project-content-pipeline) — EXECUTING
 Plan: 4 of 4
-Status: Ready to execute
+Status: Phase complete — ready for verification
 Last activity: 2026-05-28
 
 Progress: [░░░░░░░░░░] 0%
@@ -77,6 +77,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 05-project-content-pipeline P00 | 6m | 3 tasks | 41 files |
 | Phase 05-project-content-pipeline P01 | 5m 22s | 3 tasks | 9 files |
 | Phase 05-project-content-pipeline P02 | 7m | 1 tasks | 2 files |
+| Phase 05-project-content-pipeline P03 | 6min | 3 tasks | 6 files |
 
 ## Accumulated Context
 
@@ -155,6 +156,8 @@ Recent decisions affecting current work:
 - [Phase 05-project-content-pipeline]: 05-00: New CONTENT-01 gate scripts/check-mdx-structure.ts (gray-matter parse + per-locale H2 markers + split(/\s+/) word count 250-400, exit 1 on any failure) modeled on check-i18n-parity.ts; skips _* templates. 12 bodies pass.
 - [Phase 05-project-content-pipeline]: 05-01: data-lenis-prevent on DialogContent ONLY (Pitfall 5C); CodeBlock copies preRef.textContent (Pitfall 5F, raw 1:1, no transformer); warning Callout uses fixed --destructive (D-12), not --color-* alias; reused Phase 4 Contact D-20 clipboard pattern verbatim. Added root-level vitest include glob so root-convention mdx-components.test.tsx is discovered (Rule 3).
 - [Phase 05-project-content-pipeline]: 05-02: useParallax hook (ANIM-02/D-13) authored verbatim from 05-RESEARCH Code Example #2 — useGSAP({scope,dependencies:[maxTranslate]}) + gsap.matchMedia dual-branch; full motion installs ScrollTrigger scrub:0.5 on [data-parallax-image] (y:-maxTranslate, ease:none), reduced motion gsap.set y:0 + no ScrollTrigger. factor kept in signature but unused (maxTranslate drives translate). Side-effect-only import 'gsap/ScrollTrigger' — never re-registers (LenisProvider owns it); reworded doc comment to drop literal 'registerPlugin' for acceptance-grep compliance. MatchMediaController test extended with toSpy; 10 tests, suite 267.
+- [Phase 05-project-content-pipeline]: 05-03: project page (CONTENT-02) loads MDX via a RELATIVE dynamic import (../../../../content/projects/${slug}.${locale}.mdx) — the @/ alias fails Turbopack static analysis (Pitfall 5B). dynamicParams=false + generateStaticParams flatMap(routing.locales × getProjectSlugs()) emits exactly 12 static routes; notFound() on null slug. Server page + tiny ProjectCover 'use client' island (only the parallax DOM hook is client). Discriminated narrowing (project.category) drives the metadata strip with zero casts/any.
+- [Phase 05-project-content-pipeline]: 05-03: build-time gotcha — the dynamic-import glob matches ALL content/projects/*.*.mdx including _template.{fr,en}.mdx; @next/mdx parses imported .mdx WITHOUT stripping frontmatter, so a bare <slug> placeholder in a template frontmatter comment became an unclosed JSX tag and broke the build. Fixed by rewording <slug> → [slug] in both templates (Rule 3). lib/projects.ts still filters _* at runtime (D-24). ProjectCover gradient scrim from-black/60 is the one sanctioned non-palette color. Code2 substitutes the removed lucide Github (Phase 3 D-23). jsdom page tests never render past the dynamic import.
 
 ### Pending Todos
 
@@ -169,6 +172,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-05-28T05:22:35.647Z
-Stopped at: Completed 05-02-parallax-hook-PLAN.md
+Last session: 2026-05-28T05:32:21.464Z
+Stopped at: Completed 05-03-project-page-PLAN.md
 Resume file: None
