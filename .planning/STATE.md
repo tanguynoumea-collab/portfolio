@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 05-00-content-and-assets-PLAN.md
-last_updated: "2026-05-28T05:08:39.207Z"
+stopped_at: Completed 05-01-mdx-components-PLAN.md
+last_updated: "2026-05-28T05:17:42.273Z"
 last_activity: 2026-05-28
 progress:
   total_phases: 7
   completed_phases: 4
   total_plans: 28
-  completed_plans: 25
+  completed_plans: 26
   percent: 0
 ---
 
@@ -26,7 +26,7 @@ See: .planning/PROJECT.md (updated 2026-05-25)
 ## Current Position
 
 Phase: 05 (project-content-pipeline) — EXECUTING
-Plan: 2 of 4
+Plan: 3 of 4
 Status: Ready to execute
 Last activity: 2026-05-28
 
@@ -75,6 +75,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 04-homepage-sections P05 | 4min | 2 tasks | 2 files |
 | Phase 04-homepage-sections P03 | 7m 30s | 3 tasks | 8 files |
 | Phase 05-project-content-pipeline P00 | 6m | 3 tasks | 41 files |
+| Phase 05-project-content-pipeline P01 | 5m 22s | 3 tasks | 9 files |
 
 ## Accumulated Context
 
@@ -151,6 +152,7 @@ Recent decisions affecting current work:
 - [Phase 05-project-content-pipeline]: 05-00: CommonFields.gallery?: string[] added (D-14) — validator accepts-but-not-requires via (s): s is string predicate + conditional spread (no any); all 12 pre-existing stubs still validate. texture-manager + brand-system carry gallery; 4 others omit it (skip path).
 - [Phase 05-project-content-pipeline]: 05-00: projects.detail.* namespace = exactly 22 leaf keys/locale incl. meta.{tech,design,bim} category labels + meta.scale.{concept,residential,commercial,urban} consumed by 05-03 via t(meta.${category}) / t(meta.scale.${scale}); FR/EN parity at 94 leaf paths.
 - [Phase 05-project-content-pipeline]: 05-00: New CONTENT-01 gate scripts/check-mdx-structure.ts (gray-matter parse + per-locale H2 markers + split(/\s+/) word count 250-400, exit 1 on any failure) modeled on check-i18n-parity.ts; skips _* templates. 12 bodies pass.
+- [Phase 05-project-content-pipeline]: 05-01: data-lenis-prevent on DialogContent ONLY (Pitfall 5C); CodeBlock copies preRef.textContent (Pitfall 5F, raw 1:1, no transformer); warning Callout uses fixed --destructive (D-12), not --color-* alias; reused Phase 4 Contact D-20 clipboard pattern verbatim. Added root-level vitest include glob so root-convention mdx-components.test.tsx is discovered (Rule 3).
 
 ### Pending Todos
 
@@ -165,6 +167,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-05-28T05:08:26.823Z
-Stopped at: Completed 05-00-content-and-assets-PLAN.md
+Last session: 2026-05-28T05:17:42.269Z
+Stopped at: Completed 05-01-mdx-components-PLAN.md
 Resume file: None
