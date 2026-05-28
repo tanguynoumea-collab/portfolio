@@ -19,10 +19,12 @@ export const LINKEDIN_URL = 'https://www.linkedin.com/in/tanguy-delrieu';
  * SITE_URL — the canonical origin used as `metadataBase` (Phase 6 D-01) and
  * the base for absolute hreflang / sitemap / OG URLs.
  *
- * Env-aware: `NEXT_PUBLIC_SITE_URL` overrides the placeholder before deploy
- * (Phase 7 sets the real domain). The trailing slash is stripped so
- * `${SITE_URL}${pathname}` never produces a double slash.
+ * Default is the live Vercel production origin so canonical / hreflang /
+ * sitemap / OG URLs resolve correctly out of the box (no dashboard env var
+ * required). `NEXT_PUBLIC_SITE_URL` still overrides it — set it in Vercel
+ * if/when a custom domain (e.g. tanguy.dev) is added. The trailing slash is
+ * stripped so `${SITE_URL}${pathname}` never produces a double slash.
  */
 export const SITE_URL = (
-  process.env.NEXT_PUBLIC_SITE_URL ?? 'https://tanguy.dev'
+  process.env.NEXT_PUBLIC_SITE_URL ?? 'https://detportfolio.vercel.app'
 ).replace(/\/$/, '');

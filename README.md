@@ -4,7 +4,7 @@
 
 A personal portfolio that doubles as a living demo of what I build — a complement to the PDF CV, showcasing a hybrid profile across **development**, **creative design**, and **architecture / BIM**. The site is its own proof of work: technically rigorous, design-led, and obsessive about the details.
 
-> **Live:** https://tanguy.dev _(production URL finalized after the Vercel connect — see Deployment)_
+> **Live:** https://detportfolio.vercel.app
 
 ## Signature features
 
@@ -58,7 +58,7 @@ i18n parity and MDX structure are enforced by `npx tsx scripts/check-i18n-parity
 
 ## Deployment
 
-Deployed on **Vercel** with zero config (Next.js is auto-detected — no `vercel.json`). Every push to `main` triggers a production deploy. Set `NEXT_PUBLIC_SITE_URL` to the assigned production origin in the Vercel dashboard so canonical URLs, hreflang, sitemap, and OpenGraph images resolve to absolute URLs.
+Deployed on **Vercel** with zero config (Next.js is auto-detected — no `vercel.json`). Every push to `main` triggers a production deploy. The production origin (`https://detportfolio.vercel.app`) is the default in `lib/constants.ts`, so canonical URLs, hreflang, sitemap, and OpenGraph images resolve to absolute URLs without any dashboard setup. To switch to a custom domain later, set `NEXT_PUBLIC_SITE_URL` in the Vercel dashboard (it overrides the default).
 
 ---
 
