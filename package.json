@@ -11,7 +11,9 @@
     "format:check": "prettier --check .",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:palettes": "tsx scripts/validate-palettes.ts"
+    "test:palettes": "tsx scripts/validate-palettes.ts",
+    "lighthouse": "lighthouse http://localhost:3000/en --preset=desktop --only-categories=performance,accessibility,best-practices,seo --output=html --output-path=./.lighthouse/report.html --chrome-flags=\"--headless\"",
+    "lighthouse:mobile": "lighthouse http://localhost:3000/en --form-factor=mobile --only-categories=performance,accessibility,best-practices,seo --output=html --output-path=./.lighthouse/mobile.html --chrome-flags=\"--headless\""
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
@@ -53,11 +55,13 @@
     "eslint": "^9",
     "eslint-config-next": "^16.2.6",
     "jsdom": "^29.1.1",
+    "lighthouse": "^13.3.0",
     "prettier": "^3.8.3",
     "prettier-plugin-tailwindcss": "^0.8.0",
     "tailwindcss": "^4",
     "tsx": "^4.22.3",
     "typescript": "^5",
-    "vitest": "^4.1.7"
+    "vitest": "^4.1.7",
+    "vitest-axe": "1.0.0-pre.5"
   }
 }
