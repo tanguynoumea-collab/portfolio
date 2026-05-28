@@ -15,6 +15,8 @@ import { Navigation } from '@/components/layout/Navigation';
 import { Footer } from '@/components/layout/Footer';
 import { CustomCursor } from '@/components/layout/CustomCursor';
 import { ConsoleArt } from '@/components/layout/ConsoleArt';
+import { Analytics } from '@vercel/analytics/next';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 /*
  * LAYOUT-01 (Phase 3): Inter via next/font/google.
@@ -200,6 +202,21 @@ export default async function LocaleLayout({
             </LenisProvider>
           </ThemeProvider>
         </NextIntlClientProvider>
+        {/*
+         * DEPLOY-03 (Phase 7 D-08): Vercel Web Analytics + Speed Insights.
+         * Both imported from the `/next` entry point (NOT `/react`) so the
+         * App Router route-change tracking hooks fire on /fr↔/en + project
+         * navigation. They are RSC-safe wrappers that carry their OWN internal
+         * client boundary — this layout MUST stay a Server Component, so do
+         * NOT add a top-level 'use client'. Mounted as the LAST children of
+         * <body> (outside the provider tree — they need no i18n/Theme/Lenis
+         * context) per the canonical Vercel placement. Both are no-ops in dev
+         * and on non-Vercel hosts; they only beacon on the deployed Vercel
+         * production origin (which is why real-beacon verification is HUMAN-UAT
+         * in 07-01, alongside the dashboard Enable toggles).
+         */}
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
