@@ -25,8 +25,9 @@ const SLUGS = [
 ];
 
 vi.mock('@/i18n/navigation', () => ({
+  // localePrefix:'always' — every locale (incl. default fr) gets a prefix.
   getPathname: ({ href, locale }: { href: string; locale: string }) =>
-    locale === 'fr' ? href : `/${locale}${href === '/' ? '' : href}`,
+    `/${locale}${href === '/' ? '' : href}`,
 }));
 
 vi.mock('@/lib/projects', () => ({
@@ -43,9 +44,9 @@ describe('sitemap (A11Y-02)', () => {
     // 1 home + one entry per slug.
     expect(entries).toHaveLength(1 + SLUGS.length);
 
-    // Home canonical = FR at '/', en alternate = '/en'.
-    expect(entries[0]!.url).toBe(`${SITE_URL}/`);
-    expect(entries[0]!.alternates?.languages?.['fr-FR']).toBe(`${SITE_URL}/`);
+    // Home canonical = FR at '/fr' (always-prefixed), en alternate = '/en'.
+    expect(entries[0]!.url).toBe(`${SITE_URL}/fr`);
+    expect(entries[0]!.alternates?.languages?.['fr-FR']).toBe(`${SITE_URL}/fr`);
     expect(entries[0]!.alternates?.languages?.['en-US']).toBe(`${SITE_URL}/en`);
 
     // Every entry carries both fr+en alternates → 2 × (1 + N) localized URLs.
@@ -54,11 +55,11 @@ describe('sitemap (A11Y-02)', () => {
     );
     expect(altUrls).toHaveLength(2 * (1 + SLUGS.length));
 
-    // Project entry canonical = FR /projects/{slug}; en alternate is /en-prefixed.
+    // Project entry canonical = FR /fr/projects/{slug}; en alternate is /en-prefixed.
     const proj = entries.find((e) =>
       e.url.includes('/projects/texture-manager'),
     );
-    expect(proj?.url).toBe(`${SITE_URL}/projects/texture-manager`);
+    expect(proj?.url).toBe(`${SITE_URL}/fr/projects/texture-manager`);
     expect(proj?.alternates?.languages?.['en-US']).toBe(
       `${SITE_URL}/en/projects/texture-manager`,
     );

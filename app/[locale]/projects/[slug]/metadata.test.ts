@@ -28,7 +28,7 @@ import { describe, it, expect, vi } from 'vitest';
 vi.mock('@/i18n/navigation', () => ({
   Link: ({ children }: { children?: unknown }) => children,
   getPathname: ({ href, locale }: { href: string; locale: string }) =>
-    locale === 'fr' ? href : `/${locale}${href === '/' ? '' : href}`,
+    `/${locale}${href === '/' ? '' : href}`,
 }));
 
 vi.mock('@/lib/projects', () => ({
@@ -66,9 +66,9 @@ describe('project generateMetadata (A11Y-01)', () => {
     expect((md.openGraph as { type?: string })?.type).toBe('article');
 
     const langs = md.alternates?.languages as Record<string, string>;
-    expect(langs['fr-FR']).toBe(`${SITE_URL}/projects/texture-manager`);
+    expect(langs['fr-FR']).toBe(`${SITE_URL}/fr/projects/texture-manager`);
     expect(langs['en-US']).toBe(`${SITE_URL}/en/projects/texture-manager`);
-    expect(langs['x-default']).toBe(`${SITE_URL}/projects/texture-manager`);
+    expect(langs['x-default']).toBe(`${SITE_URL}/fr/projects/texture-manager`);
     expect(md.alternates?.canonical).toBe(`${SITE_URL}/en/projects/texture-manager`);
   });
 

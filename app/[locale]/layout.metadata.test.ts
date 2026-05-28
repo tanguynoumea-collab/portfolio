@@ -26,7 +26,7 @@ import { describe, it, expect, vi } from 'vitest';
 // Faithful as-needed getPathname: fr (defaultLocale) gets no prefix, en gets /en.
 vi.mock('@/i18n/navigation', () => ({
   getPathname: ({ href, locale }: { href: string; locale: string }) =>
-    locale === 'fr' ? href : `/${locale}${href === '/' ? '' : href}`,
+    `/${locale}${href === '/' ? '' : href}`,
 }));
 
 // next-intl/server: flat resolver so t('tagline') → a string.
@@ -83,9 +83,9 @@ describe('root generateMetadata (A11Y-01)', () => {
     );
 
     const langs = md.alternates?.languages as Record<string, string>;
-    expect(langs['fr-FR']).toBe(`${SITE_URL}/`);
+    expect(langs['fr-FR']).toBe(`${SITE_URL}/fr`);
     expect(langs['en-US']).toBe(`${SITE_URL}/en`);
-    expect(langs['x-default']).toBe(`${SITE_URL}/`);
-    expect(md.alternates?.canonical).toBe(`${SITE_URL}/`);
+    expect(langs['x-default']).toBe(`${SITE_URL}/fr`);
+    expect(md.alternates?.canonical).toBe(`${SITE_URL}/fr`);
   });
 });
