@@ -35,7 +35,35 @@
       "bim": "BIM"
     },
     "empty": "Aucun projet ne correspond à ce filtre.",
-    "viewProject": "Voir le projet"
+    "viewProject": "Voir le projet",
+    "detail": {
+      "back": "Tous les projets",
+      "prev": "Précédent",
+      "next": "Suivant",
+      "gallery": "Galerie",
+      "imageZoom": "Zoomer l'image",
+      "copy": "Copier",
+      "copied": "Copié !",
+      "meta": {
+        "tech": "Tech",
+        "design": "Design",
+        "bim": "BIM",
+        "year": "Année",
+        "stack": "Stack",
+        "tools": "Outils",
+        "software": "Logiciels",
+        "scale": {
+          "concept": "Concept",
+          "residential": "Résidentiel",
+          "commercial": "Commercial",
+          "urban": "Urbain"
+        },
+        "location": "Lieu",
+        "repo": "Code",
+        "live": "Voir en ligne",
+        "client": "Client"
+      }
+    }
   },
   "skills": {
     "title": "Compétences",
