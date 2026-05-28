@@ -63,7 +63,11 @@ export function Hero() {
         },
         (ctx) => {
           const nameSplit = new SplitText('[data-hero-name]', {
-            type: 'chars',
+            // 'words' keeps each name word intact so a long name (e.g.
+            // "Tanguy Delrieu") wraps at the space, never mid-word — a
+            // chars-only split lets the line break between letters and
+            // strands one on a second line, breaking the centering.
+            type: 'words,chars',
             aria: 'auto',
             // Pitfall 4-D: SplitText injects per-char <div>s and shifts
             // Hero's height by a few px after creation. Refresh
