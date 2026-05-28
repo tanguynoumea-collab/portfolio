@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: verifying
-stopped_at: Phase 7 context gathered
-last_updated: "2026-05-28T12:49:31.827Z"
+status: executing
+stopped_at: Completed 07-00-deploy-prep-PLAN.md
+last_updated: "2026-05-28T13:16:40.702Z"
 last_activity: 2026-05-28
 progress:
   total_phases: 7
   completed_phases: 6
-  total_plans: 34
-  completed_plans: 34
+  total_plans: 36
+  completed_plans: 35
   percent: 0
 ---
 
@@ -21,13 +21,13 @@ progress:
 See: .planning/PROJECT.md (updated 2026-05-25)
 
 **Core value:** Demontrer le profil creatif hybride Tech/Design/BIM via une experience web personnalisable qui prouve la maitrise technique, le sens du design et l'attention aux details.
-**Current focus:** Phase 06 — seo-accessibility-polish
+**Current focus:** Phase 07 — deployment
 
 ## Current Position
 
-Phase: 7
-Plan: Not started
-Status: Phase complete — ready for verification
+Phase: 07 (deployment) — EXECUTING
+Plan: 2 of 2
+Status: Ready to execute
 Last activity: 2026-05-28
 
 Progress: [░░░░░░░░░░] 0%
@@ -84,6 +84,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 06-seo-accessibility-polish P03 | 4m 30s | 2 tasks | 4 files |
 | Phase 06-seo-accessibility-polish P04 | 13min | 3 tasks | 17 files |
 | Phase 06-seo-accessibility-polish P05 | 4m 22s | 1 tasks | 0 files |
+| Phase 07-deployment P00 | 6m 0s | 3 tasks | 9 files |
 
 ## Accumulated Context
 
@@ -176,6 +177,9 @@ Recent decisions affecting current work:
 - [Phase 06-seo-accessibility-polish]: 06-04: A11Y-04/05/06 audit shipped — 8 vitest-axe surfaces (color-contrast disabled ONLY) incl. PaletteFab icon-only accessible-name proof; global :focus-visible ring via var(--ring); check-reduced-motion.ts + check-image-audit.ts executable gates (exit 0). Suite 336 green.
 - [Phase 06-seo-accessibility-polish]: 06-04: reduced-motion gate caught 5 real ungated motion animations (CategoryFilter/LanguageSwitcher layoutId morph, Contact/CodeBlock icon swap, ProjectGrid filter+layout) — each now gates on useReducedMotion; their test mocks gained useReducedMotion:()=>false. Dropped a dotAll s regex flag in check-image-audit (es2018 vs ES2017 target broke next build TS check).
 - [Phase 06-seo-accessibility-polish]: 06-05: Local Lighthouse mobile gate (A11Y-08) recorded against prod build (/en): Perf 69, A11y 92, BP 96, SEO 92. Perf<90 is env-sensitive (Pitfall 5: GSAP+Lenis+Motion main-thread + local next start vs edge CDN) + architectural (code-split deferred per CLAUDE.md); no deterministic in-scope fix (images all score 1, metadata green, font preloaded). Authoritative >=90 deferred to deployed Vercel URL in Phase 7 per A11Y-08 wording. chrome-launcher EPERM temp-cleanup race on Windows fires after report is written (benign). 336 tests green, lint clean, build exit 0 preserved.
+- [Phase 07-deployment]: 07-00: @vercel/analytics@^2 + @vercel/speed-insights@^2 mounted from /next (NOT /react) as last <body> children in app/[locale]/layout.tsx; layout STAYS a Server Component (the /next wrappers carry their own client boundary, no top-level 'use client'). check-analytics gate enforces the 4 markers + no client directive.
+- [Phase 07-deployment]: 07-00: 3 new tsx exit-0/1 gates modeled on check-i18n-parity.ts — check-analytics (DEPLOY-03 mount), check-env-leak (D-08: git ls-files tracked-tree scan, only NEXT_PUBLIC_SITE_URL allowed + secret heuristics), check-readme (DEPLOY-01: rejects scaffold boilerplate + requires portfolio markers + asserts GITHUB_URL consistency across constants.ts/ascii.ts/README so D-02 owner change moves all three together). Aliased check:analytics/check:env-leak/check:readme.
+- [Phase 07-deployment]: 07-00: ci.yml uses locked research YAML verbatim (Node 22 + npm cache; ci+lint+test+palette/i18n/mdx/reduced-motion/image gates+build); lighthouse deliberately EXCLUDED (env-sensitive, needs running server+headless Chrome — deployed measurement is D-09 HUMAN-UAT in 07-01). Branch renamed master->main (D-01).
 
 ### Pending Todos
 
@@ -190,6 +194,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-05-28T12:49:31.822Z
-Stopped at: Phase 7 context gathered
-Resume file: .planning/phases/07-deployment/07-CONTEXT.md
+Last session: 2026-05-28T13:16:29.405Z
+Stopped at: Completed 07-00-deploy-prep-PLAN.md
+Resume file: None
