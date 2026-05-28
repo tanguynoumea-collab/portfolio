@@ -48,7 +48,7 @@ created: 2026-05-28
 | 06-01-* | 01 | 1 | A11Y-01 | unit | `npx vitest run app/[locale]/projects/[slug]/metadata.test.ts` (type:article + per-project OG + hreflang) | ❌ W1 | ⬜ |
 | 06-01-* | 01 | 1 | A11Y-01 | unit | hreflang map fr→`/`, en→`/en`, x-default→`/` via getPathname | ❌ W1 | ⬜ |
 | 06-01-* | 01 | 1 | A11Y-01 | build/HUMAN | `npm run build` → opengraph-image routes emitted (home + 12); visit `/en/opengraph-image` | ❌ W1 | ⬜ |
-| 06-01-* | 01 | 1 | A11Y-02 | unit | `npx vitest run app/sitemap.test.ts` (13 entries: 1 home + 12 projects, fr/en alternates) | ❌ W1 | ⬜ |
+| 06-01-* | 01 | 1 | A11Y-02 | unit | `npx vitest run app/sitemap.test.ts` (7 entries = 1 home + 6 projects, each with fr/en alternates; slug-driven via getProjectSlugs, NOT hardcoded — the old "13" counted fr+en URLs flat) | ❌ W1 | ⬜ |
 | 06-01-* | 01 | 1 | A11Y-02 | unit | `npx vitest run app/robots.test.ts` (disallow /api/, allow /, sitemap ref) | ❌ W1 | ⬜ |
 | 06-02-* | 02 | 1 | A11Y-03 | unit | `npx vitest run app/[locale]/error.test.tsx` (errors.500 + reset() spy called on click) | ❌ W1 | ⬜ |
 | 06-02-* | 02 | 1 | A11Y-03/EGG-02 | unit | `npx vitest run app/[locale]/not-found.test.tsx` (errors.404 title/message + back `<Link href="/">`) | ❌ W1 | ⬜ |
