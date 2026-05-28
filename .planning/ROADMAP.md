@@ -109,7 +109,11 @@ Decimal phases appear between their surrounding integers in numeric order.
   2. `/{locale}/projects/{slug}` pages are statically generated (one per `locale x slug` pair) and render the MDX content, the frontmatter metadata block (domain-specific fields shown correctly per category), and an image gallery
   3. Custom MDX components (`Image` with zoom modal, `CodeBlock` with rehype-pretty-code highlighting, `Callout` with info/warning/note variants) are usable from any MDX file
   4. Project images receive a subtle parallax effect (factor ~0.3) via GSAP ScrollTrigger that is disabled under `prefers-reduced-motion`
-**Plans**: TBD
+**Plans**: 4 plans (3 waves)
+- [ ] 05-00-content-and-assets-PLAN.md — Wave 0: gallery? type extension + 12 MDX case-study bodies + 24 placeholder images + projects.detail.* i18n + check-mdx-structure.ts gate [CONTENT-01]
+- [ ] 05-01-mdx-components-PLAN.md — Wave 1 (parallel): Image (Dialog zoom) + CodeBlock (pre override + copy) + Callout (3 variants) + mdx-components.tsx wiring [CONTENT-03]
+- [ ] 05-02-parallax-hook-PLAN.md — Wave 1 (parallel): lib/hooks/useParallax.ts (matchMedia dual-branch, no re-register) [ANIM-02]
+- [ ] 05-03-project-page-PLAN.md — Wave 2: app/[locale]/projects/[slug]/page.tsx (relative dynamic import + generateStaticParams + notFound + cover parallax + metadata strip + gallery + prev/next) + ProjectCover island [CONTENT-02, ANIM-02]
 **UI hint**: yes
 
 ### Phase 6: SEO, Accessibility & Polish
@@ -147,6 +151,6 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7
 | 2. Palette System | 0/7 | Not started | - |
 | 3. Layout & Animation Foundation | 0/6 | Complete    | 2026-05-27 |
 | 4. Homepage Sections | 0/6 | Complete    | 2026-05-27 |
-| 5. Project Content Pipeline | 0/TBD | Not started | - |
+| 5. Project Content Pipeline | 0/4 | Not started | - |
 | 6. SEO, Accessibility & Polish | 0/TBD | Not started | - |
 | 7. Deployment | 0/TBD | Not started | - |
