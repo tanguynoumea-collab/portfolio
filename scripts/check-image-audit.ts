@@ -40,7 +40,9 @@ for (const root of ['components', 'app']) {
     // inside a JSDoc comment (e.g. "* <Image> MDX component …" in
     // components/mdx/Image.tsx) is NOT matched — a real next/image usage always
     // has attributes (src + fill|width/height), hence whitespace before them.
-    const blocks = src.match(/<(?:Image|NextImage|MDXImage)\s[^>]*\/?>/gs) ?? [];
+    // `[^>]*` already spans newlines (the negated class matches \n), so no
+    // dotAll `s` flag is needed — and `s` would require tsconfig target es2018+.
+    const blocks = src.match(/<(?:Image|NextImage|MDXImage)\s[^>]*\/?>/g) ?? [];
     for (const b of blocks) {
       const hasFill = /\bfill\b/.test(b);
       const hasDims = /\bwidth=/.test(b) && /\bheight=/.test(b);
