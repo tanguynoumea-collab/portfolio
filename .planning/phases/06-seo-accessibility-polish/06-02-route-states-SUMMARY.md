@@ -82,7 +82,7 @@ Each task was committed atomically:
 2. **Task 2: loading.tsx + project-route loading.tsx** — `1a871b9` (feat)
 3. **Task 3: unit tests (reset spy + reduced-motion gate + role=status)** — `8834b21` (test)
 
-**Plan metadata:** _(this commit)_ (docs: complete plan)
+**Plan metadata:** `d662010` (docs: complete plan)
 
 ## Files Created/Modified
 - `app/[locale]/not-found.tsx` - EGG-02 404; client `useTranslations('errors.404')`, `useReducedMotion()`-gated motion entry, `<Link href="/">` back link, palette colors only.
