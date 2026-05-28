@@ -88,7 +88,7 @@ Wave 0 — ship the content + type + i18n + asset foundation that unblocks the W
 This plan: (1) extends the discriminated `Project` type with an optional `gallery?: string[]` field (D-14) plus a backward-compat unit test, (2) authors all 12 MDX case-study bodies per the D-01 4-heading structure (250-400 words/locale, plausible first-person placeholders — NOT lorem ipsum), (3) adds `gallery` frontmatter to 2 demo projects (texture-manager Tech + brand-system Design per D-03), (4) seeds 24 placeholder gallery images, (5) adds the `projects.detail.*` i18n namespace to both locales (parity-gated), (6) updates `_template.{fr,en}.mdx` to the case-study scaffold, and (7) ships `scripts/check-mdx-structure.ts` — the new CONTENT-01 gate that asserts 4 H2 sections + word count.
 
 Purpose: Wave 2's `app/[locale]/projects/[slug]/page.tsx` cannot render MDX, show metadata, or gate the gallery section without these bodies, type field, i18n keys, and assets in place. This is the sequential blocker for plan 05-03.
-Output: 12 enriched MDX files, extended `lib/projects.ts` + test, new `check-mdx-structure.ts` script, `projects.detail.*` keys in both messages files, 24 placeholder images, updated template.
+Output: 12 enriched MDX files, extended `lib/projects.ts` + test, new `check-mdx-structure.ts` script, the `projects.detail.*` namespace (**22 leaf keys per locale** per RESEARCH §9: 7 top-level `detail` keys + `meta` 11 keys + `meta.scale` 4 keys = 44 additions across both files) in both messages files, 24 placeholder images, updated template.
 </objective>
 
 <execution_context>
@@ -244,7 +244,7 @@ Existing loaders (no signature changes — just the new field flows through): `g
   <read_first>
     - scripts/check-i18n-parity.ts (sibling script — copy its tsx/Node style, exit-code convention, and the way it walks messages files)
     - lib/projects.ts (for the `_` filter convention + gray-matter usage to mirror in the new script)
-    - .planning/phases/05-project-content-pipeline/05-RESEARCH.md §"Code Examples" #9 (the exact projects.detail.* JSON for both locales)
+    - .planning/phases/05-project-content-pipeline/05-RESEARCH.md §"Code Examples" #9 (the exact projects.detail.* JSON for both locales — 22 leaf keys/locale)
     - .planning/phases/05-project-content-pipeline/05-VALIDATION.md (Wave 0 Requirements — the script's exact assertions)
     - messages/fr.json + messages/en.json (existing structure — projects.detail.* is ADDITIVE; preserve all existing keys)
   </read_first>
@@ -256,7 +256,7 @@ Existing loaders (no signature changes — just the new field flows through): `g
     - Word count: `const words = body.split(/\s+/).filter(Boolean).length;` assert `words >= 250 && words <= 400`. (Strip MDX component tags from the count is NOT required — count the raw body words; the 250-400 target already accounts for occasional Callout/code content.)
     - Collect ALL failures, print each as `❌ {file}: {reason}`, and `process.exit(1)` if any failure; else print `✅ N files OK` and `process.exit(0)`. No `any` — type the gray-matter result and the file list.
 
-    Add the `projects.detail.*` namespace to BOTH `messages/fr.json` and `messages/en.json` per RESEARCH.md Code Example #9 (verbatim). FR values: back="Tous les projets", prev="Précédent", next="Suivant", gallery="Galerie", imageZoom="Zoomer l'image", copy="Copier", copied="Copié !", and a `meta` object with tech/design/bim, year="Année", stack="Stack", tools="Outils", software="Logiciels", a nested `scale` object {concept:"Concept", residential:"Résidentiel", commercial:"Commercial", urban:"Urbain"}, location="Lieu", repo="Code", live="Voir en ligne", client="Client". EN values per the same example (back="All projects", prev="Previous", next="Next", gallery="Gallery", imageZoom="Zoom image", copy="Copy", copied="Copied!", meta.scale {concept:"Concept", residential:"Residential", commercial:"Commercial", urban:"Urban"}, location="Location", repo="Source", live="Live demo", client="Client"). This namespace nests under the EXISTING top-level `projects` key — merge into it, do NOT create a duplicate `projects` key. Preserve every existing key in both files.
+    Add the `projects.detail.*` namespace to BOTH `messages/fr.json` and `messages/en.json` per RESEARCH.md Code Example #9 (verbatim — the COMPLETE 22-leaf-key object, not a subset). The namespace has exactly 22 leaf keys per locale: 7 direct children of `detail` (back, prev, next, gallery, imageZoom, copy, copied) + an 11-key `meta` object (tech, design, bim, year, stack, tools, software, location, repo, live, client) + a 4-key `meta.scale` object (concept, residential, commercial, urban). FR values: back="Tous les projets", prev="Précédent", next="Suivant", gallery="Galerie", imageZoom="Zoomer l'image", copy="Copier", copied="Copié !", and a `meta` object with tech="Tech", design="Design", bim="BIM", year="Année", stack="Stack", tools="Outils", software="Logiciels", a nested `scale` object {concept:"Concept", residential:"Résidentiel", commercial:"Commercial", urban:"Urbain"}, location="Lieu", repo="Code", live="Voir en ligne", client="Client". EN values per the same example (back="All projects", prev="Previous", next="Next", gallery="Gallery", imageZoom="Zoom image", copy="Copy", copied="Copied!", meta {tech:"Tech", design:"Design", bim:"BIM", year:"Year", stack:"Stack", tools:"Tools", software:"Software", location:"Location", repo:"Source", live:"Live demo", client:"Client"}, meta.scale {concept:"Concept", residential:"Residential", commercial:"Commercial", urban:"Urban"}). The discriminator-label keys `meta.tech`/`meta.design`/`meta.bim` are consumed by 05-03 via `t(\`meta.${project.category}\`)` and the scale keys via `t(\`meta.scale.${project.projectScale}\`)` — they are NOT optional; if omitted, the project page renders raw key strings instead of category/scale labels (silent degradation that `check-i18n-parity.ts` cannot catch because both locales would be equally missing them). This namespace nests under the EXISTING top-level `projects` key — merge into it, do NOT create a duplicate `projects` key. Preserve every existing key in both files.
 
     Seed 24 placeholder gallery images: copy the existing `public/projects/agora/cover.jpg` to `public/projects/{slug}/[1-4].jpg` for all 6 slugs (agora, texture-manager, brand-system, editorial-grid, residential-renovation, tower-concept). Use a shell loop (Bash) or Node fs.copyFileSync. All 24 share the one source JPEG — visual repetition signals "swap before deploy". The 6 per-slug directories already exist (each has cover.jpg). Verify all 24 files exist after.
   </action>
@@ -268,11 +268,14 @@ Existing loaders (no signature changes — just the new field flows through): `g
     - scripts/check-mdx-structure.ts contains '## Contexte' and '## Context'
     - messages/fr.json contains '"detail"' and '"imageZoom": "Zoomer l\'image"' and '"residential": "Résidentiel"'
     - messages/en.json contains '"detail"' and '"live": "Live demo"'
+    - DISCRIMINATOR-LABEL keys present in BOTH locales (consumed by 05-03 — assert each): messages/fr.json AND messages/en.json each contain '"tech":', '"design":', and '"bim":' under projects.detail.meta (grep: all three appear in each file)
+    - SCALE sub-keys present in BOTH locales (representative bounds — assert lowest + highest): messages/fr.json AND messages/en.json each contain '"concept":' and '"urban":' under projects.detail.meta.scale
+    - Leaf-key COUNT is 22 per locale and internally consistent with the objective: the `projects.detail` object resolves to exactly 22 leaf string values per locale (7 direct + 11 meta + 4 meta.scale). A quick parity-of-shape check: `node -e "const m=require('./messages/fr.json').projects.detail; const n=(o)=>Object.values(o).reduce((a,v)=>a+(typeof v==='object'?n(v):1),0); process.exit(n(m)===22?0:1)"` exits 0 (and the same against en.json exits 0)
     - 24 files exist matching public/projects/*/[1-4].jpg (verify: count = 24)
     - `npx tsx scripts/check-mdx-structure.ts` exits 0
     - `npx tsx scripts/check-i18n-parity.ts` exits 0 (FR/EN parity preserved after additions)
   </acceptance_criteria>
-  <done>New CONTENT-01 structure gate passes on all 12 bodies; projects.detail.* keys present in both locales at parity; 24 placeholder gallery images seeded.</done>
+  <done>New CONTENT-01 structure gate passes on all 12 bodies; projects.detail.* keys present in both locales at parity (full 22-leaf-key object including meta.tech/design/bim + meta.scale.* discriminator labels); 24 placeholder gallery images seeded.</done>
 </task>
 
 </tasks>
@@ -293,3 +296,5 @@ CONTENT-01 satisfied: 6 projects × 2 locales = 12 MDX files with valid discrimi
 <output>
 After completion, create `.planning/phases/05-project-content-pipeline/05-00-SUMMARY.md`
 </output>
+</content>
+</invoke>
