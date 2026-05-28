@@ -83,7 +83,7 @@ Requirements for initial release. Each maps to roadmap phases.
 ### Deployment
 
 - [x] **DEPLOY-01**: Le repo GitHub `tanguynoumea/portfolio` existe (public ou privé), avec README.md de base, et `main` contient le code production
-- [ ] **DEPLOY-02**: Vercel est connecté au repo via l'intégration GitHub, déploie automatiquement sur push `main`, et l'URL de production est accessible
+- [x] **DEPLOY-02**: Vercel est connecté au repo via l'intégration GitHub, déploie automatiquement sur push `main`, et l'URL de production est accessible (live: https://detportfolio.vercel.app)
 - [x] **DEPLOY-03**: `@vercel/analytics` et `@vercel/speed-insights` sont installés et actifs en production (Web Vitals trackés, pas de leak d'env vars NEXT_PUBLIC_ sensibles)
 
 ## v2 Requirements
@@ -187,7 +187,7 @@ Populated by `gsd-roadmapper` on 2026-05-25.
 | A11Y-07 | Phase 6 | Complete |
 | A11Y-08 | Phase 6 | Complete |
 | DEPLOY-01 | Phase 7 | Complete |
-| DEPLOY-02 | Phase 7 | Pending |
+| DEPLOY-02 | Phase 7 | Complete |
 | DEPLOY-03 | Phase 7 | Complete |
 
 **Coverage:**
