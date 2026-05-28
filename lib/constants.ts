@@ -11,7 +11,7 @@
  * inlines the same URLs; Phase 4 deferred refactor is to migrate Footer to
  * import from this file too — not in scope for Phase 4).
  */
-export const EMAIL = 'tanguy@example.com';
+export const EMAIL = 'tanguy.delrieu@estp.fr';
 export const GITHUB_URL = 'https://github.com/tanguynoumea-collab/portfolio';
 export const LINKEDIN_URL = 'https://www.linkedin.com/in/tanguy-delrieu';
 

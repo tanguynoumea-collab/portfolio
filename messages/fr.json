@@ -12,8 +12,8 @@
   },
   "hero": {
     "name": "Tanguy",
-    "role": "Tech × Design × BIM",
-    "tagline": "Profil hybride au croisement du développement, du design et de l'architecture.",
+    "role": "Ingénieur BIM",
+    "tagline": "Coordination et modélisation BIM, du modèle numérique au suivi de chantier.",
     "cta": "Découvrir mon travail",
     "scrollCue": "Faire défiler vers les projets"
   },
@@ -22,8 +22,8 @@
     "intro": "À compléter en Phase 4.",
     "details": "À compléter en Phase 4.",
     "paragraphs": {
-      "1": "Je suis Tanguy, profil hybride au croisement du développement web, du design graphique et de l'architecture BIM. Mon parcours mêle des projets de gestion de textures procédurales pour la 3D temps réel, des refontes d'identité visuelle complètes et des études conceptuelles d'architecture résidentielle écologique.",
-      "2": "Ce portfolio est lui-même une démonstration : système de palettes interactif WCAG-compliant, animations GSAP soignées, contenu MDX bilingue. Chaque détail vise à prouver la maîtrise technique, le sens du design et l'attention portée à l'utilisateur. Je suis disponible pour discuter de projets qui croisent ces trois disciplines."
+      "1": "Je suis Tanguy Delrieu, ingénieur BIM diplômé de l'École Spéciale des Travaux Publics de Paris (ESTP). Originaire de Nouméa, je me spécialise dans la coordination et la modélisation de maquettes numériques pour le bâtiment, du gros œuvre à la mise en service.",
+      "2": "J'ai coordonné des maquettes BIM chez Vinci Construction à Genève — récolement via HoloLens 2 et suivi des BCF sur BimCollab — et assuré le suivi de chantiers en gros œuvre et en rénovation en Nouvelle-Calédonie. Je travaille avec Revit, Navisworks et NEXT-BIM, et je m'intéresse à tout ce qui rapproche le modèle numérique du terrain."
     }
   },
   "projects": {
@@ -69,16 +69,16 @@
     "title": "Compétences",
     "groups": {
       "tech": {
-        "label": "Développement",
-        "items": ["TypeScript", "React", "Next.js", "Node.js", "Tailwind", "GSAP", "Three.js"]
+        "label": "Logiciels BIM",
+        "items": ["Revit", "Navisworks", "NEXT-BIM", "BimCollab", "AutoCAD"]
       },
       "design": {
-        "label": "Design",
-        "items": ["Figma", "Photoshop", "Illustrator", "InDesign", "Design System", "Branding", "Typography"]
+        "label": "Coordination & chantier",
+        "items": ["Coordination BIM", "Suivi de chantier", "HoloLens 2", "Récolement", "Autocontrôles"]
       },
       "bim": {
-        "label": "Architecture & BIM",
-        "items": ["Revit", "ArchiCAD", "Rhino", "Grasshopper", "AutoCAD", "Twinmotion", "Lumion"]
+        "label": "Méthodes & économie",
+        "items": ["Économie de la construction", "Chiffrage", "Conception de plans", "Mise en service", "BCF"]
       }
     }
   },

@@ -14,14 +14,14 @@ import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { OgCard, OG_SIZE } from '@/lib/og';
 
-export const alt = 'Tanguy Delrieu — Tech × Design × BIM';
+export const alt = 'Tanguy Delrieu — Ingénieur BIM';
 export const size = OG_SIZE;
 export const contentType = 'image/png';
 
 export default async function Image() {
   const inter = await readFile(join(process.cwd(), 'assets/Inter-SemiBold.ttf'));
   return new ImageResponse(
-    <OgCard title="Tanguy Delrieu" subtitle="Tech × Design × BIM" />,
+    <OgCard title="Tanguy Delrieu" subtitle="Ingénieur BIM" />,
     {
       ...size,
       fonts: [{ name: 'Inter', data: inter, style: 'normal', weight: 600 }],

@@ -66,7 +66,7 @@ import { Code2, Briefcase, Mail } from 'lucide-react';
 
 const PORTFOLIO_REPO = 'https://github.com/tanguynoumea-collab/portfolio';
 const LINKEDIN_URL = 'https://www.linkedin.com/in/tanguy-delrieu';
-const CONTACT_EMAIL = 'mailto:contact@tanguy-delrieu.dev';
+const CONTACT_EMAIL = 'mailto:tanguy.delrieu@estp.fr';
 
 export function Footer({ year }: { year: number }) {
   const t = useTranslations('footer');

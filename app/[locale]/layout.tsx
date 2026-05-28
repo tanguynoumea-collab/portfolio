@@ -94,7 +94,7 @@ export async function generateMetadata({
 
   return {
     metadataBase: new URL(SITE_URL),
-    title: 'Tanguy Delrieu — Tech × Design × BIM',
+    title: 'Tanguy Delrieu — Ingénieur BIM',
     description: t('tagline'),
     alternates: {
       canonical,
@@ -103,14 +103,14 @@ export async function generateMetadata({
     openGraph: {
       type: 'website',
       locale: locale === 'fr' ? 'fr_FR' : 'en_US',
-      title: 'Tanguy Delrieu — Tech × Design × BIM',
+      title: 'Tanguy Delrieu — Ingénieur BIM',
       description: t('tagline'),
       siteName: 'Tanguy Delrieu',
       url: canonical,
     },
     twitter: {
       card: 'summary_large_image',
-      title: 'Tanguy Delrieu — Tech × Design × BIM',
+      title: 'Tanguy Delrieu — Ingénieur BIM',
       description: t('tagline'),
     },
   };

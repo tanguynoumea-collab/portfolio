@@ -12,8 +12,8 @@
   },
   "hero": {
     "name": "Tanguy",
-    "role": "Tech × Design × BIM",
-    "tagline": "Hybrid profile at the crossroads of development, design, and architecture.",
+    "role": "BIM Engineer",
+    "tagline": "BIM coordination and modeling — from the digital model to on-site delivery.",
     "cta": "See my work",
     "scrollCue": "Scroll to projects"
   },
@@ -22,8 +22,8 @@
     "intro": "To be completed in Phase 4.",
     "details": "To be completed in Phase 4.",
     "paragraphs": {
-      "1": "I'm Tanguy, a hybrid profile at the crossroads of web development, graphic design, and BIM architecture. My work spans procedural texture management tools for real-time 3D, full visual identity redesigns, and conceptual studies of ecological residential architecture.",
-      "2": "This portfolio is itself a demonstration: an interactive WCAG-compliant palette system, polished GSAP animations, bilingual MDX content. Every detail aims to prove technical mastery, design sensibility, and attention to user experience. I'm available to discuss projects that bridge these three disciplines."
+      "1": "I'm Tanguy Delrieu, a BIM engineer trained at the École Spéciale des Travaux Publics de Paris (ESTP). Originally from Nouméa, I specialize in coordinating and modeling digital building models — from structural works through to commissioning.",
+      "2": "I've coordinated BIM models at Vinci Construction in Geneva — as-built capture with the HoloLens 2 and BCF tracking on BimCollab — and run site supervision on structural and renovation projects in New Caledonia. I work with Revit, Navisworks and NEXT-BIM, and I'm drawn to everything that brings the digital model closer to the field."
     }
   },
   "projects": {
@@ -69,16 +69,16 @@
     "title": "Skills",
     "groups": {
       "tech": {
-        "label": "Development",
-        "items": ["TypeScript", "React", "Next.js", "Node.js", "Tailwind", "GSAP", "Three.js"]
+        "label": "BIM Software",
+        "items": ["Revit", "Navisworks", "NEXT-BIM", "BimCollab", "AutoCAD"]
       },
       "design": {
-        "label": "Design",
-        "items": ["Figma", "Photoshop", "Illustrator", "InDesign", "Design System", "Branding", "Typography"]
+        "label": "Coordination & site",
+        "items": ["BIM coordination", "Site supervision", "HoloLens 2", "As-built capture", "Self-inspections"]
       },
       "bim": {
-        "label": "Architecture & BIM",
-        "items": ["Revit", "ArchiCAD", "Rhino", "Grasshopper", "AutoCAD", "Twinmotion", "Lumion"]
+        "label": "Methods & cost",
+        "items": ["Construction economics", "Cost estimating", "Drawing production", "Commissioning", "BCF"]
       }
     }
   },

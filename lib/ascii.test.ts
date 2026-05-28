@@ -20,14 +20,14 @@ import { getAsciiArt, ASCII_GITHUB_URL, ASCII_KONAMI_HINT } from './ascii';
 describe('lib/ascii (EGG-01) — bilingual signature content', () => {
   it('FR variant contains the French intro phrase', () => {
     const out = getAsciiArt('fr');
-    expect(out).toContain('Profil hybride');
-    expect(out).toContain('Tech × Design × BIM');
+    expect(out).toContain('Ingénieur BIM');
+    expect(out).toContain('coordination & modélisation');
   });
 
   it('EN variant contains the English intro phrase', () => {
     const out = getAsciiArt('en');
-    expect(out).toContain('Hybrid profile');
-    expect(out).toContain('Tech × Design × BIM');
+    expect(out).toContain('BIM Engineer');
+    expect(out).toContain('coordination & modeling');
   });
 
   it('contains the portfolio GitHub URL exactly', () => {
