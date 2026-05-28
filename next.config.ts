@@ -16,7 +16,10 @@ const withNextIntl = createNextIntlPlugin('./i18n/request.ts');
  */
 const withMDX = createMDX({
   options: {
-    remarkPlugins: [['remark-gfm', {}]],
+    // remark-frontmatter strips the YAML `---…---` block so it is NOT rendered as
+    // body text on project pages (gray-matter parses it separately for metadata).
+    // Must come before remark-gfm so the frontmatter node is removed early.
+    remarkPlugins: [['remark-frontmatter', 'yaml'], ['remark-gfm', {}]],
     rehypePlugins: [['rehype-pretty-code', { theme: 'github-dark-dimmed', keepBackground: false }]],
   },
 });
