@@ -62,7 +62,7 @@ Requirements for initial release. Each maps to roadmap phases.
 ### Animations Avancées
 
 - [ ] **ANIM-01**: `app/template.tsx` wraps chaque page avec motion `AnimatePresence mode="popLayout"` pour transitions de route (fade + petite translation), durée ≤ 350ms
-- [ ] **ANIM-02**: Parallaxe douce sur les images projet (factor ≈ 0.3) via GSAP ScrollTrigger dans `useGSAP()` hooks, respecte `prefers-reduced-motion`
+- [x] **ANIM-02**: Parallaxe douce sur les images projet (factor ≈ 0.3) via GSAP ScrollTrigger dans `useGSAP()` hooks, respecte `prefers-reduced-motion`
 
 ### Easter Eggs & Personality
 
@@ -175,7 +175,7 @@ Populated by `gsd-roadmapper` on 2026-05-25.
 | CONTENT-02 | Phase 5 | Pending |
 | CONTENT-03 | Phase 5 | Complete |
 | ANIM-01 | Phase 3 | Pending |
-| ANIM-02 | Phase 5 | Pending |
+| ANIM-02 | Phase 5 | Complete |
 | EGG-01 | Phase 3 | Pending |
 | EGG-02 | Phase 6 | Pending |
 | A11Y-01 | Phase 6 | Pending |
