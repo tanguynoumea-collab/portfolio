@@ -14,3 +14,15 @@
 export const EMAIL = 'tanguy@example.com';
 export const GITHUB_URL = 'https://github.com/tanguynoumea/portfolio';
 export const LINKEDIN_URL = 'https://www.linkedin.com/in/tanguy-delrieu';
+
+/**
+ * SITE_URL — the canonical origin used as `metadataBase` (Phase 6 D-01) and
+ * the base for absolute hreflang / sitemap / OG URLs.
+ *
+ * Env-aware: `NEXT_PUBLIC_SITE_URL` overrides the placeholder before deploy
+ * (Phase 7 sets the real domain). The trailing slash is stripped so
+ * `${SITE_URL}${pathname}` never produces a double slash.
+ */
+export const SITE_URL = (
+  process.env.NEXT_PUBLIC_SITE_URL ?? 'https://tanguy.dev'
+).replace(/\/$/, '');

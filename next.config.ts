@@ -23,6 +23,11 @@ const withMDX = createMDX({
 
 const nextConfig: NextConfig = {
   pageExtensions: ['ts', 'tsx', 'md', 'mdx'],
+  images: {
+    // A11Y-06 (D-13): serve modern formats. AVIF first (best compression),
+    // WebP fallback, then the browser's last-resort original.
+    formats: ['image/avif', 'image/webp'],
+  },
 };
 
 export default withNextIntl(withMDX(nextConfig));
