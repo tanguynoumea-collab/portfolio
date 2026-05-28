@@ -107,12 +107,15 @@ Démontrer le profil créatif hybride Tech/Design/BIM via une expérience web pe
 
 #### Déploiement
 
-#### Déploiement
+**Validated in Phase 7: Deployment (2026-05-28) — MILESTONE v1.0 SHIPPED 🎉**
 
-- [ ] Repo Git initialisé avec `.gitignore` et premier commit
-- [ ] Repo GitHub `tanguynoumea/portfolio` créé et code pushé
-- [ ] Connexion Vercel via intégration GitHub et déploiement production
-- [ ] Vercel Analytics + Speed Insights configurés
+- [x] Repo Git initialisé avec `.gitignore` complet (Phase 1) + repo GitHub **public** créé à **`tanguynoumea-collab/portfolio`** (le namespace `tanguynoumea` n'existait pas ; refs GITHUB_URL alignées dans constants.ts/ascii.ts/README/Footer.tsx) + `main` poussé avec l'historique complet + README portfolio réel + CI GitHub Actions (lint/test/gates/build) [DEPLOY-01]
+- [x] **Vercel connecté** via l'intégration GitHub (zéro-config Next 16), **URL de production live + publique : https://detportfolio.vercel.app**, auto-déploiement sur chaque push `main` [DEPLOY-02]
+- [x] **`@vercel/analytics` + `@vercel/speed-insights`** montés (layout) + activés dans le dashboard Vercel ; aucun leak `NEXT_PUBLIC_*` (seul `NEXT_PUBLIC_SITE_URL`, origine publique) [DEPLOY-03]
+
+**Lighthouse mobile déployé (PageSpeed) :** Accessibilité **92** ✓ · Bonnes pratiques **100** ✓ · SEO **100** ✓ · Performance **68** (FCP 0,2s / LCP 0,7s / SI 1,1s excellents ; TBT 1080ms = coût JS du trio GSAP+Lenis+Motion). **A11Y-08 : 3/4 axes ≥90 ; Performance 68 = arbitrage produit assumé** (portfolio créatif animé — l'utilisateur a choisi de livrer ainsi ; optimisation `next/dynamic`/allègement Motion = candidat v2).
+
+**Correctifs post-déploiement (trouvés + corrigés live, vérifiés navigateur) :** SITE_URL → origine réelle ; `localePrefix` `as-needed`→`always` (home FR à `/` était cassée — sans `<html lang>`/`<title>`) ; transition de page déplacée root→`[locale]` (le template racine remontait toute l'app à chaque navigation → page blanche) ; `remark-frontmatter` ajouté (le frontmatter YAML s'affichait en clair sur les pages projet).
 
 ### Out of Scope
 
@@ -197,4 +200,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-05-28 after Phase 6 completion (SEO, Accessibility & Polish) — audit gate passed (Phase-6-controllable scope): full per-route metadata (metadataBase + openGraph + twitter + hreflang via next-intl getPathname, as-needed-aware) + 2 dynamic `next/og` branded OG cards (Satori, Terra colors via oklchToHex) + slug-driven `sitemap.ts` (7 entries w/ alternates) + `robots.ts` ; route-state trio `not-found.tsx` (EGG-02 playful bilingual 404, motion entry reduced-motion-gated) + `error.tsx` (client, reset() prop — not Server Action) + `loading.tsx` ×2 ; a11y audit = 8 `vitest-axe` surfaces (zero violations, only color-contrast disabled) + global `:focus-visible` ring ; two exit-0 regression gates `check-reduced-motion.ts` (caught + fixed 5 ungated motion files from prior phases) + `check-image-audit.ts` + `images.formats` avif/webp ; seeded palette stress test (40 random harmonic palettes — FOUND + FIXED a real `generateHarmonic` sub-3.0 contrast bug via new `clampUiContrast`). 336/336 Vitest tests green (276 Phase 5 + 49 net : +8 a11y + 41 stress). Lighthouse mobile local: A11y 92 / BP 96 / SEO 92 ✓, **Performance 69** (animation-stack JS + local server sans edge CDN — authoritative ≥90 deferred to deployed Vercel = Phase 7, #1 watch item). All 9 A11Y/EGG REQs Complete (5/5 must-have truth-groups verified) ; 3 manual browser/deploy checks tracked in 06-HUMAN-UAT.md. New dev deps only: `vitest-axe@1.0.0-pre.5` + `lighthouse@^13.3.0` (`next/og` built-in, no @vercel/og). Next: Phase 7 — Deployment (GitHub + Vercel + Analytics/Speed Insights), where deployed Lighthouse ≥90 gets its authoritative measurement.*
+*Last updated: 2026-05-28 — **MILESTONE v1.0 SHIPPED 🎉** (Phase 7: Deployment complete). Live: **https://detportfolio.vercel.app** · Repo: **github.com/tanguynoumea-collab/portfolio** (public, auto-deploy on `main`) · Vercel Analytics + Speed Insights active. All 7 phases + 52/52 requirements complete. Deployed Lighthouse mobile: A11y 92 / Best-Practices 100 / SEO 100 ✓ ; Performance 68 (FCP 0.2s/LCP 0.7s excellent; TBT 1080ms = GSAP+Lenis+Motion animation stack — A11Y-08's ≥90-all-axes is met on 3/4, Performance is an accepted creative-portfolio trade-off, v2 optimization candidate). 336/336 Vitest tests green. Post-launch hotfixes: SITE_URL, localePrefix as-needed→always (fixed broken FR root), root→[locale] template relocation (fixed blank-page-on-navigation), remark-frontmatter (fixed YAML leak on project pages). Remaining = user content swaps (PRE-DEPLOY-CHECKLIST.md): real bio/photo/email/LinkedIn/project covers+galleries/MDX bodies/CV-EN. v2 candidates: animation perf optimization, blog, 3D BIM viewer, palette export, contact-form backend, custom domain.*

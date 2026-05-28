@@ -20,7 +20,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 4: Homepage Sections** - Hero with SplitText, About, filterable Projects grid, Skills, and Contact with CV PDF downloads (completed 2026-05-27)
 - [ ] **Phase 5: Project Content Pipeline** - 12 MDX files (6 projects x 2 locales), discriminated Project type, project detail pages with galleries and parallax
 - [ ] **Phase 6: SEO, Accessibility & Polish** - Metadata, sitemap, robots, loading/error states, a11y audit, reduced-motion, palette stress test, Lighthouse 90+, custom 404
-- [ ] **Phase 7: Deployment** - Git + GitHub repo, Vercel auto-deploy, Analytics + Speed Insights
+- [x] **Phase 7: Deployment** - Git + GitHub repo, Vercel auto-deploy, Analytics + Speed Insights (completed 2026-05-28 — live: https://detportfolio.vercel.app)
 
 ## Phase Details
 
@@ -161,4 +161,4 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7
 | 4. Homepage Sections | 0/6 | Complete    | 2026-05-27 |
 | 5. Project Content Pipeline | 0/4 | Not started | - |
 | 6. SEO, Accessibility & Polish | 0/6 | Not started | - |
-| 7. Deployment | 0/2 | Not started | - |
+| 7. Deployment | 2/2 | Complete    | 2026-05-28 |
