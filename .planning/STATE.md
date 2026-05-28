@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: executing
-stopped_at: Completed 06-04-a11y-audit-PLAN.md
-last_updated: "2026-05-28T12:28:16.998Z"
+status: verifying
+stopped_at: "Completed 06-05-lighthouse-PLAN.md (Phase 6 execution complete: 6/6)"
+last_updated: "2026-05-28T12:35:32.347Z"
 last_activity: 2026-05-28
 progress:
   total_phases: 7
-  completed_phases: 5
+  completed_phases: 6
   total_plans: 34
-  completed_plans: 33
+  completed_plans: 34
   percent: 0
 ---
 
@@ -27,7 +27,7 @@ See: .planning/PROJECT.md (updated 2026-05-25)
 
 Phase: 06 (seo-accessibility-polish) — EXECUTING
 Plan: 6 of 6
-Status: Ready to execute
+Status: Phase complete — ready for verification
 Last activity: 2026-05-28
 
 Progress: [░░░░░░░░░░] 0%
@@ -83,6 +83,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 06-seo-accessibility-polish P02 | 4min | 3 tasks | 7 files |
 | Phase 06-seo-accessibility-polish P03 | 4m 30s | 2 tasks | 4 files |
 | Phase 06-seo-accessibility-polish P04 | 13min | 3 tasks | 17 files |
+| Phase 06-seo-accessibility-polish P05 | 4m 22s | 1 tasks | 0 files |
 
 ## Accumulated Context
 
@@ -174,6 +175,7 @@ Recent decisions affecting current work:
 - [Phase 06-seo-accessibility-polish]: 06-03: Fixed a real A11Y-07 defect in generateHarmonic — pale/high-L sources yielded accent/secondary below the 3.0 UI contrast threshold against the derived light bg (as low as 1.22), and applyMatrixAdjust (D-11) can't fix them (only shifts text/textMuted). Added clampUiContrast (L-only shift, hue+chroma preserved) clamping accent/secondary against bg + surface at generation time. D-11 invariant + Test 27 intact; harmonic hue offsets preserved.
 - [Phase 06-seo-accessibility-polish]: 06-04: A11Y-04/05/06 audit shipped — 8 vitest-axe surfaces (color-contrast disabled ONLY) incl. PaletteFab icon-only accessible-name proof; global :focus-visible ring via var(--ring); check-reduced-motion.ts + check-image-audit.ts executable gates (exit 0). Suite 336 green.
 - [Phase 06-seo-accessibility-polish]: 06-04: reduced-motion gate caught 5 real ungated motion animations (CategoryFilter/LanguageSwitcher layoutId morph, Contact/CodeBlock icon swap, ProjectGrid filter+layout) — each now gates on useReducedMotion; their test mocks gained useReducedMotion:()=>false. Dropped a dotAll s regex flag in check-image-audit (es2018 vs ES2017 target broke next build TS check).
+- [Phase 06-seo-accessibility-polish]: 06-05: Local Lighthouse mobile gate (A11Y-08) recorded against prod build (/en): Perf 69, A11y 92, BP 96, SEO 92. Perf<90 is env-sensitive (Pitfall 5: GSAP+Lenis+Motion main-thread + local next start vs edge CDN) + architectural (code-split deferred per CLAUDE.md); no deterministic in-scope fix (images all score 1, metadata green, font preloaded). Authoritative >=90 deferred to deployed Vercel URL in Phase 7 per A11Y-08 wording. chrome-launcher EPERM temp-cleanup race on Windows fires after report is written (benign). 336 tests green, lint clean, build exit 0 preserved.
 
 ### Pending Todos
 
@@ -188,6 +190,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-05-28T12:28:16.993Z
-Stopped at: Completed 06-04-a11y-audit-PLAN.md
+Last session: 2026-05-28T12:35:20.552Z
+Stopped at: Completed 06-05-lighthouse-PLAN.md (Phase 6 execution complete: 6/6)
 Resume file: None

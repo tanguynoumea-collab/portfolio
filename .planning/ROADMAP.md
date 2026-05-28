@@ -132,7 +132,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] 06-02-route-states-PLAN.md — Wave 1: not-found.tsx (EGG-02, motion-gated 404) + error.tsx (client, reset()) + loading.tsx (locale + project route) [A11Y-03, EGG-02]
 - [x] 06-03-palette-stress-test-PLAN.md — Wave 1: seeded 10-random x 4-mode stress test (validateFullMatrix + OKLCh parse) + tsx gate [A11Y-07]
 - [x] 06-04-a11y-audit-PLAN.md — Wave 2: vitest-axe tests on 8 surfaces + :focus-visible ring + check-reduced-motion.ts gate + check-image-audit.ts gate [A11Y-04, A11Y-05, A11Y-06]
-- [ ] 06-05-lighthouse-PLAN.md — Wave 2: production build + lighthouse:mobile run, record 4 scores, fix deterministic <90 [A11Y-08]
+- [x] 06-05-lighthouse-PLAN.md — Wave 2: production build + lighthouse:mobile run, record 4 scores, fix deterministic <90 [A11Y-08]
 **UI hint**: yes
 
 ### Phase 7: Deployment
