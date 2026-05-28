@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Unit tests
+        run: npm test
+
+      - name: Palette validation
+        run: npm run test:palettes
+
+      - name: Palette stress test
+        run: npm run test:stress
+
+      - name: i18n parity gate
+        run: npx tsx scripts/check-i18n-parity.ts
+
+      - name: MDX structure gate
+        run: npx tsx scripts/check-mdx-structure.ts
+
+      - name: Reduced-motion gate
+        run: npm run check:reduced-motion
+
+      - name: Image audit gate
+        run: npm run check:images
+
+      - name: Build
+        run: npm run build

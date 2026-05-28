@@ -1,36 +1,65 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Tanguy Delrieu — Portfolio
 
-## Getting Started
+**Bilingual (FR/EN) creative portfolio. Hybrid profile: Tech × Design × BIM.**
 
-First, run the development server:
+A personal portfolio that doubles as a living demo of what I build — a complement to the PDF CV, showcasing a hybrid profile across **development**, **creative design**, and **architecture / BIM**. The site is its own proof of work: technically rigorous, design-led, and obsessive about the details.
+
+> **Live:** https://tanguy.dev _(production URL finalized after the Vercel connect — see Deployment)_
+
+## Signature features
+
+- **Runtime WCAG-aware palette switcher** — 4 presets + a custom HSL color picker + a harmonic palette generator with live contrast readouts, all computed in **OKLCh** so the theme adjusts perceptually and never drops below WCAG AA (4.5:1). The whole UI re-themes live, with no rebuild and no reload.
+- **Secret Vaporwave palette** — unlocked via the Konami code (↑ ↑ ↓ ↓ ← → ← → B A), with a confetti flourish.
+- **Bilingual FR/EN** — fully localized `/fr` and `/en` routes (next-intl, `as-needed` prefixing), with hreflang, localized metadata, and a typed message catalog.
+- **Animation stack** — GSAP (ScrollTrigger / SplitText) + Lenis smooth scroll driven by a single shared RAF + Motion micro-interactions, all gated behind `prefers-reduced-motion`.
+- **MDX case studies** — each project is an MDX file with a parallax cover, syntax-highlighted code blocks, and a discriminated metadata strip per category (Tech / Design / BIM).
+
+## Tech stack
+
+- **Next.js 16** — App Router, React Server Components, Turbopack
+- **React 19.2** + **TypeScript 5.6** (strict, no `any`)
+- **Tailwind CSS v4** — CSS-variable OKLCh design tokens via `@theme` (no `tailwind.config.ts`)
+- **next-intl** v4 — localized routing + typed messages
+- **GSAP** + **Lenis** + **Motion** — scroll, reveal, and micro-interaction animation
+- **culori** — OKLCh conversion, WCAG contrast, harmonic color math
+- **@next/mdx** — project case studies as MDX
+- **shadcn/ui** (Radix primitives) + **lucide-react**
+- **Vercel** — hosting, Web Analytics, Speed Insights
+
+## Local development
 
 ```bash
+git clone https://github.com/tanguynoumea/portfolio
+cd portfolio
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The dev server runs on http://localhost:3000. The root `/` redirects to the visitor's browser locale (`/fr` or `/en`).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Script                          | What it does                                                       |
+| ------------------------------- | ------------------------------------------------------------------ |
+| `npm run dev`                   | Start the dev server (Turbopack)                                   |
+| `npm run build`                 | Production build                                                   |
+| `npm run lint`                  | ESLint (flat config)                                               |
+| `npm test`                      | Vitest unit + a11y suite                                           |
+| `npm run test:palettes`         | Validate all presets against the 7-pair WCAG matrix                |
+| `npm run test:stress`           | Seeded stress test of the harmonic palette generator              |
+| `npm run check:reduced-motion`  | Assert every animation is `prefers-reduced-motion` gated           |
+| `npm run check:images`          | Assert every image goes through `next/image` with reserved layout  |
+| `npm run check:analytics`       | Assert Analytics + Speed Insights are mounted correctly            |
+| `npm run check:env-leak`        | Assert no secret-looking `NEXT_PUBLIC_*` value is committed         |
+| `npm run check:readme`          | Assert this README is real + the repo URL is consistent            |
+| `npm run lighthouse:mobile`     | Run a mobile Lighthouse audit against a running build              |
 
-## Learn More
+i18n parity and MDX structure are enforced by `npx tsx scripts/check-i18n-parity.ts` and `npx tsx scripts/check-mdx-structure.ts`. CI re-runs the full suite on every push and pull request (`.github/workflows/ci.yml`).
 
-To learn more about Next.js, take a look at the following resources:
+## Deployment
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Deployed on **Vercel** with zero config (Next.js is auto-detected — no `vercel.json`). Every push to `main` triggers a production deploy. Set `NEXT_PUBLIC_SITE_URL` to the assigned production origin in the Vercel dashboard so canonical URLs, hreflang, sitemap, and OpenGraph images resolve to absolute URLs.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Built by **Tanguy Delrieu** — Tech × Design × BIM.
