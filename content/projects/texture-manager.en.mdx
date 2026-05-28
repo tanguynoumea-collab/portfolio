@@ -12,8 +12,43 @@ stack:
   - React
   - Vite
 repo: https://github.com/tanguynoumea/texture-manager
+gallery:
+  - /projects/texture-manager/1.jpg
+  - /projects/texture-manager/2.jpg
+  - /projects/texture-manager/3.jpg
+  - /projects/texture-manager/4.jpg
 ---
 
 ## Context
 
-This page will be enriched in Phase 5 of the portfolio plan.
+Texture Manager is a procedural texture editor I built for 3D artists working on real-time scenes. The idea: generate materials directly in the browser, with no round-trip to a heavy application, and preview the result on a live WebGL mesh. The tool targets small teams who cannot afford a Substance licence.
+
+## Challenge
+
+The core problem was performance: recompiling a GLSL shader on every parameter change caused micro-freezes that made editing unpleasant. I also had to manage a node graph (noise, gradients, blends) whose output feeds a texture, all while staying smooth at 60 frames per second even on a modest laptop.
+
+## Process
+
+I first mapped the most expensive operations with the Chrome profiler. Systematic shader recompilation was the main culprit. So I set up a cache of compiled programs indexed by the graph structure, and a system passing parameters as `uniforms` rather than injecting them into the source code.
+
+<Callout variant="warning" title="WebGL pitfall">
+  Recompiling a shader blocks the main thread. Pass editable values as uniforms and only recompile when the graph topology actually changes.
+</Callout>
+
+The base fragment shader blends several octaves of noise to produce an organic grain:
+
+```glsl
+uniform float uTime;
+varying vec2 vUv;
+
+void main() {
+  float n = sin(vUv.x * 10.0 + uTime) * 0.5 + 0.5;
+  gl_FragColor = vec4(vec3(n), 1.0);
+}
+```
+
+The React interface exposes the node graph while Three.js handles off-screen rendering to a reusable texture target.
+
+## Outcome
+
+After optimisation, editing stayed smooth at 60 frames per second and the response time to slider adjustments dropped below 16 ms — roughly 50 times faster than the naive initial version. The tool exports ready-to-use 2K textures. It now serves as a sandbox for my shader experiments and remains public on GitHub.

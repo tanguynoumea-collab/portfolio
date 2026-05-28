@@ -12,8 +12,43 @@ stack:
   - React
   - Vite
 repo: https://github.com/tanguynoumea/texture-manager
+gallery:
+  - /projects/texture-manager/1.jpg
+  - /projects/texture-manager/2.jpg
+  - /projects/texture-manager/3.jpg
+  - /projects/texture-manager/4.jpg
 ---
 
 ## Contexte
 
-Cette page sera enrichie en Phase 5 du plan portfolio.
+Texture Manager est un éditeur de textures procédurales que j'ai développé pour les artistes 3D travaillant sur des scènes temps réel. L'idée : générer des matériaux directement dans le navigateur, sans aller-retour avec un logiciel lourd, et prévisualiser le rendu sur un maillage WebGL en direct. L'outil cible les petites équipes qui ne peuvent pas s'offrir une licence Substance.
+
+## Défi
+
+Le cœur du problème était la performance : recompiler un shader GLSL à chaque ajustement de paramètre provoquait des micro-freezes qui rendaient l'édition désagréable. Il fallait aussi gérer un graphe de nœuds (bruit, dégradés, mélanges) dont la sortie alimente une texture, le tout en restant fluide à 60 images par seconde même sur un ordinateur portable modeste.
+
+## Processus
+
+J'ai d'abord cartographié les opérations les plus coûteuses avec le profileur de Chrome. La recompilation systématique du shader était la cause principale. J'ai donc mis en place un cache de programmes compilés indexés par la structure du graphe, et un système de paramètres passés en `uniforms` plutôt qu'injectés dans le code source.
+
+<Callout variant="warning" title="Piège WebGL">
+  Recompiler un shader bloque le thread principal. Passez les valeurs modifiables en uniforms et ne recompilez que lorsque la topologie du graphe change réellement.
+</Callout>
+
+Le fragment shader de base mélange plusieurs octaves de bruit pour produire un grain organique :
+
+```glsl
+uniform float uTime;
+varying vec2 vUv;
+
+void main() {
+  float n = sin(vUv.x * 10.0 + uTime) * 0.5 + 0.5;
+  gl_FragColor = vec4(vec3(n), 1.0);
+}
+```
+
+L'interface React expose le graphe de nœuds tandis que Three.js gère le rendu hors écran vers une cible de texture réutilisable.
+
+## Résultat
+
+Après optimisation, l'édition est restée fluide à 60 images par seconde et le temps de réaction aux ajustements de curseur est passé sous les 16 ms — soit environ 50 fois plus rapide que la version naïve initiale. L'outil exporte des textures en 2K prêtes à l'emploi. Il sert aujourd'hui de bac à sable pour mes expérimentations de shaders et reste public sur GitHub.

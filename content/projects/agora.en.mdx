@@ -16,4 +16,31 @@ repo: https://github.com/tanguynoumea/agora
 
 ## Context
 
-This page will be enriched in Phase 5 of the portfolio plan.
+Agora grew out of a simple observation: traditional online forums reward volume over the quality of the exchanges. I designed this platform to explore how community moderation paired with short thematic threads could reverse that trend. The project served as a testing ground with a cohort of 80 students over three months.
+
+## Challenge
+
+The main technical challenge was building a voting system weighted by user reputation without creating a frozen hierarchy that would discourage new voices. On the product side, I had to balance automated control (anti-spam, toxicity detection) with the agility of human moderation. Every design decision had direct consequences on the social dynamics of the forum.
+
+## Process
+
+I started with a week of Figma prototypes tested with six target users. Their feedback led me to drop an initial "karma" system that felt too close to Reddit, in favour of a relevance score local to each topic. On the backend, I chose PostgreSQL with Prisma over MongoDB to express the complex relational constraints between votes, users, threads, and tags without awkward workarounds.
+
+<Callout variant="info" title="Technical choice">
+  Prisma + PostgreSQL over MongoDB: the relational modelling of weighted votes requires frequent joins that MongoDB made verbose.
+</Callout>
+
+The reputation score is computed incrementally on every vote, which avoids an expensive full recomputation:
+
+```ts
+function updateReputation(user: User, vote: Vote): number {
+  const weight = Math.log1p(user.reputation) * vote.value;
+  return Math.max(0, user.reputation + weight);
+}
+```
+
+The initial deployment ran on a 5-euro-per-month VPS, which forced continuous SQL query optimisation through `EXPLAIN ANALYZE` — a formative exercise I would happily repeat.
+
+## Outcome
+
+Over three months of use, Agora hosted 1,200 messages across 80 thematic threads, with an 84% automated moderation rate (the rest handled by four volunteer moderators). The p95 latency stayed under 200 ms despite the modest hardware. The project is now on pause, the original learning goal having been met, but the code remains open on GitHub for anyone who wants to build on it.

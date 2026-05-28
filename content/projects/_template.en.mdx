@@ -13,26 +13,29 @@ stack:
   - Motion
 repo: https://github.com/tanguynoumea/portfolio-template
 liveUrl: https://example.com
+# gallery (optional) — uncomment and adapt to render an image gallery.
+# Place the files in public/projects/<slug>/.
+# gallery:
+#   - /projects/_template/1.jpg
+#   - /projects/_template/2.jpg
 ---
 
-# Tech Project Template
+## Context
 
-This is an example MDX file used to validate the Phase 1 loader pipeline. It
-**does not appear in the project list** because its filename starts with an
-underscore (`_template.en.mdx`), and `lib/projects.ts` filters out all `_*`
-files (D-24).
+Describe the project context here (2-3 sentences): who it is for, why it matters, what was at stake.
 
-## How to use this template
+## Challenge
 
-1. Duplicate `_template.fr.mdx` and `_template.en.mdx` to `my-project.fr.mdx`
-   and `my-project.en.mdx`.
-2. Adjust `slug` (must match the filename without the locale suffix and `.mdx`).
-3. Set `category` to `tech`, `design`, or `bim` — each has its own discriminated
-   set of frontmatter fields (see `lib/projects.ts`).
-4. Write the case-study content in standard MDX; you can import custom React
-   components (Phase 5 will add `<Callout>`, `<CodeBlock>`, `<Image>` with zoom).
+Name the main problem to solve in one paragraph — technical, product, or creative.
 
-The frontmatter above exercises the full `TechProject` variant: common fields
-+ `stack[]` + `repo?` + `liveUrl?`. If you change `category` to `design` or
-`bim`, you must replace `stack/repo/liveUrl` with `tools/client?` or
-`software/projectScale/location?`.
+## Process
+
+Tell the story of the work (2-3 paragraphs). You may embed a `<Callout variant="info" title="…">…</Callout>` for an author's note, or a triple-backtick fenced code block for a Tech project.
+
+## Outcome
+
+Close with what shipped and a quantified or qualitative win where plausible.
+
+---
+
+Note: this file starts with an underscore, so `lib/projects.ts` filters it out (D-24) — it never appears in the project list or gallery. Aim for 250-400 words per locale on real entries; the template itself is excluded from the `scripts/check-mdx-structure.ts` gate. If you change `category` to `design` or `bim`, replace `stack/repo/liveUrl` with `tools/client?` or `software/projectScale/location?`.

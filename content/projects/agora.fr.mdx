@@ -16,4 +16,31 @@ repo: https://github.com/tanguynoumea/agora
 
 ## Contexte
 
-Cette page sera enrichie en Phase 5 du plan portfolio.
+Agora est née d'un constat simple : les forums en ligne traditionnels privilégient le volume au détriment de la qualité des échanges. J'ai conçu cette plateforme pour explorer comment un système de modération communautaire couplé à des fils thématiques courts pouvait inverser cette tendance. Le projet a servi de terrain d'expérimentation auprès d'une promotion de 80 étudiants sur trois mois.
+
+## Défi
+
+Le défi technique principal était de bâtir un système de votes pondérés par la réputation des utilisateurs sans créer une hiérarchie figée qui aurait découragé les nouvelles voix. Côté produit, il fallait trouver l'équilibre entre le contrôle automatisé (anti-spam, détection de toxicité) et l'agilité d'une modération humaine. Chaque décision de design avait des conséquences directes sur la dynamique sociale du forum.
+
+## Processus
+
+J'ai démarré par une semaine de prototypes Figma testés auprès de six utilisateurs cibles. Les retours ont conduit à abandonner un premier système de « karma » trop proche de Reddit, au profit d'un score de pertinence local à chaque thématique. Côté backend, j'ai choisi PostgreSQL avec Prisma plutôt que MongoDB pour exprimer les contraintes relationnelles complexes entre votes, utilisateurs, fils et tags sans gymnastique.
+
+<Callout variant="info" title="Choix technique">
+  Prisma + PostgreSQL plutôt que MongoDB : la modélisation relationnelle des votes pondérés impose des jointures fréquentes que MongoDB rendait verbeuses.
+</Callout>
+
+Le score de réputation se calcule de façon incrémentale à chaque vote, ce qui évite un recalcul complet coûteux :
+
+```ts
+function updateReputation(user: User, vote: Vote): number {
+  const weight = Math.log1p(user.reputation) * vote.value;
+  return Math.max(0, user.reputation + weight);
+}
+```
+
+Le déploiement initial a tourné sur un VPS à 5 € par mois, ce qui a forcé une optimisation continue des requêtes SQL via `EXPLAIN ANALYZE` — un exercice formateur.
+
+## Résultat
+
+Sur trois mois d'usage, Agora a hébergé 1 200 messages dans 80 fils thématiques, avec un taux de modération automatique de 84 % (le reste traité par quatre modérateurs volontaires). La latence p95 est restée sous 200 ms malgré le matériel modeste. Le projet est aujourd'hui en pause, le besoin pédagogique initial étant rempli, mais le code reste ouvert sur GitHub pour quiconque voudrait s'en inspirer.
