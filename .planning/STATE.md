@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: verifying
-stopped_at: Phase 6 context gathered
-last_updated: "2026-05-28T06:15:30.515Z"
+status: executing
+stopped_at: Completed 06-00-install-audit-deps-PLAN.md
+last_updated: "2026-05-28T06:51:29.640Z"
 last_activity: 2026-05-28
 progress:
   total_phases: 7
   completed_phases: 5
-  total_plans: 28
-  completed_plans: 28
+  total_plans: 34
+  completed_plans: 29
   percent: 0
 ---
 
@@ -21,13 +21,13 @@ progress:
 See: .planning/PROJECT.md (updated 2026-05-25)
 
 **Core value:** Demontrer le profil creatif hybride Tech/Design/BIM via une experience web personnalisable qui prouve la maitrise technique, le sens du design et l'attention aux details.
-**Current focus:** Phase 05 — project-content-pipeline
+**Current focus:** Phase 06 — seo-accessibility-polish
 
 ## Current Position
 
-Phase: 6
-Plan: Not started
-Status: Phase complete — ready for verification
+Phase: 06 (seo-accessibility-polish) — EXECUTING
+Plan: 2 of 6
+Status: Ready to execute
 Last activity: 2026-05-28
 
 Progress: [░░░░░░░░░░] 0%
@@ -78,6 +78,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 05-project-content-pipeline P01 | 5m 22s | 3 tasks | 9 files |
 | Phase 05-project-content-pipeline P02 | 7m | 1 tasks | 2 files |
 | Phase 05-project-content-pipeline P03 | 6min | 3 tasks | 6 files |
+| Phase 06-seo-accessibility-polish P00 | 10min | 3 tasks | 10 files |
 
 ## Accumulated Context
 
@@ -158,6 +159,9 @@ Recent decisions affecting current work:
 - [Phase 05-project-content-pipeline]: 05-02: useParallax hook (ANIM-02/D-13) authored verbatim from 05-RESEARCH Code Example #2 — useGSAP({scope,dependencies:[maxTranslate]}) + gsap.matchMedia dual-branch; full motion installs ScrollTrigger scrub:0.5 on [data-parallax-image] (y:-maxTranslate, ease:none), reduced motion gsap.set y:0 + no ScrollTrigger. factor kept in signature but unused (maxTranslate drives translate). Side-effect-only import 'gsap/ScrollTrigger' — never re-registers (LenisProvider owns it); reworded doc comment to drop literal 'registerPlugin' for acceptance-grep compliance. MatchMediaController test extended with toSpy; 10 tests, suite 267.
 - [Phase 05-project-content-pipeline]: 05-03: project page (CONTENT-02) loads MDX via a RELATIVE dynamic import (../../../../content/projects/${slug}.${locale}.mdx) — the @/ alias fails Turbopack static analysis (Pitfall 5B). dynamicParams=false + generateStaticParams flatMap(routing.locales × getProjectSlugs()) emits exactly 12 static routes; notFound() on null slug. Server page + tiny ProjectCover 'use client' island (only the parallax DOM hook is client). Discriminated narrowing (project.category) drives the metadata strip with zero casts/any.
 - [Phase 05-project-content-pipeline]: 05-03: build-time gotcha — the dynamic-import glob matches ALL content/projects/*.*.mdx including _template.{fr,en}.mdx; @next/mdx parses imported .mdx WITHOUT stripping frontmatter, so a bare <slug> placeholder in a template frontmatter comment became an unclosed JSX tag and broke the build. Fixed by rewording <slug> → [slug] in both templates (Rule 3). lib/projects.ts still filters _* at runtime (D-24). ProjectCover gradient scrim from-black/60 is the one sanctioned non-palette color. Code2 substitutes the removed lucide Github (Phase 3 D-23). jsdom page tests never render past the dynamic import.
+- [Phase 06-seo-accessibility-polish]: 06-00: vitest-axe pinned EXACTLY 1.0.0-pre.5 (npm rewrote to caret on install; reverted). The latest dist-tag is the stale 2022 0.1.0 lacking the ./matchers subpath + modern axe-core. Verified ./matchers resolves to dist/matchers.js.
+- [Phase 06-seo-accessibility-polish]: 06-00: Satori OG font sourced from rsms/inter v4.1 release zip (extras/ttf/Inter-SemiBold.ttf, 419744 B static) — the old docs/font-files raw path and google/fonts static dir both 404; google/fonts ships only the 876KB variable font (over Satori 500KB budget). next/font woff2 subsets are unusable by Satori.
+- [Phase 06-seo-accessibility-polish]: 06-00: axe matcher wired additively (vitest-setup.ts expect.extend + vitest.config.ts setupFiles) — does NOT globally extend jest-dom, so the 276 chai-matcher tests stay green. No @vercel/og (next/og built-in), no @types/vitest-axe (ships own .d.ts).
 
 ### Pending Todos
 
@@ -172,6 +176,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-05-28T06:15:30.510Z
-Stopped at: Phase 6 context gathered
-Resume file: .planning/phases/06-seo-accessibility-polish/06-CONTEXT.md
+Last session: 2026-05-28T06:51:18.947Z
+Stopped at: Completed 06-00-install-audit-deps-PLAN.md
+Resume file: None

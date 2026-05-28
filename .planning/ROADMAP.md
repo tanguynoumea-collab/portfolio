@@ -127,7 +127,7 @@ Decimal phases appear between their surrounding integers in numeric order.
   4. The palette switcher survives a stress test of 10 randomly generated palettes plus the 4 presets without layout breakage or WCAG regression
   5. Lighthouse mobile homepage scores >= 90 on Performance, Accessibility, Best Practices, and SEO
 **Plans**: 6 plans (3 waves)
-- [ ] 06-00-install-audit-deps-PLAN.md — Wave 0: vitest-axe@1.0.0-pre.5 + lighthouse dev deps + vitest-axe matcher infra + Inter OG font + images.formats + SITE_URL [A11Y-04, A11Y-06, A11Y-08, A11Y-01 dep gate]
+- [x] 06-00-install-audit-deps-PLAN.md — Wave 0: vitest-axe@1.0.0-pre.5 + lighthouse dev deps + vitest-axe matcher infra + Inter OG font + images.formats + SITE_URL [A11Y-04, A11Y-06, A11Y-08, A11Y-01 dep gate]
 - [ ] 06-01-metadata-seo-PLAN.md — Wave 1: root + project generateMetadata (metadataBase + OG + twitter + hreflang via getPathname) + 2 dynamic next/og cards + sitemap.ts + robots.ts [A11Y-01, A11Y-02]
 - [ ] 06-02-route-states-PLAN.md — Wave 1: not-found.tsx (EGG-02, motion-gated 404) + error.tsx (client, reset()) + loading.tsx (locale + project route) [A11Y-03, EGG-02]
 - [ ] 06-03-palette-stress-test-PLAN.md — Wave 1: seeded 10-random x 4-mode stress test (validateFullMatrix + OKLCh parse) + tsx gate [A11Y-07]

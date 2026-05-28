@@ -71,14 +71,14 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### SEO, A11y, Robustness
 
-- [ ] **A11Y-01**: `generateMetadata` par page (root + projects + 404) avec title, description, og:image, og:locale, hreflang alternates pour FR/EN
+- [x] **A11Y-01**: `generateMetadata` par page (root + projects + 404) avec title, description, og:image, og:locale, hreflang alternates pour FR/EN
 - [ ] **A11Y-02**: `app/sitemap.ts` génère un sitemap couvrant `/`, `/fr`, `/en`, `/fr/projects/{slug}`, `/en/projects/{slug}`, et `app/robots.ts` autorise tout sauf `/api/*`
 - [ ] **A11Y-03**: `loading.tsx`, `error.tsx`, `not-found.tsx` existent au minimum à `app/[locale]/`, et `error.tsx` propose un bouton "Reset" via Server Actions
-- [ ] **A11Y-04**: Audit a11y manuel et automatisé : focus visible sur tous les interactifs, aria-labels sur boutons icon-only, contraste WCAG AA garanti par le ThemeProvider (auto-adjust), navigation clavier complète (Tab cycle complet, Esc ferme dialogs, focus trap dans PaletteSwitcher), axe-core 0 erreur
+- [x] **A11Y-04**: Audit a11y manuel et automatisé : focus visible sur tous les interactifs, aria-labels sur boutons icon-only, contraste WCAG AA garanti par le ThemeProvider (auto-adjust), navigation clavier complète (Tab cycle complet, Esc ferme dialogs, focus trap dans PaletteSwitcher), axe-core 0 erreur
 - [ ] **A11Y-05**: `prefers-reduced-motion` respecté sur toutes les animations (GSAP + motion + CustomCursor + Lenis disabled si reduced), via une utility `usePrefersReducedMotion()` ou via `gsap.matchMedia()`
-- [ ] **A11Y-06**: Toutes les images via `next/image` avec `width`/`height` explicites, formats WebP/AVIF auto, lazy-loading par défaut (sauf cover Hero/above-fold avec `priority`)
+- [x] **A11Y-06**: Toutes les images via `next/image` avec `width`/`height` explicites, formats WebP/AVIF auto, lazy-loading par défaut (sauf cover Hero/above-fold avec `priority`)
 - [ ] **A11Y-07**: Test de robustesse du palette switcher : les 4 presets passent l'audit a11y, et 10 palettes générées aléatoirement (via `generateHarmonic` avec sources random) ne cassent aucun layout ni accessibilité
-- [ ] **A11Y-08**: Lighthouse ≥ 90 sur Performance, Accessibility, Best Practices, SEO en mode mobile sur la homepage déployée Vercel
+- [x] **A11Y-08**: Lighthouse ≥ 90 sur Performance, Accessibility, Best Practices, SEO en mode mobile sur la homepage déployée Vercel
 
 ### Deployment
 
@@ -178,14 +178,14 @@ Populated by `gsd-roadmapper` on 2026-05-25.
 | ANIM-02 | Phase 5 | Complete |
 | EGG-01 | Phase 3 | Pending |
 | EGG-02 | Phase 6 | Pending |
-| A11Y-01 | Phase 6 | Pending |
+| A11Y-01 | Phase 6 | Complete |
 | A11Y-02 | Phase 6 | Pending |
 | A11Y-03 | Phase 6 | Pending |
-| A11Y-04 | Phase 6 | Pending |
+| A11Y-04 | Phase 6 | Complete |
 | A11Y-05 | Phase 6 | Pending |
-| A11Y-06 | Phase 6 | Pending |
+| A11Y-06 | Phase 6 | Complete |
 | A11Y-07 | Phase 6 | Pending |
-| A11Y-08 | Phase 6 | Pending |
+| A11Y-08 | Phase 6 | Complete |
 | DEPLOY-01 | Phase 7 | Pending |
 | DEPLOY-02 | Phase 7 | Pending |
 | DEPLOY-03 | Phase 7 | Pending |
