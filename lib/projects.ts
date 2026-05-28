@@ -29,6 +29,7 @@ type CommonFields = {
   cover: string; // D-22: plain path relative to /public, e.g. '/projects/agora/cover.jpg'
   summary: string;
   featured: boolean;
+  gallery?: string[]; // NEW (D-14) — optional. Asset paths under /public/projects/{slug}/.
 };
 
 export type TechProject = CommonFields & {
@@ -75,7 +76,16 @@ function isProjectScale(v: unknown): v is 'concept' | 'residential' | 'commercia
  * Throws if a field is missing or has the wrong shape — fail loud at build time
  * rather than ship a broken project to production.
  */
-function validateFrontmatter(slug: string, data: Record<string, unknown>): Project {
+export function validateFrontmatter(slug: string, data: Record<string, unknown>): Project {
+  const galleryValid =
+    data.gallery === undefined ||
+    (Array.isArray(data.gallery) && data.gallery.every((s): s is string => typeof s === 'string'));
+  if (!galleryValid) {
+    throw new Error(
+      `[lib/projects] '${slug}' has invalid 'gallery': expected string[] or undefined, got ${typeof data.gallery}.`,
+    );
+  }
+
   const common = {
     slug,
     title: typeof data.title === 'string' ? data.title : '',
@@ -83,6 +93,7 @@ function validateFrontmatter(slug: string, data: Record<string, unknown>): Proje
     cover: typeof data.cover === 'string' ? data.cover : '',
     summary: typeof data.summary === 'string' ? data.summary : '',
     featured: typeof data.featured === 'boolean' ? data.featured : false,
+    ...(Array.isArray(data.gallery) ? { gallery: data.gallery as string[] } : {}),
   };
 
   if (!common.title || !common.year || !common.cover || !common.summary) {
