@@ -12,6 +12,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:palettes": "tsx scripts/validate-palettes.ts",
+    "test:stress": "tsx scripts/stress-test-palettes.ts",
     "lighthouse": "lighthouse http://localhost:3000/en --preset=desktop --only-categories=performance,accessibility,best-practices,seo --output=html --output-path=./.lighthouse/report.html --chrome-flags=\"--headless\"",
     "lighthouse:mobile": "lighthouse http://localhost:3000/en --form-factor=mobile --only-categories=performance,accessibility,best-practices,seo --output=html --output-path=./.lighthouse/mobile.html --chrome-flags=\"--headless\""
   },
