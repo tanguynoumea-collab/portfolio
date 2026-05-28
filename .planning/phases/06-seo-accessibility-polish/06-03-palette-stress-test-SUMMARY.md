@@ -72,7 +72,7 @@ Each task was committed atomically:
 1. **Task 1: lib/colors.stress.test.ts (seeded 10x4 + preset regression guard) + generateHarmonic fix** - `3c5eb4c` (fix)
 2. **Task 2: scripts/stress-test-palettes.ts (tsx gate mirror) + test:stress script** - `93ea0f9` (test)
 
-**Plan metadata:** (this SUMMARY + STATE/ROADMAP) — see final docs commit.
+**Plan metadata:** `630bc9f` (docs: complete plan — SUMMARY + STATE + ROADMAP + REQUIREMENTS)
 
 ## Files Created/Modified
 - `lib/colors.stress.test.ts` - Seeded in-suite stress test (A11Y-07): 40 generated palettes + 1 preset regression `it`, 41 tests total
