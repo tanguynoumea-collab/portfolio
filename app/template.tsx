@@ -1,79 +1,75 @@
 'use client';
 
 /**
- * app/template.tsx — ANIM-01 (Phase 3 D-31..D-33).
+ * app/template.tsx — ANIM-01 route-transition wrapper.
  *
- * Route-transition wrapper. Templates re-mount on every navigation (Next App
- * Router contract) which is exactly what AnimatePresence needs to drive enter
- * + exit animations. AnimatePresence requires the React client runtime, so
- * the `'use client'` directive at the top is mandatory — Next 16 templates
- * default to Server Components otherwise.
+ * Templates re-mount on every navigation (Next App Router contract), so a
+ * `key={pathname}` <motion.div> plays an ENTER animation on each forward AND
+ * back navigation.
  *
- * Placed at app/template.tsx (NOT app/[locale]/template.tsx) so locale
- * switches do NOT trigger a page transition — only true route changes do.
- * The LanguageSwitcher already preserves scroll position via Lenis; making
- * the locale swap feel instant (no fade) keeps it from looking like a full
- * navigation.
+ * Phase 7 FIX — blank page on back navigation:
+ * The original `<AnimatePresence mode="popLayout">` blanked the page when the
+ * user navigated back. `popLayout` absolutely-positions its children for the
+ * sibling-overlap effect; combined with the per-navigation template remount,
+ * the incoming page ended up `position:absolute` with zero height → blank.
+ * `popLayout` is for sibling lists (the Projects grid), NOT full-page route
+ * transitions, and exit animations are impossible in a remounting template
+ * anyway. The App-Router-correct pattern is an enter-only transition.
  *
- * D-31: `mode="popLayout"` (NOT `wait`). Exiting and entering elements
- * overlap; the exiting element is removed from layout (position:absolute
- * under the hood) so the incoming page claims space immediately. Phase 4's
- * filterable Projects grid uses the same mode, so establishing the pattern
- * here keeps the project consistent.
+ * SSR/LCP-safe: the very first paint (initial page load) renders with NO
+ * entrance animation (`initial={false}`) so content is visible immediately —
+ * no flash of invisible content, no LCP delay. The fade+slide only plays on
+ * subsequent client navigations. The module-level `seenFirstPaint` flag
+ * survives the template remount; it's only mutated in an effect (client-only),
+ * so SSR always renders the visible state.
  *
- * D-32: under normal motion, 300ms fade + 8px Y-translate with a custom
- * easeOut curve. Under reduced motion, 100ms opacity-only — no translate,
- * no spring, no overshoot. Strict ≤350ms ceiling per ANIM-01.
- *
- * D-33: `key={pathname}` triggers the unmount-mount cycle on full path
- * changes. We import `usePathname` from `'next/navigation'` (NOT from
- * `@/i18n/navigation`) so the key includes the locale prefix — the
- * locale-stripped pathname from next-intl would NOT cause a re-key on
- * /fr ↔ /en navigation, but since we intentionally do NOT animate locale
- * switches anyway, the full path is the correct primitive. Hash-only
- * changes (#about → #projects on the same page) don't re-mount because
- * the pathname is identical.
+ * D-32 preserved: 300ms fade + 8px Y-translate under normal motion; 100ms
+ * opacity-only under reduced motion (≤350ms ANIM-01 ceiling). usePathname from
+ * `next/navigation` (full locale-prefixed path) keys the remount.
  */
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { motion, useReducedMotion } from 'motion/react';
 import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import type { ReactNode } from 'react';
+
+// Module scope: persists across the per-navigation template remount. Mutated
+// only in an effect (never during render / never on the server), so SSR and
+// the first client paint both read `false` → no entrance animation on load.
+let seenFirstPaint = false;
 
 export default function Template({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const reduce = useReducedMotion();
 
-  // D-32: explicit duration literals so the acceptance grep gate can verify
-  // the file ships both branches. 0.3 = 300ms normal motion; 0.1 = 100ms
-  // reduced motion. easeOut cubic-bezier vs linear keeps reduced-motion users
-  // out of curved motion entirely.
+  // false on the very first load (render visible immediately), true after the
+  // first commit (animate subsequent navigations). Read once at mount.
+  const [animateOnEnter] = useState(() => seenFirstPaint);
+  useEffect(() => {
+    seenFirstPaint = true;
+  }, []);
+
+  // 0.3 = 300ms normal motion; 0.1 = 100ms reduced motion (≤350ms ANIM-01 ceiling).
   const transition = reduce
     ? { duration: 0.1, ease: 'linear' as const }
     : { duration: 0.3, ease: [0.22, 1, 0.36, 1] as const };
 
-  const variants = reduce
-    ? {
-        initial: { opacity: 0 },
-        animate: { opacity: 1 },
-        exit: { opacity: 0 },
-      }
-    : {
-        initial: { opacity: 0, y: 8 },
-        animate: { opacity: 1, y: 0 },
-        exit: { opacity: 0, y: -8 },
-      };
+  // initial={false} → motion renders directly at the `animate` state (no
+  // entrance) — used on first load. On navigations, start hidden then fade in.
+  const initial = !animateOnEnter
+    ? false
+    : reduce
+      ? { opacity: 0 }
+      : { opacity: 0, y: 8 };
 
   return (
-    <AnimatePresence mode="popLayout" initial={false}>
-      <motion.div
-        key={pathname}
-        initial={variants.initial}
-        animate={variants.animate}
-        exit={variants.exit}
-        transition={transition}
-        style={{ width: '100%' }}
-      >
-        {children}
-      </motion.div>
-    </AnimatePresence>
+    <motion.div
+      key={pathname}
+      initial={initial}
+      animate={{ opacity: 1, y: 0 }}
+      transition={transition}
+      style={{ width: '100%' }}
+    >
+      {children}
+    </motion.div>
   );
 }
