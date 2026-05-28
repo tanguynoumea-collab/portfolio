@@ -67,13 +67,13 @@ Requirements for initial release. Each maps to roadmap phases.
 ### Easter Eggs & Personality
 
 - [ ] **EGG-01**: ASCII art bilingue (différent par locale) imprimé dans la console navigateur au chargement (via un effet client dans le layout root) avec hint subtil "↑↑↓↓←→←→BA" sans dire ce que ça débloque
-- [ ] **EGG-02**: Page 404 personnalisée (`app/[locale]/not-found.tsx`) avec animation motion d'arrivée, message humoristique bilingue, lien retour vers `/{locale}` stylé
+- [x] **EGG-02**: Page 404 personnalisée (`app/[locale]/not-found.tsx`) avec animation motion d'arrivée, message humoristique bilingue, lien retour vers `/{locale}` stylé
 
 ### SEO, A11y, Robustness
 
 - [x] **A11Y-01**: `generateMetadata` par page (root + projects + 404) avec title, description, og:image, og:locale, hreflang alternates pour FR/EN
 - [x] **A11Y-02**: `app/sitemap.ts` génère un sitemap couvrant `/`, `/fr`, `/en`, `/fr/projects/{slug}`, `/en/projects/{slug}`, et `app/robots.ts` autorise tout sauf `/api/*`
-- [ ] **A11Y-03**: `loading.tsx`, `error.tsx`, `not-found.tsx` existent au minimum à `app/[locale]/`, et `error.tsx` propose un bouton "Reset" via Server Actions
+- [x] **A11Y-03**: `loading.tsx`, `error.tsx`, `not-found.tsx` existent au minimum à `app/[locale]/`, et `error.tsx` propose un bouton "Reset" via Server Actions
 - [x] **A11Y-04**: Audit a11y manuel et automatisé : focus visible sur tous les interactifs, aria-labels sur boutons icon-only, contraste WCAG AA garanti par le ThemeProvider (auto-adjust), navigation clavier complète (Tab cycle complet, Esc ferme dialogs, focus trap dans PaletteSwitcher), axe-core 0 erreur
 - [ ] **A11Y-05**: `prefers-reduced-motion` respecté sur toutes les animations (GSAP + motion + CustomCursor + Lenis disabled si reduced), via une utility `usePrefersReducedMotion()` ou via `gsap.matchMedia()`
 - [x] **A11Y-06**: Toutes les images via `next/image` avec `width`/`height` explicites, formats WebP/AVIF auto, lazy-loading par défaut (sauf cover Hero/above-fold avec `priority`)
@@ -177,10 +177,10 @@ Populated by `gsd-roadmapper` on 2026-05-25.
 | ANIM-01 | Phase 3 | Pending |
 | ANIM-02 | Phase 5 | Complete |
 | EGG-01 | Phase 3 | Pending |
-| EGG-02 | Phase 6 | Pending |
+| EGG-02 | Phase 6 | Complete |
 | A11Y-01 | Phase 6 | Complete |
 | A11Y-02 | Phase 6 | Complete |
-| A11Y-03 | Phase 6 | Pending |
+| A11Y-03 | Phase 6 | Complete |
 | A11Y-04 | Phase 6 | Complete |
 | A11Y-05 | Phase 6 | Pending |
 | A11Y-06 | Phase 6 | Complete |

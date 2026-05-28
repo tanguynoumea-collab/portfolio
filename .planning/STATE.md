@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 06-01-metadata-seo-PLAN.md
-last_updated: "2026-05-28T07:04:32.510Z"
+stopped_at: Completed 06-02-route-states-PLAN.md
+last_updated: "2026-05-28T07:11:22.057Z"
 last_activity: 2026-05-28
 progress:
   total_phases: 7
   completed_phases: 5
   total_plans: 34
-  completed_plans: 30
+  completed_plans: 31
   percent: 0
 ---
 
@@ -26,7 +26,7 @@ See: .planning/PROJECT.md (updated 2026-05-25)
 ## Current Position
 
 Phase: 06 (seo-accessibility-polish) — EXECUTING
-Plan: 3 of 6
+Plan: 4 of 6
 Status: Ready to execute
 Last activity: 2026-05-28
 
@@ -80,6 +80,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 05-project-content-pipeline P03 | 6min | 3 tasks | 6 files |
 | Phase 06-seo-accessibility-polish P00 | 10min | 3 tasks | 10 files |
 | Phase 06-seo-accessibility-polish P01 | 9min | 3 tasks | 12 files |
+| Phase 06-seo-accessibility-polish P02 | 4min | 3 tasks | 7 files |
 
 ## Accumulated Context
 
@@ -166,6 +167,7 @@ Recent decisions affecting current work:
 - [Phase 06-seo-accessibility-polish]: 06-01: OG image routes render dynamically (ƒ) not statically prerendered — Next 16 defaults file-based OG routes under dynamic segments ([locale]/[slug]) to on-demand; functionally correct (card renders on first request + cached), satisfies A11Y-01, no static public/og.png fallback needed (D-04 fallback unused).
 - [Phase 06-seo-accessibility-polish]: 06-01: sitemap.ts is canonical-<loc>-with-alternates (FR canonical at / and /projects/{slug}; fr/en <xhtml:link> alternates per entry). Slug-driven via getProjectSlugs (7 entries = 1 home + 6 projects). Build-verified sitemap.xml has correct as-needed hreflang (FR no prefix, EN /en).
 - [Phase 06-seo-accessibility-polish]: 06-01: metadata/sitemap hreflang tests mock @/i18n/navigation with a faithful as-needed getPathname — next-intl react-client createNavigation statically imports bare 'next/navigation' which Vitest can't resolve under jsdom (node_modules externalized, resolve.alias doesn't reach it). Same module page.test.tsx already mocks. Real getPathname proven correct by build output.
+- [Phase 06-seo-accessibility-polish]: 06-02: route-state trio at app/[locale]/ wires EXISTING errors.404/errors.500 keys verbatim (no new keys, parity stays 94 leaf paths). error.tsx is 'use client' + framework reset() prop (NOT a Server Action, D-08 lock; kept reset() over Next 16.2 unstable_retry). not-found.tsx motion entry gates on useReducedMotion → opacity-only (no scale) when reduced. loading.tsx is a Server Component role=status spinner with motion-safe:animate-pulse (static dot under reduced motion); project route re-exports it via export { default } from '../../loading'. Doc comments reworded to avoid acceptance-grep literals ('use client'/'use server'/next-intl/server) — same Rule-3 deviation class as Phases 3/4/5.
 
 ### Pending Todos
 
@@ -180,6 +182,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-05-28T07:04:20.478Z
-Stopped at: Completed 06-01-metadata-seo-PLAN.md
+Last session: 2026-05-28T07:11:12.165Z
+Stopped at: Completed 06-02-route-states-PLAN.md
 Resume file: None
