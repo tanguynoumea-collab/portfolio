@@ -1,8 +1,8 @@
 ---
 phase: 5
 slug: project-content-pipeline
-status: draft
-nyquist_compliant: false
+status: approved
+nyquist_compliant: true
 wave_0_complete: false
 created: 2026-05-27
 ---
@@ -88,4 +88,4 @@ created: 2026-05-27
 - [ ] Feedback latency < 30s
 - [ ] `nyquist_compliant: true` set in frontmatter
 
-**Approval:** pending
+**Approval:** approved 2026-05-27
