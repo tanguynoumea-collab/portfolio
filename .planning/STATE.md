@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 06-00-install-audit-deps-PLAN.md
-last_updated: "2026-05-28T06:51:29.640Z"
+stopped_at: Completed 06-01-metadata-seo-PLAN.md
+last_updated: "2026-05-28T07:04:32.510Z"
 last_activity: 2026-05-28
 progress:
   total_phases: 7
   completed_phases: 5
   total_plans: 34
-  completed_plans: 29
+  completed_plans: 30
   percent: 0
 ---
 
@@ -26,7 +26,7 @@ See: .planning/PROJECT.md (updated 2026-05-25)
 ## Current Position
 
 Phase: 06 (seo-accessibility-polish) — EXECUTING
-Plan: 2 of 6
+Plan: 3 of 6
 Status: Ready to execute
 Last activity: 2026-05-28
 
@@ -79,6 +79,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 05-project-content-pipeline P02 | 7m | 1 tasks | 2 files |
 | Phase 05-project-content-pipeline P03 | 6min | 3 tasks | 6 files |
 | Phase 06-seo-accessibility-polish P00 | 10min | 3 tasks | 10 files |
+| Phase 06-seo-accessibility-polish P01 | 9min | 3 tasks | 12 files |
 
 ## Accumulated Context
 
@@ -162,6 +163,9 @@ Recent decisions affecting current work:
 - [Phase 06-seo-accessibility-polish]: 06-00: vitest-axe pinned EXACTLY 1.0.0-pre.5 (npm rewrote to caret on install; reverted). The latest dist-tag is the stale 2022 0.1.0 lacking the ./matchers subpath + modern axe-core. Verified ./matchers resolves to dist/matchers.js.
 - [Phase 06-seo-accessibility-polish]: 06-00: Satori OG font sourced from rsms/inter v4.1 release zip (extras/ttf/Inter-SemiBold.ttf, 419744 B static) — the old docs/font-files raw path and google/fonts static dir both 404; google/fonts ships only the 876KB variable font (over Satori 500KB budget). next/font woff2 subsets are unusable by Satori.
 - [Phase 06-seo-accessibility-polish]: 06-00: axe matcher wired additively (vitest-setup.ts expect.extend + vitest.config.ts setupFiles) — does NOT globally extend jest-dom, so the 276 chai-matcher tests stay green. No @vercel/og (next/og built-in), no @types/vitest-axe (ships own .d.ts).
+- [Phase 06-seo-accessibility-polish]: 06-01: OG image routes render dynamically (ƒ) not statically prerendered — Next 16 defaults file-based OG routes under dynamic segments ([locale]/[slug]) to on-demand; functionally correct (card renders on first request + cached), satisfies A11Y-01, no static public/og.png fallback needed (D-04 fallback unused).
+- [Phase 06-seo-accessibility-polish]: 06-01: sitemap.ts is canonical-<loc>-with-alternates (FR canonical at / and /projects/{slug}; fr/en <xhtml:link> alternates per entry). Slug-driven via getProjectSlugs (7 entries = 1 home + 6 projects). Build-verified sitemap.xml has correct as-needed hreflang (FR no prefix, EN /en).
+- [Phase 06-seo-accessibility-polish]: 06-01: metadata/sitemap hreflang tests mock @/i18n/navigation with a faithful as-needed getPathname — next-intl react-client createNavigation statically imports bare 'next/navigation' which Vitest can't resolve under jsdom (node_modules externalized, resolve.alias doesn't reach it). Same module page.test.tsx already mocks. Real getPathname proven correct by build output.
 
 ### Pending Todos
 
@@ -176,6 +180,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-05-28T06:51:18.947Z
-Stopped at: Completed 06-00-install-audit-deps-PLAN.md
+Last session: 2026-05-28T07:04:20.478Z
+Stopped at: Completed 06-01-metadata-seo-PLAN.md
 Resume file: None
