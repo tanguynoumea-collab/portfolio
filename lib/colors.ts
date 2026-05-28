@@ -248,6 +248,57 @@ const HUE_OFFSETS: Record<HarmonicMode, readonly [number, number]> = {
 };
 
 /**
+ * Shift ONLY the OKLCh L channel of a UI color (accent/secondary) until it
+ * reaches `minRatio` contrast against `bg`, preserving hue + chroma so the
+ * brand identity survives. Direction picked from `bg.l` (light bg → darker UI;
+ * dark bg → lighter UI), mirroring `adjustForAA`'s logic but for the 3.0 WCAG
+ * UI-component threshold (1.4.11) rather than the 4.5 text threshold.
+ *
+ * No-op when the color already passes. Returns the original string if either
+ * input is unparseable. Used by `generateHarmonic` so a high-L (pale) random
+ * source can't yield an accent that's invisible against the derived light bg —
+ * `applyMatrixAdjust` (D-11) only shifts text/textMuted, so accent/secondary
+ * must be made AA-safe at generation time.
+ */
+function clampUiContrast(uiColor: string, bg: string, minRatio = 3.0): string {
+  const parsedUi = parse(uiColor);
+  const parsedBg = parse(bg);
+  const uiOk = parsedUi ? toOklch(parsedUi) : undefined;
+  const bgOk = parsedBg ? toOklch(parsedBg) : undefined;
+  if (!uiOk || !bgOk) return uiColor;
+  if (wcagContrast(uiColor, bg) >= minRatio) return uiColor;
+
+  const direction: -1 | 1 = bgOk.l > 0.5 ? -1 : 1;
+  let lo = direction === -1 ? 0 : uiOk.l;
+  let hi = direction === -1 ? uiOk.l : 1;
+  let best = uiColor;
+
+  for (let i = 0; i < 24; i++) {
+    const mid = (lo + hi) / 2;
+    const candidate = formatCss({
+      mode: 'oklch',
+      l: mid,
+      c: uiOk.c,
+      h: uiOk.h,
+    });
+    if (!candidate) break;
+    const ratio = wcagContrast(candidate, bg);
+    if (ratio >= minRatio) {
+      // Passing — keep it, and backtrack toward the original L for the
+      // closest-to-intent shade that still clears the threshold.
+      best = candidate;
+      if (direction === -1) lo = mid;
+      else hi = mid;
+    } else {
+      // Failing — push further in `direction`.
+      if (direction === -1) hi = mid;
+      else lo = mid;
+    }
+  }
+  return best;
+}
+
+/**
  * Generate a full 6-token palette by rotating the OKLCh hue of `sourceHex`.
  *
  * Modes (secondary hue offset vs source):
@@ -277,14 +328,14 @@ export function generateHarmonic(
   const sourceH = sourceOklch.h ?? 0;
   const secondaryH = (sourceH + secondOffset + 360) % 360;
 
-  const accent =
+  const rawAccent =
     formatCss({
       mode: 'oklch',
       l: sourceOklch.l,
       c: sourceOklch.c,
       h: sourceH,
     }) ?? sourceHex;
-  const secondary =
+  const rawSecondary =
     formatCss({
       mode: 'oklch',
       l: sourceOklch.l,
@@ -296,7 +347,32 @@ export function generateHarmonic(
   // Always pick a LIGHT bg here; user can flip via Custom tab if dark mode desired.
   const bg = `oklch(0.97 0.01 ${sourceH.toFixed(2)})`;
 
-  return deriveDefaultTokens({ bg, accent, secondary });
+  // Derive the neutral tokens (bg/surface/text/textMuted) first so we know the
+  // surface L — the binding contrast constraint for accent/secondary on a light
+  // palette (surface is ~3% darker than bg).
+  const neutrals = deriveDefaultTokens({
+    bg,
+    accent: rawAccent,
+    secondary: rawSecondary,
+  });
+
+  // Clamp accent + secondary L until they clear the 3.0 WCAG UI threshold
+  // against BOTH bg and surface, preserving hue + chroma. Without this, a pale
+  // (high-L) random source produces an accent that's invisible on the light bg,
+  // and applyMatrixAdjust (D-11) can't fix it (it only shifts text/textMuted).
+  // The accent/secondary hue is untouched, so the harmonic offset is preserved.
+  const accent = clampUiContrast(
+    clampUiContrast(rawAccent, bg, 3.0),
+    neutrals.surface,
+    3.0,
+  );
+  const secondary = clampUiContrast(
+    clampUiContrast(rawSecondary, bg, 3.0),
+    neutrals.surface,
+    3.0,
+  );
+
+  return { ...neutrals, accent, secondary };
 }
 
 // -------------------- applyMatrixAdjust (D-11) --------------------
