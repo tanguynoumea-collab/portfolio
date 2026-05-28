@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Phase 5 context gathered
-last_updated: "2026-05-27T19:32:38.633Z"
-last_activity: 2026-05-27
+stopped_at: Completed 05-00-content-and-assets-PLAN.md
+last_updated: "2026-05-28T05:08:39.207Z"
+last_activity: 2026-05-28
 progress:
   total_phases: 7
   completed_phases: 4
-  total_plans: 24
-  completed_plans: 24
+  total_plans: 28
+  completed_plans: 25
   percent: 0
 ---
 
@@ -21,14 +21,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-05-25)
 
 **Core value:** Demontrer le profil creatif hybride Tech/Design/BIM via une experience web personnalisable qui prouve la maitrise technique, le sens du design et l'attention aux details.
-**Current focus:** Phase 4 — Homepage Sections
+**Current focus:** Phase 05 — project-content-pipeline
 
 ## Current Position
 
-Phase: 5
-Plan: Not started
+Phase: 05 (project-content-pipeline) — EXECUTING
+Plan: 2 of 4
 Status: Ready to execute
-Last activity: 2026-05-27
+Last activity: 2026-05-28
 
 Progress: [░░░░░░░░░░] 0%
 
@@ -74,6 +74,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 04-homepage-sections P01 | 4m 5s | 2 tasks | 3 files |
 | Phase 04-homepage-sections P05 | 4min | 2 tasks | 2 files |
 | Phase 04-homepage-sections P03 | 7m 30s | 3 tasks | 8 files |
+| Phase 05-project-content-pipeline P00 | 6m | 3 tasks | 41 files |
 
 ## Accumulated Context
 
@@ -147,6 +148,9 @@ Recent decisions affecting current work:
 - [Phase 04-homepage-sections]: HOME-05 ProjectGrid: BOTH AnimatePresence mode='popLayout' AND outer motion.div with layout prop are required (Pitfall 4-C — popLayout removes exiting cards from layout flow as position:absolute; outer layout prop transitions parent height smoothly during exit states). initial={false} on AnimatePresence suppresses initial mount animation (cards visible immediately on page load; only filter changes trigger enter/exit). Empty state: SearchX lucide icon + projects.empty i18n + motion fade-in. Per-card motion.div key={slug} layout initial={opacity:0,scale:0.9} animate={opacity:1,scale:1} exit={opacity:0,scale:0.9} duration 0.3 easeOut
 - [Phase 04-homepage-sections]: HOME-05 ProjectsSection: Server -> Client RSC boundary pattern. page.tsx (Server Component) calls await getProjects(locale) and passes the serialized discriminated Project union as a prop to <ProjectsSection projects={projects} /> (Client). ProjectsSection owns useState<FilterValue>('all') default + useMemo selector keyed [projects, active] for stable identity (avoids running AnimatePresence reconciliation unnecessarily across unrelated re-renders). Renders h2 title + CategoryFilter (with active+onChange) + ProjectGrid (with filtered). max-w-6xl container with md:flex-row title+filter layout
 - [Phase 04-homepage-sections]: Test mock pattern correction: Wave 0 RED harnesses returned plain {type, props} objects which fail React reconciliation ('Objects are not valid as a React child'). Task 3 expanded harnesses use React.createElement(...) instead — matches Contact.test.tsx Wave 1 convention. Result: 42 new GREEN tests across 4 files. Full suite 222/222 (180 baseline + 42 new). motion.div/span/AnimatePresence mocks serialize whileHover/layout/mode props as data attributes so behavior is verifiable without running the actual motion engine in jsdom
+- [Phase 05-project-content-pipeline]: 05-00: CommonFields.gallery?: string[] added (D-14) — validator accepts-but-not-requires via (s): s is string predicate + conditional spread (no any); all 12 pre-existing stubs still validate. texture-manager + brand-system carry gallery; 4 others omit it (skip path).
+- [Phase 05-project-content-pipeline]: 05-00: projects.detail.* namespace = exactly 22 leaf keys/locale incl. meta.{tech,design,bim} category labels + meta.scale.{concept,residential,commercial,urban} consumed by 05-03 via t(meta.${category}) / t(meta.scale.${scale}); FR/EN parity at 94 leaf paths.
+- [Phase 05-project-content-pipeline]: 05-00: New CONTENT-01 gate scripts/check-mdx-structure.ts (gray-matter parse + per-locale H2 markers + split(/\s+/) word count 250-400, exit 1 on any failure) modeled on check-i18n-parity.ts; skips _* templates. 12 bodies pass.
 
 ### Pending Todos
 
@@ -161,6 +165,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-05-27T19:32:38.629Z
-Stopped at: Phase 5 context gathered
-Resume file: .planning/phases/05-project-content-pipeline/05-CONTEXT.md
+Last session: 2026-05-28T05:08:26.823Z
+Stopped at: Completed 05-00-content-and-assets-PLAN.md
+Resume file: None
