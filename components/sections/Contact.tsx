@@ -52,7 +52,7 @@
 
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
 import {
   Copy,
   Check,
@@ -72,6 +72,18 @@ export function Contact() {
   const t = useTranslations('contact');
   const tSocial = useTranslations('contact.social');
   const [copied, setCopied] = useState(false);
+  // A11Y-05: gate the Copy↔Check icon-swap animation. Under reduced motion the
+  // icons swap instantly (no scale/opacity tween) — WCAG 2.3.3. The aria-live
+  // copy feedback below is unaffected (it is not a motion concern).
+  const reduce = useReducedMotion();
+  const iconMotion = reduce
+    ? {}
+    : {
+        initial: { opacity: 0, scale: 0.8 },
+        animate: { opacity: 1, scale: 1 },
+        exit: { opacity: 0, scale: 0.8 },
+        transition: { duration: 0.15 },
+      };
 
   /**
    * Email copy handler.
@@ -122,26 +134,14 @@ export function Contact() {
             <span>{EMAIL}</span>
             <AnimatePresence mode="wait" initial={false}>
               {copied ? (
-                <motion.span
-                  key="check"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.8 }}
-                  transition={{ duration: 0.15 }}
-                >
+                <motion.span key="check" {...iconMotion}>
                   <Check
                     className="text-primary h-4 w-4"
                     aria-hidden="true"
                   />
                 </motion.span>
               ) : (
-                <motion.span
-                  key="copy"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.8 }}
-                  transition={{ duration: 0.15 }}
-                >
+                <motion.span key="copy" {...iconMotion}>
                   <Copy className="h-4 w-4" aria-hidden="true" />
                 </motion.span>
               )}

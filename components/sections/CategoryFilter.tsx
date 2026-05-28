@@ -24,7 +24,7 @@
  */
 
 import { useTranslations } from 'next-intl';
-import { motion } from 'motion/react';
+import { motion, useReducedMotion } from 'motion/react';
 import { cn } from '@/lib/utils';
 
 export type Category = 'tech' | 'design' | 'bim';
@@ -39,6 +39,11 @@ type Props = {
 
 export function CategoryFilter({ active, onChange }: Props) {
   const t = useTranslations('projects.filters');
+  // A11Y-05: gate the shared-element layout morph. Under reduced motion the
+  // indicator still moves (it tracks the active pill) but `layout` is disabled
+  // so it jumps instantly instead of spring-sliding across — no motion for
+  // motion-sensitive users (WCAG 2.3.3).
+  const reduce = useReducedMotion();
   return (
     <div
       role="group"
@@ -58,10 +63,14 @@ export function CategoryFilter({ active, onChange }: Props) {
           >
             {isActive && (
               <motion.span
-                layoutId="filter-indicator"
+                layoutId={reduce ? undefined : 'filter-indicator'}
                 aria-hidden="true"
                 className="bg-primary absolute inset-0 -z-10 rounded-full"
-                transition={{ type: 'spring', mass: 0.4, stiffness: 700 }}
+                transition={
+                  reduce
+                    ? { duration: 0 }
+                    : { type: 'spring', mass: 0.4, stiffness: 700 }
+                }
               />
             )}
             <span

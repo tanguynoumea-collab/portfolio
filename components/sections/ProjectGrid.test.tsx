@@ -62,6 +62,10 @@ vi.mock('motion/react', () => ({
       { 'data-presence-mode': mode } as Record<string, unknown>,
       children as ReactNode,
     ),
+  // A11Y-05: the component now gates filter/layout animation on
+  // useReducedMotion. Default false = full motion, preserving the
+  // layout-prop + popLayout assertions below.
+  useReducedMotion: () => false,
 }));
 
 vi.mock('./ProjectCard', () => ({

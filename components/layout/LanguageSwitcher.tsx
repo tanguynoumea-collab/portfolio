@@ -38,7 +38,7 @@ import { useEffect, useTransition } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 import { useRouter, usePathname } from '@/i18n/navigation';
-import { motion } from 'motion/react';
+import { motion, useReducedMotion } from 'motion/react';
 import { useLenis } from '@/components/providers/LenisProvider';
 import { cn } from '@/lib/utils';
 
@@ -53,6 +53,9 @@ export function LanguageSwitcher() {
   const t = useTranslations('nav.lang');
   const [isPending, startTransition] = useTransition();
   const lenis = useLenis();
+  // A11Y-05: gate the shared-element layout morph (WCAG 2.3.3). Under reduced
+  // motion the FR|EN indicator jumps instantly instead of spring-sliding.
+  const reduce = useReducedMotion();
 
   // D-19: keep <html lang> imperatively in sync with useLocale() so screen
   // readers and CSS :lang() selectors react instantly to the swap. next-intl
@@ -124,10 +127,14 @@ export function LanguageSwitcher() {
           >
             {isActive && (
               <motion.span
-                layoutId="lang-indicator"
+                layoutId={reduce ? undefined : 'lang-indicator'}
                 aria-hidden="true"
                 className="bg-primary absolute inset-0 -z-10 rounded-full"
-                transition={{ type: 'spring', mass: 0.4, stiffness: 700 }}
+                transition={
+                  reduce
+                    ? { duration: 0 }
+                    : { type: 'spring', mass: 0.4, stiffness: 700 }
+                }
               />
             )}
             <span

@@ -53,6 +53,9 @@ vi.mock('motion/react', () => ({
         children as ReactNode,
       ),
   },
+  // A11Y-05: the component now gates the layout morph on useReducedMotion.
+  // Default false = full motion, preserving the layoutId / spring assertions.
+  useReducedMotion: () => false,
 }));
 
 describe('CategoryFilter (HOME-03) — 4 buttons rendered from i18n', () => {

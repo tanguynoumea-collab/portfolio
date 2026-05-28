@@ -2,7 +2,7 @@
 
 import { useRef, useState, type HTMLAttributes } from 'react';
 import { useTranslations } from 'next-intl';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
 import { Copy, Check } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -41,6 +41,17 @@ export default function CodeBlock({
   const preRef = useRef<HTMLPreElement>(null);
   const t = useTranslations('projects.detail');
   const [copied, setCopied] = useState(false);
+  // A11Y-05: gate the Copy↔Check icon-swap animation (WCAG 2.3.3). Under
+  // reduced motion the icons swap instantly with no scale/opacity tween.
+  const reduce = useReducedMotion();
+  const iconMotion = reduce
+    ? {}
+    : {
+        initial: { opacity: 0, scale: 0.8 },
+        animate: { opacity: 1, scale: 1 },
+        exit: { opacity: 0, scale: 0.8 },
+        transition: { duration: 0.15 },
+      };
 
   const language =
     typeof props['data-language'] === 'string' ? props['data-language'] : 'text';
@@ -78,23 +89,11 @@ export default function CodeBlock({
       >
         <AnimatePresence mode="wait" initial={false}>
           {copied ? (
-            <motion.span
-              key="check"
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.8 }}
-              transition={{ duration: 0.15 }}
-            >
+            <motion.span key="check" {...iconMotion}>
               <Check className="h-3.5 w-3.5 text-primary" aria-hidden="true" />
             </motion.span>
           ) : (
-            <motion.span
-              key="copy"
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.8 }}
-              transition={{ duration: 0.15 }}
-            >
+            <motion.span key="copy" {...iconMotion}>
               <Copy className="h-3.5 w-3.5" aria-hidden="true" />
             </motion.span>
           )}

@@ -168,6 +168,22 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  /* ----------------------------------------------------------
+     Global :focus-visible ring (A11Y-04, Phase 6 D-11 / WCAG 2.4.7)
+     ----------------------------------------------------------
+     Keyboard-only focus indicator. `--ring` aliases var(--color-accent)
+     (Phase 1 D-13), so the ring repaints live on palette switch with no
+     rebuild — NO hardcoded color. `:focus-visible` (not `:focus`) keeps
+     the ring off mouse/touch interactions while guaranteeing every
+     keyboard-reachable control (links, buttons, the icon-only PaletteFab,
+     social anchors, the language switcher) shows a visible focus outline.
+     The `outline-offset` lifts the ring off the element so it is legible
+     against the element's own background. */
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
 }
 
 /* ============================================================
@@ -207,4 +223,30 @@
   transition:
     opacity 200ms ease,
     transform 250ms ease;
+}
+
+/* ============================================================
+   Reduced-motion CSS safety net (A11Y-05, Phase 6 D-12 — belt & suspenders)
+   ------------------------------------------------------------
+   The JS gates (gsap.matchMedia / usePrefersReducedMotion /
+   useReducedMotion) already disable every scripted GSAP + motion
+   animation. This block neutralizes the remaining PURELY-CSS motion
+   for users who request reduced motion: the global 400ms color-swap
+   transition (ARCH-04) and any stray CSS animation/transition.
+
+   CAUTION (06-RESEARCH §15): this flattens the ARCH-04 global 400ms
+   color transition to instant under reduced motion — palette swaps
+   become instant rather than animated. That is the correct, accessible
+   tradeoff. The Phase 2 Pitfall-E overlay-transition test runs in jsdom
+   WITHOUT this media query active, so it is unaffected.
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

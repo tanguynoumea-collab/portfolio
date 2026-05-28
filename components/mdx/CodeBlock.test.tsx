@@ -43,6 +43,9 @@ vi.mock('motion/react', () => ({
   },
   AnimatePresence: ({ children }: { children: ReactNode }) =>
     children as React.ReactElement,
+  // A11Y-05: the component now gates the icon-swap animation on
+  // useReducedMotion. Default false = full motion (icon-swap props applied).
+  useReducedMotion: () => false,
 }));
 
 vi.mock('lucide-react', () => ({
