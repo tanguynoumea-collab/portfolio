@@ -84,7 +84,7 @@ Each task was committed atomically (all on `main` after the Task-2 rename):
 2. **Task 2: README rewrite + ci.yml + master→main + checklist** - `4e553c9` (docs)
 3. **Task 3 fix: check-readme return-type under noUncheckedIndexedAccess** - `a9bb266` (fix)
 
-**Plan metadata:** _(final docs commit — SUMMARY.md + STATE.md + ROADMAP.md + REQUIREMENTS.md)_
+**Plan metadata:** `e6534df` (docs: complete deploy-prep plan — SUMMARY.md + STATE.md + ROADMAP.md + REQUIREMENTS.md)
 
 _Note: Task 3 was verification + commit; its only code change was the auto-fix in `a9bb266` (see Deviations). The plan's 9 files were committed across 660e222 + 4e553c9; the rename is git state._
 
