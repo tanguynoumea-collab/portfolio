@@ -5,6 +5,8 @@ import { notFound } from 'next/navigation';
 import { NextIntlClientProvider, hasLocale } from 'next-intl';
 import { setRequestLocale, getMessages, getTranslations } from 'next-intl/server';
 import { routing } from '@/i18n/routing';
+import { getPathname } from '@/i18n/navigation';
+import { SITE_URL } from '@/lib/constants';
 import { PaletteFouCScript } from '@/components/theme/PaletteFouCScript';
 import { ThemeProvider } from '@/components/providers/ThemeProvider';
 import { LenisProvider } from '@/components/providers/LenisProvider';
@@ -54,14 +56,31 @@ export function generateStaticParams() {
 type Params = Promise<{ locale: string }>;
 
 /*
- * D-12 (Phase 3 LAYOUT-01): minimal localized metadata.
+ * A11Y-01 (Phase 6 D-01/02/03): full per-route SEO metadata.
  *
- * Phase 6 (A11Y-01) expands this with og:image, og:locale, hreflang
- * alternates, sitemap entries, twitter:card, theme-color, etc. For
- * Phase 3 we ship a substantive title + a localized description sourced
- * from `hero.tagline` so the document already announces itself
- * correctly to crawlers, screen readers, and OS share sheets.
+ * Expanded from Phase 3's title+description: adds metadataBase (D-01, so the
+ * file-based opengraph-image.tsx og:image resolves to an absolute URL),
+ * openGraph (type:website) + twitter card (D-02, localized via hero.tagline),
+ * and hreflang alternates.languages + canonical (D-03).
+ *
+ * hreflang is built via next-intl's `getPathname` — NOT hand-built strings —
+ * so it survives any routing change and respects localePrefix:'as-needed'
+ * (fr canonical at '/', en at '/en'). Pitfall 2: the default locale (fr) must
+ * NOT get a '/fr' prefix; getPathname({href:'/', locale:'fr'}) returns '/'.
+ *
+ * NOTE: this is a SEPARATE export from the default LocaleLayout component — it
+ * does NOT touch <head>/PaletteFouCScript/suppressHydrationWarning (Pitfall 6,
+ * FOUC regression guard). The OG image is NOT listed in openGraph.images: the
+ * file-based opengraph-image.tsx route auto-injects og:image.
  */
+function hreflangMap(href: string) {
+  return {
+    'fr-FR': `${SITE_URL}${getPathname({ href, locale: 'fr' })}`,
+    'en-US': `${SITE_URL}${getPathname({ href, locale: 'en' })}`,
+    'x-default': `${SITE_URL}${getPathname({ href, locale: routing.defaultLocale })}`,
+  };
+}
+
 export async function generateMetadata({
   params,
 }: {
@@ -69,9 +88,29 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'hero' });
+  const canonical = `${SITE_URL}${getPathname({ href: '/', locale })}`;
+
   return {
+    metadataBase: new URL(SITE_URL),
     title: 'Tanguy Delrieu — Tech × Design × BIM',
     description: t('tagline'),
+    alternates: {
+      canonical,
+      languages: hreflangMap('/'),
+    },
+    openGraph: {
+      type: 'website',
+      locale: locale === 'fr' ? 'fr_FR' : 'en_US',
+      title: 'Tanguy Delrieu — Tech × Design × BIM',
+      description: t('tagline'),
+      siteName: 'Tanguy Delrieu',
+      url: canonical,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: 'Tanguy Delrieu — Tech × Design × BIM',
+      description: t('tagline'),
+    },
   };
 }
 

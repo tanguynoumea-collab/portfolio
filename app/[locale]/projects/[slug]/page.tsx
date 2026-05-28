@@ -30,6 +30,7 @@
  * repo link uses `Code2` (same substitution Footer/Contact made for GitHub).
  */
 
+import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
 import {
@@ -44,7 +45,8 @@ import {
 } from 'lucide-react';
 import { getProjectBySlug, getProjectSlugs, type Locale } from '@/lib/projects';
 import { routing } from '@/i18n/routing';
-import { Link } from '@/i18n/navigation';
+import { Link, getPathname } from '@/i18n/navigation';
+import { SITE_URL } from '@/lib/constants';
 import { Badge } from '@/components/ui/badge';
 import { ProjectCover } from '@/components/sections/ProjectCover';
 import MDXImage from '@/components/mdx/Image';
@@ -68,14 +70,58 @@ export async function generateStaticParams() {
 }
 
 /**
- * Minimal page title (D-15 discretion). Phase 6 (A11Y-01) expands with OG image,
- * hreflang alternates, twitter:card, and description.
+ * A11Y-01 (Phase 6 D-02/03): full per-project SEO metadata.
+ *
+ * Expanded from Phase 5's title-only: adds the localized project description
+ * (frontmatter summary), openGraph (type:article — this is editorial content,
+ * not the site root) + twitter card, and hreflang alternates.languages +
+ * canonical built via next-intl `getPathname` (as-needed-aware, Pitfall 2).
+ *
+ * The og:image is auto-injected by the colocated opengraph-image.tsx route, so
+ * it is NOT listed in openGraph.images. metadataBase (set in the root layout)
+ * makes the relative og:image absolute.
+ *
+ * `getPathname` is given the dynamic `/projects/${slug}` href with an `as never`
+ * cast — the same pattern the page body uses for its prev/next <Link> hrefs
+ * (next-intl's typed pathnames reject bare dynamic-segment strings; the runtime
+ * resolution is identical).
  */
-export async function generateMetadata({ params }: { params: Params }) {
+export async function generateMetadata({
+  params,
+}: {
+  params: Params;
+}): Promise<Metadata> {
   const { locale, slug } = await params;
   const project = await getProjectBySlug(slug, locale);
   if (!project) return {};
-  return { title: `${project.title} — Tanguy Delrieu` };
+
+  const href = `/projects/${slug}`;
+  const canonical = `${SITE_URL}${getPathname({ href: href as never, locale })}`;
+
+  return {
+    title: `${project.title} — Tanguy Delrieu`,
+    description: project.summary,
+    alternates: {
+      canonical,
+      languages: {
+        'fr-FR': `${SITE_URL}${getPathname({ href: href as never, locale: 'fr' })}`,
+        'en-US': `${SITE_URL}${getPathname({ href: href as never, locale: 'en' })}`,
+        'x-default': `${SITE_URL}${getPathname({ href: href as never, locale: routing.defaultLocale })}`,
+      },
+    },
+    openGraph: {
+      type: 'article',
+      locale: locale === 'fr' ? 'fr_FR' : 'en_US',
+      title: project.title,
+      description: project.summary,
+      url: canonical,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: project.title,
+      description: project.summary,
+    },
+  };
 }
 
 export default async function ProjectPage({ params }: { params: Params }) {
