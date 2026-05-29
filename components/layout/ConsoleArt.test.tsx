@@ -83,7 +83,7 @@ describe('ConsoleArt (EGG-01) — one-shot guarded print', () => {
     localeMock.mockReturnValue('fr');
     render(<mod.ConsoleArt />);
     const firstArg = logSpy.mock.calls[0]?.[0] as string;
-    expect(firstArg).toMatch(/Ingénieur BIM/);
+    expect(firstArg).toMatch(/Spécialiste BIM/);
   });
 
   it('dispatches by locale — EN variant contains English intro', async () => {
@@ -94,6 +94,6 @@ describe('ConsoleArt (EGG-01) — one-shot guarded print', () => {
     localeMock.mockReturnValue('en');
     render(<mod.ConsoleArt />);
     const firstArg = logSpy.mock.calls[0]?.[0] as string;
-    expect(firstArg).toMatch(/BIM Engineer/i);
+    expect(firstArg).toMatch(/BIM Specialist/i);
   });
 });

@@ -12,7 +12,7 @@
   },
   "hero": {
     "name": "Tanguy Delrieu",
-    "role": "BIM Engineer",
+    "role": "BIM Specialist",
     "tagline": "BIM coordination and modeling — from the digital model to on-site delivery.",
     "cta": "See my work",
     "scrollCue": "Scroll to projects"
@@ -22,7 +22,7 @@
     "intro": "To be completed in Phase 4.",
     "details": "To be completed in Phase 4.",
     "paragraphs": {
-      "1": "I'm Tanguy Delrieu, a BIM engineer trained at the École Spéciale des Travaux Publics de Paris (ESTP). Originally from Nouméa, I specialize in coordinating and modeling digital building models — from structural works through to commissioning.",
+      "1": "I'm Tanguy Delrieu, a BIM specialist trained at the École Spéciale des Travaux Publics de Paris (ESTP). Originally from Nouméa, I specialize in coordinating and modeling digital building models — from structural works through to commissioning.",
       "2": "I've coordinated BIM models at Vinci Construction in Geneva — as-built capture with the HoloLens 2 and BCF tracking on BimCollab — and run site supervision on structural and renovation projects in New Caledonia. I work with Revit, Navisworks and NEXT-BIM, and I'm drawn to everything that brings the digital model closer to the field."
     }
   },

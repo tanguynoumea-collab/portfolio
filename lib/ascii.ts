@@ -36,11 +36,11 @@ const GITHUB_URL = 'https://github.com/tanguynoumea-collab/portfolio';
 const KONAMI_HINT = '// ↑ ↑ ↓ ↓ ← → ← → B A';
 
 const FR_INTRO =
-  'Ingénieur BIM — coordination & modélisation.\n' +
+  'Spécialiste BIM — coordination & modélisation.\n' +
   "Si tu lis ceci, tu aimes jeter un œil sous le capot — bienvenue.";
 
 const EN_INTRO =
-  'BIM Engineer — coordination & modeling.\n' +
+  'BIM Specialist — coordination & modeling.\n' +
   'If you are reading this, you are the kind of person who looks under the hood — welcome.';
 
 /**
