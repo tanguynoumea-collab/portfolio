@@ -1,0 +1,33 @@
+---
+slug: olympe-materialmanager
+title: Olympe MaterialManager
+year: 2026
+category: bim
+cover: /projects/olympe-materialmanager/cover.jpg
+summary: A Revit add-in to visually manage the materials of every type visible in a 3D view, from a three-panel editor.
+featured: true
+order: 3
+revit: "Revit 2024 · 2025 · 2026"
+repo: https://github.com/tanguynoumea-collab/TEXTURE-MANAGER
+stack:
+  - C#
+  - WPF
+  - Revit API
+  - WiX
+---
+
+## Context
+
+Assigning the right materials to a Revit model is tedious: open each type, dig through its layered structure, find the right material, repeat. Olympe MaterialManager is the Revit add-in I built to make that work visual and fast: a unified editor where the architect applies a preset material to the layers or parameters of any type visible in the active 3D view, in a few clicks.
+
+## Challenge
+
+The challenge was to connect three worlds in a single readable interface: the list of families and types present in the view, the internal structure of each type (the CompoundStructure layers of walls, floors, roofs and ceilings, or the material parameters of loaded families), and a library of reusable preset materials. All of it had to stay in sync with Revit in real time and run across three versions (2024, 2025, 2026).
+
+## Process
+
+I structured the interface into three panels. On the left, the tree of families and types in the "active scene" — a subset the user composes on the fly, by list or by clicking in the 3D view, with walls and floors first. In the centre, the layers or material parameters of the selected type, with multi-selection. On the right, preset materials organised in groups, persisted as JSON at a chosen, remembered location. A viewer shows name, pattern, colour and tint with a preview, and live editing writes back to Revit through a Transaction. Set Mat applies the preset to the selected layers or chosen parameter. A WiX installer handles the Revit version choice.
+
+## Outcome
+
+What used to take many round-trips through Revit's menus now happens from a single screen, live on the 3D view. The tool is public on GitHub and illustrates how I approach BIM tooling: start from a concrete daily pain point and build the interface that removes it.

@@ -1,9 +1,9 @@
 'use client';
 
 /**
- * components/sections/CategoryFilter.tsx — HOME-03 Phase 4.
+ * components/sections/CategoryFilter.tsx — HOME-03.
  *
- * Segmented control with 4 pill buttons (All / Tech / Design / BIM) and a
+ * Segmented control with 3 pill buttons (All / BIM·Revit / Outils) and a
  * shared-element motion indicator (layoutId="filter-indicator"). The
  * pattern mirrors Phase 3 LanguageSwitcher D-18 — only the layoutId string
  * differs.
@@ -27,10 +27,10 @@ import { useTranslations } from 'next-intl';
 import { motion, useReducedMotion } from 'motion/react';
 import { cn } from '@/lib/utils';
 
-export type Category = 'tech' | 'design' | 'bim';
+export type Category = 'bim' | 'tech';
 export type FilterValue = Category | 'all';
 
-const OPTIONS: ReadonlyArray<FilterValue> = ['all', 'tech', 'design', 'bim'] as const;
+const OPTIONS: ReadonlyArray<FilterValue> = ['all', 'bim', 'tech'] as const;
 
 type Props = {
   active: FilterValue;

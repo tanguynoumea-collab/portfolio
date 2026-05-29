@@ -1,0 +1,33 @@
+---
+slug: hrs-tab
+title: HRS.tab — pyRevit
+year: 2026
+category: bim
+cover: /projects/hrs-tab/cover.jpg
+summary: A pyRevit toolset for the BIM team — per-category parameter auditing, shared-parameter checks, view filters and schedule editing.
+featured: false
+order: 4
+proprietary: true
+revit: "Revit 2024 · 2025"
+stack:
+  - Python
+  - pyRevit
+  - Revit API
+  - WPF (XAML)
+---
+
+## Context
+
+Day to day, a BIM team repeats the same gestures: check that the right parameters are filled, clean up view filters, fix schedules, audit a model's consistency. HRS.tab is the pyRevit tab I built to tool these recurring tasks straight in the Revit ribbon, in Python, without resorting to throwaway Dynamo scripts.
+
+## Challenge
+
+The hard part of an internal toolbox isn't any single tool, but the coherence of the whole: dozens of buttons must share common logic, a consistent interface and enough reliability to be used without supervision. Each tool hits the Revit API, where a badly scoped query can be slow on a large model or silently produce a wrong result.
+
+## Process
+
+I organised the extension into three panels: Analyse, Edit and Filter. The centrepiece is the Param Category Auditor, which separates a data engine (collecting shared parameters, computing the fill rate per category) from a WPF interface in XAML — segmented colour bars, a detail table, an adjustable threshold — with Excel export and unassignment of unused parameters. Alongside it, a Shared Parameters Checker compares parameters across models, a Geometry Analyser and a family-nesting detector inspect the model, a Smart Filter and a View Filter Cleaner manage view filters, and a Nomenclature Modifier bulk-edits schedules. Each button follows the pyRevit format (bundle plus script) over a shared base.
+
+## Outcome
+
+The team gets an in-house tab that turns manual checks, done too late, into one-click actions from Revit. Seeing instantly which shared parameters are actually used per category — and cleaning up the rest — keeps models from drifting. HRS.tab shows the other side of my BIM tooling: fast Python scripting, as close as possible to the workflow.

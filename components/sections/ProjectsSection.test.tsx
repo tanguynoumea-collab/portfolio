@@ -1,26 +1,22 @@
 /**
  * ProjectsSection.test.tsx — HOME-05 acceptance suite (lifted state).
  *
- * Wave 0 shipped a RED harness with a trivial assertion. Wave 2
- * (04-03-projects-PLAN.md Task 3) expands the suite to cover the lifted
- * state contract:
+ * Covers the lifted-state contract against the 2-category model:
  *   1. Default active='all' → ProjectGrid receives ALL projects
  *   2. Renders CategoryFilter with active prop
  *   3. Renders ProjectGrid with filtered projects prop
- *   4. Clicking CategoryFilter onChange callback (simulated via mock's
- *      exposed handler) updates active state → ProjectGrid re-renders
- *      with filtered subset
- *   5. useMemo filter selector handles all category branches
- *      (tech / design / bim / all)
+ *   4. Clicking CategoryFilter onChange (simulated via the stub's exposed
+ *      buttons) updates active state → ProjectGrid re-renders filtered
+ *   5. useMemo filter selector handles all branches (bim / tech / all)
  *   6. Empty filter results (e.g., projects=[]) pass empty array to grid
  *   7. h2 title from projects.title i18n
  *
  * Mock strategy:
  *   - next-intl returns plain strings
- *   - CategoryFilter stubbed as a div with data-active + a hidden button
- *     that exposes onChange so tests can simulate filter changes
- *   - ProjectGrid stubbed as a div with data-count + data-slugs (CSV) so
- *     tests can assert WHICH projects were passed through the filter
+ *   - CategoryFilter stubbed as a div with data-active + hidden buttons that
+ *     expose onChange so tests can simulate filter changes
+ *   - ProjectGrid stubbed as a div with data-count + data-slugs (CSV) so tests
+ *     can assert WHICH projects were passed through the filter
  */
 
 import React from 'react';
@@ -37,7 +33,7 @@ vi.mock('next-intl', () => ({
   },
 }));
 
-// CategoryFilter stub — exposes a button that fires onChange so tests can
+// CategoryFilter stub — exposes buttons that fire onChange so tests can
 // simulate user interaction without coupling to the real CategoryFilter UI.
 vi.mock('./CategoryFilter', () => ({
   CategoryFilter: ({
@@ -45,7 +41,7 @@ vi.mock('./CategoryFilter', () => ({
     onChange,
   }: {
     active: string;
-    onChange: (v: 'all' | 'tech' | 'design' | 'bim') => void;
+    onChange: (v: 'all' | 'bim' | 'tech') => void;
   }) =>
     React.createElement(
       'div',
@@ -53,26 +49,18 @@ vi.mock('./CategoryFilter', () => ({
       React.createElement(
         'button',
         {
-          'data-test': 'set-tech',
-          onClick: () => onChange('tech'),
-        } as Record<string, unknown>,
-        'set tech',
-      ),
-      React.createElement(
-        'button',
-        {
-          'data-test': 'set-design',
-          onClick: () => onChange('design'),
-        } as Record<string, unknown>,
-        'set design',
-      ),
-      React.createElement(
-        'button',
-        {
           'data-test': 'set-bim',
           onClick: () => onChange('bim'),
         } as Record<string, unknown>,
         'set bim',
+      ),
+      React.createElement(
+        'button',
+        {
+          'data-test': 'set-tech',
+          onClick: () => onChange('tech'),
+        } as Record<string, unknown>,
+        'set tech',
       ),
       React.createElement(
         'button',
@@ -98,70 +86,70 @@ vi.mock('./ProjectGrid', () => ({
     ),
 }));
 
-// ----- Fixtures -----
+// ----- Fixtures (prop order preserved by the filter) -----
 
 const fakeProjects: Project[] = [
   {
     slug: 'tech-1',
     title: 'Tech 1',
-    year: 2024,
+    year: 2026,
     category: 'tech',
     cover: '/c.jpg',
     summary: '.',
     featured: true,
-    stack: ['TS'],
+    stack: ['C#'],
   },
   {
     slug: 'tech-2',
     title: 'Tech 2',
-    year: 2024,
+    year: 2026,
     category: 'tech',
     cover: '/c.jpg',
     summary: '.',
     featured: false,
-    stack: ['TS'],
-  },
-  {
-    slug: 'design-1',
-    title: 'Design 1',
-    year: 2023,
-    category: 'design',
-    cover: '/c.jpg',
-    summary: '.',
-    featured: false,
-    tools: ['Figma'],
-  },
-  {
-    slug: 'design-2',
-    title: 'Design 2',
-    year: 2023,
-    category: 'design',
-    cover: '/c.jpg',
-    summary: '.',
-    featured: false,
-    tools: ['Figma'],
+    stack: ['C#'],
   },
   {
     slug: 'bim-1',
     title: 'BIM 1',
-    year: 2022,
+    year: 2026,
     category: 'bim',
     cover: '/c.jpg',
     summary: '.',
     featured: false,
-    software: ['Revit'],
-    projectScale: 'urban',
+    stack: ['C#'],
+    revit: 'Revit 2025',
   },
   {
     slug: 'bim-2',
     title: 'BIM 2',
-    year: 2022,
+    year: 2026,
     category: 'bim',
     cover: '/c.jpg',
     summary: '.',
     featured: false,
-    software: ['Revit'],
-    projectScale: 'residential',
+    stack: ['Python'],
+    revit: 'Revit 2024',
+  },
+  {
+    slug: 'bim-3',
+    title: 'BIM 3',
+    year: 2026,
+    category: 'bim',
+    cover: '/c.jpg',
+    summary: '.',
+    featured: false,
+    stack: ['C#'],
+  },
+  {
+    slug: 'bim-4',
+    title: 'BIM 4',
+    year: 2026,
+    category: 'bim',
+    cover: '/c.jpg',
+    summary: '.',
+    featured: false,
+    stack: ['C#'],
   },
 ];
 
@@ -189,50 +177,34 @@ describe('ProjectsSection (HOME-05) — initial render', () => {
 });
 
 describe('ProjectsSection (HOME-05) — useMemo filter selector', () => {
+  it('clicking set-bim filters ProjectGrid to bim projects only', async () => {
+    const { ProjectsSection } = await import('./ProjectsSection');
+    const { container } = render(<ProjectsSection projects={fakeProjects} />);
+    fireEvent.click(
+      container.querySelector('[data-test="set-bim"]') as HTMLButtonElement,
+    );
+    const grid = container.querySelector('[data-count]');
+    expect(grid?.getAttribute('data-count')).toBe('4');
+    expect(grid?.getAttribute('data-slugs')).toBe('bim-1,bim-2,bim-3,bim-4');
+  });
+
   it('clicking set-tech filters ProjectGrid to tech projects only', async () => {
     const { ProjectsSection } = await import('./ProjectsSection');
     const { container } = render(<ProjectsSection projects={fakeProjects} />);
-    const setTech = container.querySelector(
-      '[data-test="set-tech"]',
-    ) as HTMLButtonElement;
-    fireEvent.click(setTech);
+    fireEvent.click(
+      container.querySelector('[data-test="set-tech"]') as HTMLButtonElement,
+    );
     const grid = container.querySelector('[data-count]');
     expect(grid?.getAttribute('data-count')).toBe('2');
     expect(grid?.getAttribute('data-slugs')).toBe('tech-1,tech-2');
   });
 
-  it('clicking set-design filters ProjectGrid to design projects only', async () => {
-    const { ProjectsSection } = await import('./ProjectsSection');
-    const { container } = render(<ProjectsSection projects={fakeProjects} />);
-    const setDesign = container.querySelector(
-      '[data-test="set-design"]',
-    ) as HTMLButtonElement;
-    fireEvent.click(setDesign);
-    const grid = container.querySelector('[data-count]');
-    expect(grid?.getAttribute('data-count')).toBe('2');
-    expect(grid?.getAttribute('data-slugs')).toBe('design-1,design-2');
-  });
-
-  it('clicking set-bim filters ProjectGrid to bim projects only', async () => {
-    const { ProjectsSection } = await import('./ProjectsSection');
-    const { container } = render(<ProjectsSection projects={fakeProjects} />);
-    const setBim = container.querySelector(
-      '[data-test="set-bim"]',
-    ) as HTMLButtonElement;
-    fireEvent.click(setBim);
-    const grid = container.querySelector('[data-count]');
-    expect(grid?.getAttribute('data-count')).toBe('2');
-    expect(grid?.getAttribute('data-slugs')).toBe('bim-1,bim-2');
-  });
-
   it('clicking set-all restores all projects', async () => {
     const { ProjectsSection } = await import('./ProjectsSection');
     const { container } = render(<ProjectsSection projects={fakeProjects} />);
-    // First filter to tech
     fireEvent.click(
       container.querySelector('[data-test="set-tech"]') as HTMLButtonElement,
     );
-    // Then back to all
     fireEvent.click(
       container.querySelector('[data-test="set-all"]') as HTMLButtonElement,
     );
@@ -244,10 +216,10 @@ describe('ProjectsSection (HOME-05) — useMemo filter selector', () => {
     const { ProjectsSection } = await import('./ProjectsSection');
     const { container } = render(<ProjectsSection projects={fakeProjects} />);
     fireEvent.click(
-      container.querySelector('[data-test="set-design"]') as HTMLButtonElement,
+      container.querySelector('[data-test="set-bim"]') as HTMLButtonElement,
     );
     const filter = container.querySelector('[data-active]');
-    expect(filter?.getAttribute('data-active')).toBe('design');
+    expect(filter?.getAttribute('data-active')).toBe('bim');
   });
 });
 
@@ -265,9 +237,9 @@ describe('ProjectsSection (HOME-05) — empty edge cases', () => {
     const { container } = render(
       <ProjectsSection projects={techOnlyProjects} />,
     );
-    // Filter to design — no matches
+    // Filter to bim — no matches in a tech-only set.
     fireEvent.click(
-      container.querySelector('[data-test="set-design"]') as HTMLButtonElement,
+      container.querySelector('[data-test="set-bim"]') as HTMLButtonElement,
     );
     const grid = container.querySelector('[data-count]');
     expect(grid?.getAttribute('data-count')).toBe('0');

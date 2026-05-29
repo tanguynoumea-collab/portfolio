@@ -4,8 +4,9 @@
  * components/sections/ProjectCard.tsx — HOME-04 Phase 4.
  *
  * Color-coded project card with hover micro-interaction and locale-aware
- * routing. Discriminated metadata footer renders different fields per
- * project.category (Tech.stack / Design.tools / BIM.software + projectScale).
+ * routing. The footer shows up to 3 metadata tags (Revit version for BIM
+ * tools, then the tech stack). The category badge is colored per category
+ * (bim / tech) and labelled from i18n (BIM·Revit / Outils).
  *
  * Stack (per RESEARCH Pitfall 4-I): motion.div whileHover > Link > Card.
  * The motion.div is OUTSIDE the Link so pointer-enter fires on hover —
@@ -18,9 +19,9 @@
  * next-intl prefixes the current locale automatically, so the href
  * `/projects/${slug}` resolves to `/fr/projects/slug` or `/en/projects/slug`.
  *
- * Category badge uses the fixed `category-{tech,design,bim}` Badge variants
- * from Wave 0 (palette-independent). Footer metadata badges use the
- * neutral `outline` variant — they are NOT category-colored.
+ * Category badge uses the fixed `category-{bim,tech}` Badge variants
+ * (palette-independent). Footer metadata badges use the neutral `outline`
+ * variant — they are NOT category-colored.
  *
  * Colors are Tailwind utilities backed by --color-* tokens. No literal colors
  * (the base64 blur placeholder is a JPEG fallback for next/image, not a CSS color).
@@ -48,17 +49,14 @@ type Props = {
 
 function categoryVariant(
   category: Project['category'],
-): 'category-tech' | 'category-design' | 'category-bim' {
-  if (category === 'tech') return 'category-tech';
-  if (category === 'design') return 'category-design';
-  return 'category-bim';
+): 'category-bim' | 'category-tech' {
+  return category === 'bim' ? 'category-bim' : 'category-tech';
 }
 
 function metadataBadges(project: Project): string[] {
-  if (project.category === 'tech') return project.stack.slice(0, 3);
-  if (project.category === 'design') return project.tools.slice(0, 3);
-  // BIM: software[0..1] + projectScale
-  return [...project.software.slice(0, 2), project.projectScale];
+  // Revit version first (BIM tools), then the tech stack — capped at 3.
+  const tags = project.revit ? [project.revit, ...project.stack] : project.stack;
+  return tags.slice(0, 3);
 }
 
 // Minimal blur dataURL — matches About's about-photo blur for consistency.
@@ -101,7 +99,7 @@ export function ProjectCard({ project }: Props) {
             />
             <div className="absolute left-3 top-3">
               <Badge variant={categoryVariant(project.category)}>
-                {project.category.toUpperCase()}
+                {t(`filters.${project.category}`)}
               </Badge>
             </div>
             <div className="text-muted-foreground bg-background/70 absolute right-3 top-3 rounded px-2 py-0.5 font-mono text-xs backdrop-blur-sm">

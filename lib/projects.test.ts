@@ -41,9 +41,10 @@ describe('validateFrontmatter — gallery (D-14)', () => {
 });
 
 describe('getProjectBySlug — regression guard', () => {
-  it("resolves agora (fr) — the real stub still validates after the gallery change", async () => {
-    const project = await getProjectBySlug('agora', 'fr');
+  it('resolves diskscout (fr) — a real project validates against the loader', async () => {
+    const project = await getProjectBySlug('diskscout', 'fr');
     expect(project).not.toBe(null);
-    expect(project?.slug).toBe('agora');
+    expect(project?.slug).toBe('diskscout');
+    expect(project?.category).toBe('tech');
   });
 });

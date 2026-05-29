@@ -1,18 +1,28 @@
 /**
- * lib/projects.ts — Server-only MDX project loader + discriminated Project type.
+ * lib/projects.ts — Server-only MDX project loader + Project type.
  *
- * Discriminated union per CONTEXT.md D-18..D-22:
- *   - TechProject:   common + stack[] + repo? + liveUrl?
- *   - DesignProject: common + tools[] + client?
- *   - BIMProject:    common + software[] + projectScale + location?
+ * The portfolio features the author's real software projects (BIM/Revit
+ * tooling + desktop apps), so the shape is a single flat Project type rather
+ * than the original fictional discriminated union. Two categories drive the
+ * homepage filter and the badge color:
+ *   - 'bim'  → BIM·Revit tooling (Revit/pyRevit plugins, geometry engines)
+ *   - 'tech' → standalone tools / desktop apps
+ *
+ * Every project is software, so every project has a `stack`. The rest is
+ * optional and rendered only when present:
+ *   - revit?       Revit version target string (BIM tools only)
+ *   - repo?        public repository URL (set ONLY for public repos)
+ *   - liveUrl?     download / releases / live URL
+ *   - proprietary? true for private/employer/own-IP code — the UI shows a
+ *                  "proprietary" badge instead of a (dead) repo link
  *
  * Loader contract:
  *   - Reads content/projects/{slug}.{locale}.mdx files
  *   - Parses frontmatter with gray-matter
- *   - Validates discriminator (category must be 'tech' | 'design' | 'bim')
+ *   - Validates the category discriminator ('bim' | 'tech') + required fields
  *   - Skips files starting with '_' (D-24 — _template stub stays in repo as reusable template)
  *
- * This file is imported by Server Components only (Phase 5 project pages).
+ * This file is imported by Server Components only (project pages).
  * It uses node:fs and is NOT safe to import from Client Components.
  */
 
@@ -20,39 +30,29 @@ import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import matter from 'gray-matter';
 
-// ----- Discriminated Project union (D-18..D-22) -----
+// ----- Project type -----
+
+export type ProjectCategory = 'bim' | 'tech';
 
 type CommonFields = {
   slug: string;
   title: string;
   year: number;
-  cover: string; // D-22: plain path relative to /public, e.g. '/projects/agora/cover.jpg'
+  cover: string; // plain path relative to /public, e.g. '/projects/diskscout/cover.jpg'
   summary: string;
   featured: boolean;
-  gallery?: string[]; // NEW (D-14) — optional. Asset paths under /public/projects/{slug}/.
+  order?: number; // optional curated sort key (ascending); undefined sorts last.
+  gallery?: string[]; // optional. Asset paths under /public/projects/{slug}/.
 };
 
-export type TechProject = CommonFields & {
-  category: 'tech';
+export type Project = CommonFields & {
+  category: ProjectCategory;
   stack: string[];
+  revit?: string;
   repo?: string;
   liveUrl?: string;
+  proprietary?: boolean;
 };
-
-export type DesignProject = CommonFields & {
-  category: 'design';
-  tools: string[];
-  client?: string;
-};
-
-export type BIMProject = CommonFields & {
-  category: 'bim';
-  software: string[];
-  projectScale: 'concept' | 'residential' | 'commercial' | 'urban';
-  location?: string;
-};
-
-export type Project = TechProject | DesignProject | BIMProject;
 
 export type Locale = 'fr' | 'en';
 
@@ -64,15 +64,12 @@ function isStringArray(v: unknown): v is string[] {
   return Array.isArray(v) && v.every((x) => typeof x === 'string');
 }
 
-function isProjectScale(v: unknown): v is 'concept' | 'residential' | 'commercial' | 'urban' {
-  return (
-    typeof v === 'string' &&
-    (v === 'concept' || v === 'residential' || v === 'commercial' || v === 'urban')
-  );
+function isCategory(v: unknown): v is ProjectCategory {
+  return v === 'bim' || v === 'tech';
 }
 
 /**
- * Runtime validator that narrows raw frontmatter data to the discriminated union.
+ * Runtime validator that narrows raw frontmatter data to the Project type.
  * Throws if a field is missing or has the wrong shape — fail loud at build time
  * rather than ship a broken project to production.
  */
@@ -93,6 +90,7 @@ export function validateFrontmatter(slug: string, data: Record<string, unknown>)
     cover: typeof data.cover === 'string' ? data.cover : '',
     summary: typeof data.summary === 'string' ? data.summary : '',
     featured: typeof data.featured === 'boolean' ? data.featured : false,
+    ...(typeof data.order === 'number' ? { order: data.order } : {}),
     ...(Array.isArray(data.gallery) ? { gallery: data.gallery as string[] } : {}),
   };
 
@@ -102,62 +100,26 @@ export function validateFrontmatter(slug: string, data: Record<string, unknown>)
     );
   }
 
-  const category = data.category;
-  if (category === 'tech') {
-    if (!isStringArray(data.stack)) {
-      throw new Error(
-        `[lib/projects] '${slug}' is a tech project but 'stack' is not a string array.`,
-      );
-    }
-    const project: TechProject = {
-      ...common,
-      category: 'tech',
-      stack: data.stack,
-      ...(typeof data.repo === 'string' ? { repo: data.repo } : {}),
-      ...(typeof data.liveUrl === 'string' ? { liveUrl: data.liveUrl } : {}),
-    };
-    return project;
+  if (!isCategory(data.category)) {
+    throw new Error(
+      `[lib/projects] '${slug}' has invalid category: expected 'bim' | 'tech', got '${String(data.category)}'.`,
+    );
   }
 
-  if (category === 'design') {
-    if (!isStringArray(data.tools)) {
-      throw new Error(
-        `[lib/projects] '${slug}' is a design project but 'tools' is not a string array.`,
-      );
-    }
-    const project: DesignProject = {
-      ...common,
-      category: 'design',
-      tools: data.tools,
-      ...(typeof data.client === 'string' ? { client: data.client } : {}),
-    };
-    return project;
+  if (!isStringArray(data.stack)) {
+    throw new Error(`[lib/projects] '${slug}' is missing a 'stack' string array.`);
   }
 
-  if (category === 'bim') {
-    if (!isStringArray(data.software)) {
-      throw new Error(
-        `[lib/projects] '${slug}' is a BIM project but 'software' is not a string array.`,
-      );
-    }
-    if (!isProjectScale(data.projectScale)) {
-      throw new Error(
-        `[lib/projects] '${slug}' has invalid projectScale: expected one of 'concept' | 'residential' | 'commercial' | 'urban'.`,
-      );
-    }
-    const project: BIMProject = {
-      ...common,
-      category: 'bim',
-      software: data.software,
-      projectScale: data.projectScale,
-      ...(typeof data.location === 'string' ? { location: data.location } : {}),
-    };
-    return project;
-  }
-
-  throw new Error(
-    `[lib/projects] '${slug}' has invalid category: expected 'tech' | 'design' | 'bim', got '${String(category)}'.`,
-  );
+  const project: Project = {
+    ...common,
+    category: data.category,
+    stack: data.stack,
+    ...(typeof data.revit === 'string' ? { revit: data.revit } : {}),
+    ...(typeof data.repo === 'string' ? { repo: data.repo } : {}),
+    ...(typeof data.liveUrl === 'string' ? { liveUrl: data.liveUrl } : {}),
+    ...(data.proprietary === true ? { proprietary: true } : {}),
+  };
+  return project;
 }
 
 /**
@@ -181,6 +143,15 @@ export async function getProjects(locale: Locale): Promise<Project[]> {
     const project = validateFrontmatter(slug, data as Record<string, unknown>);
     projects.push(project);
   }
+
+  // Curated order: explicit `order` ascending, projects without one sort last
+  // (then alphabetically by title for a stable, deterministic sequence).
+  projects.sort((a, b) => {
+    const ao = a.order ?? Number.POSITIVE_INFINITY;
+    const bo = b.order ?? Number.POSITIVE_INFINITY;
+    if (ao !== bo) return ao - bo;
+    return a.title.localeCompare(b.title);
+  });
 
   return projects;
 }

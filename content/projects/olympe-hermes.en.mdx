@@ -1,0 +1,34 @@
+---
+slug: olympe-hermes
+title: Olympe Hermès
+year: 2026
+category: bim
+cover: /projects/olympe-hermes/cover.jpg
+summary: A Revit extension that pushes room parameters down to the objects they contain, via an offline geometric engine (BVH + FastWindingNumber).
+featured: true
+order: 2
+proprietary: true
+revit: "Revit 2024 · 2025"
+stack:
+  - C# 12
+  - .NET 8
+  - WPF
+  - geometry3Sharp
+  - SQLite
+---
+
+## Context
+
+On a model, critical information is often carried by the room: its name, number, zone, work package. But the objects inside it — light fittings, equipment, furniture — have no idea which room contains them. Olympe Hermès answers that need: automatically transfer a room's parameters to every object it contains. It is my own intellectual property, developed outside any employment contract, as an extension of the Olympe platform.
+
+## Challenge
+
+Deciding whether an object is "inside" a room is a 3D geometry problem, not a database one. A room is an arbitrary volume, sometimes concave, sometimes split across several models; an object may be a point, a surface or a solid, sometimes slightly outside the volume. Running that test for thousands of objects against hundreds of rooms, reliably and fast, without overloading Revit, was the real challenge.
+
+## Process
+
+I moved the computation out of Revit. Hermès collects rooms, volumes and objects from the model, then runs an N×M match fully offline: a BVH (bounding volume hierarchy) acceleration structure prunes impossible pairs, and a FastWindingNumber, via geometry3Sharp, settles containment even for concave volumes. A distance tolerance attaches objects slightly outside a room to the nearest one within a configurable radius. Several models can be merged into a single geometry group. Once the computation is validated, Apply pushes the parameters back into Revit in a transaction. Scheduled routines re-run extraction and application with automatic recompute.
+
+## Outcome
+
+A tedious, error-prone assignment task becomes a reproducible computation: collect, compute, apply. The offline engine handles heavy models without freezing Revit, and the tolerance copes with the real world, where geometry is never perfect. Hermès shows that a BIM domain problem can be solved with genuine computational-geometry algorithms.

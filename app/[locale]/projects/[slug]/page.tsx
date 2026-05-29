@@ -6,9 +6,9 @@
  * MDX body (max-w-prose) → optional gallery grid → footer (back + prev/next).
  *
  * Key contracts:
- *   - dynamicParams = false (Pattern 1): only the 12 generated routes render;
- *     unknown slugs 404 without on-demand rendering.
- *   - generateStaticParams returns ALL locale × slug combos (12 = 6 × 2, D-06).
+ *   - dynamicParams = false (Pattern 1): only the generated routes render
+ *     (one per locale × slug); unknown slugs 404 without on-demand rendering.
+ *   - generateStaticParams returns ALL locale × slug combos (D-06).
  *   - getProjectBySlug → notFound() on null (D-07).
  *   - CRITICAL (Pitfall 5B): the MDX is loaded via a RELATIVE dynamic import path
  *     (../../../../content/projects/...), NOT the @/ alias — Turbopack's
@@ -35,13 +35,12 @@ import { notFound } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
 import {
   ArrowLeft,
-  Briefcase,
   Calendar,
   ChevronLeft,
   ChevronRight,
   Code2,
   ExternalLink,
-  MapPin,
+  Lock,
 } from 'lucide-react';
 import { getProjectBySlug, getProjectSlugs, type Locale } from '@/lib/projects';
 import { routing } from '@/i18n/routing';
@@ -59,8 +58,8 @@ export const dynamicParams = false;
 type Params = Promise<{ locale: Locale; slug: string }>;
 
 /**
- * D-06: pre-render every locale × slug combination (12 entries for 6 projects × 2
- * locales). Future projects need only an MDX file — no code change here.
+ * D-06: pre-render every locale × slug combination. Future projects need only
+ * an MDX file — no code change here.
  */
 export async function generateStaticParams() {
   const slugs = await getProjectSlugs();
@@ -169,81 +168,56 @@ export default async function ProjectPage({ params }: { params: Params }) {
               {project.year}
             </span>
 
-            {/* Category badge (palette-independent fixed token, D-13). */}
+            {/* Category badge (palette-independent fixed token). */}
             <Badge variant={`category-${project.category}`}>
               {t(`meta.${project.category}`)}
             </Badge>
 
-            {/* Discriminated, category-specific metadata. The union narrows on
-                project.category so TS knows which fields exist — no `any`, no
-                casts to reach category-specific fields. */}
-            {project.category === 'tech' && (
-              <>
-                {project.stack.slice(0, 4).map((item) => (
-                  <Badge key={item} variant="outline">
-                    {item}
-                  </Badge>
-                ))}
-                {project.repo && (
-                  <a
-                    href={project.repo}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-muted-foreground hover:text-primary inline-flex items-center gap-1.5 text-sm underline-offset-4 hover:underline"
-                  >
-                    <Code2 className="h-4 w-4" aria-hidden="true" />
-                    {t('meta.repo')}
-                  </a>
-                )}
-                {project.liveUrl && (
-                  <a
-                    href={project.liveUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-muted-foreground hover:text-primary inline-flex items-center gap-1.5 text-sm underline-offset-4 hover:underline"
-                  >
-                    <ExternalLink className="h-4 w-4" aria-hidden="true" />
-                    {t('meta.live')}
-                  </a>
-                )}
-              </>
+            {/* Revit version target (BIM tools only). */}
+            {project.revit && (
+              <Badge variant="outline">
+                <span className="sr-only">{t('meta.revit')}: </span>
+                {project.revit}
+              </Badge>
             )}
 
-            {project.category === 'design' && (
-              <>
-                {project.tools.slice(0, 4).map((item) => (
-                  <Badge key={item} variant="outline">
-                    {item}
-                  </Badge>
-                ))}
-                {project.client && (
-                  <span className="text-muted-foreground inline-flex items-center gap-1.5 text-sm">
-                    <Briefcase className="h-4 w-4" aria-hidden="true" />
-                    <span className="sr-only">{t('meta.client')}: </span>
-                    {project.client}
-                  </span>
-                )}
-              </>
-            )}
+            {/* Tech stack. */}
+            {project.stack.slice(0, 5).map((item) => (
+              <Badge key={item} variant="outline">
+                {item}
+              </Badge>
+            ))}
 
-            {project.category === 'bim' && (
-              <>
-                {project.software.slice(0, 4).map((item) => (
-                  <Badge key={item} variant="outline">
-                    {item}
-                  </Badge>
-                ))}
-                <Badge variant="outline">
-                  {t(`meta.scale.${project.projectScale}`)}
-                </Badge>
-                {project.location && (
-                  <span className="text-muted-foreground inline-flex items-center gap-1.5 text-sm">
-                    <MapPin className="h-4 w-4" aria-hidden="true" />
-                    <span className="sr-only">{t('meta.location')}: </span>
-                    {project.location}
-                  </span>
-                )}
-              </>
+            {/* Public repo link, OR a "proprietary" marker for private /
+                employer code (a public link would 404 for visitors). */}
+            {project.repo ? (
+              <a
+                href={project.repo}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-muted-foreground hover:text-primary inline-flex items-center gap-1.5 text-sm underline-offset-4 hover:underline"
+              >
+                <Code2 className="h-4 w-4" aria-hidden="true" />
+                {t('meta.repo')}
+              </a>
+            ) : project.proprietary ? (
+              <span className="text-muted-foreground inline-flex items-center gap-1.5 text-sm">
+                <Lock className="h-4 w-4" aria-hidden="true" />
+                {t('meta.proprietary')}
+              </span>
+            ) : null}
+
+            {/* Download / releases / live URL. */}
+            {project.liveUrl && (
+              <a
+                href={project.liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-muted-foreground hover:text-primary inline-flex items-center gap-1.5 text-sm underline-offset-4 hover:underline"
+              >
+                <ExternalLink className="h-4 w-4" aria-hidden="true" />
+                {t('meta.live')}
+              </a>
             )}
           </div>
         </div>

@@ -11,8 +11,12 @@ stack:
   - TypeScript
   - Tailwind CSS
   - Motion
-repo: https://github.com/tanguynoumea/portfolio-template
+repo: https://github.com/tanguynoumea-collab/portfolio-template
 liveUrl: https://example.com
+# order (optionnel) — clé de tri croissante dans la grille ; les projets sans order finissent à la fin.
+order: 99
+# revit (optionnel, outils BIM) — version(s) Revit ciblée(s), ex. "Revit 2024 · 2025".
+# proprietary (optionnel) — true pour un dépôt privé/employeur : affiche un badge « Propriétaire » au lieu d'un lien repo mort.
 # gallery (optionnel) — décommente et adapte pour afficher une galerie d'images.
 # Place les fichiers dans public/projects/[slug]/.
 # gallery:
@@ -38,4 +42,4 @@ Concluez par ce qui a été livré et un résultat chiffré ou qualitatif lorsqu
 
 ---
 
-Note : ce fichier commence par un underscore, donc `lib/projects.ts` le filtre (D-24) — il n'apparaît jamais dans la liste des projets ni dans la galerie. Visez 250-400 mots par locale pour les vraies fiches ; le gabarit lui-même est exclu du contrôle `scripts/check-mdx-structure.ts`. Si vous changez `category` pour `design` ou `bim`, remplacez `stack/repo/liveUrl` par `tools/client?` ou `software/projectScale/location?`.
+Note : ce fichier commence par un underscore, donc `lib/projects.ts` le filtre (D-24) — il n'apparaît jamais dans la liste des projets ni dans la galerie. Visez 250-400 mots par locale pour les vraies fiches ; le gabarit lui-même est exclu du contrôle `scripts/check-mdx-structure.ts`. `category` vaut `bim` (outils BIM·Revit) ou `tech` (autres outils & apps). Champs : `stack[]` requis ; `revit?`, `repo?` (dépôts publics uniquement), `liveUrl?`, `proprietary?`, `order?` optionnels.

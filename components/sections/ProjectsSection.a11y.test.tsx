@@ -117,14 +117,16 @@ const fixture: Project[] = [
     stack: ['TypeScript', 'React'],
   },
   {
-    slug: 'design-1',
-    title: 'Design One',
+    slug: 'bim-1',
+    title: 'BIM One',
     year: 2023,
-    category: 'design',
+    category: 'bim',
     cover: '/c.jpg',
-    summary: 'A design project summary.',
+    summary: 'A BIM project summary.',
     featured: false,
-    tools: ['Figma'],
+    stack: ['C#', 'Revit API'],
+    revit: 'Revit 2025',
+    proprietary: true,
   },
 ];
 

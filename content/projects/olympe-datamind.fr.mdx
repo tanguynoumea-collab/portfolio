@@ -1,0 +1,34 @@
+---
+slug: olympe-datamind
+title: Olympe Datamind
+year: 2026
+category: bim
+cover: /projects/olympe-datamind/cover.jpg
+summary: Gestion paramétrique des maquettes Revit via un moteur de règles externe — définir, appliquer et auditer la donnée sans toucher aux familles.
+featured: true
+order: 1
+proprietary: true
+revit: "Revit 2024 · 2025"
+stack:
+  - C# 12
+  - .NET 8
+  - WPF
+  - SQLite
+  - Revit API
+---
+
+## Contexte
+
+Dans un environnement BIM, la qualité des paramètres Revit conditionne tout : quantités, exports IFC, lien avec l'ERP, audits de conformité. Pourtant les règles métier vivent souvent dans des fichiers Excel ou dans les têtes, les vérifications se font à la main, et chaque projet repart de zéro. Olympe Datamind est l'application Windows que j'ai conçue pour HRS Real Estate AG afin de centraliser cette donnée : définir, appliquer et auditer les paramètres de toutes les maquettes depuis un outil dédié, versionnable et ré-applicable en un clic.
+
+## Défi
+
+Le pari : piloter Revit sans le fragiliser. Toucher aux familles ou aux vues d'un projet déjà fragile, c'est risquer de le casser. Il fallait donc une architecture où la logique vit dehors et l'exécution se fait dedans, proprement, avec un historique complet et la possibilité de rejouer chaque opération — y compris en lot, la nuit, sur plusieurs maquettes à la fois.
+
+## Processus
+
+J'ai séparé le système en deux : une application WPF qui gère les règles, les specs et l'historique, et un plug-in Revit multi-version (2024 / 2025) qui exécute les transactions dans un environnement Revit propre. Les deux communiquent par fichiers JSON versionnés — aucun serveur, aucun couplage fort. Le moteur gère des règles classiques (conditions AND/OR vers actions Set/Clear) et des règles matricielles pour les cas multi-colonnes. Côté audit, une spécification Excel multi-onglets devient un jeu de règles, lancé sur une maquette en un clic, avec un rapport Excel auto-généré (barres de données, taux de réussite) et un export PDF. Un planificateur enchaîne Open, Extract, Apply, Sync et Close en mode batch.
+
+## Résultat
+
+Les règles de gestion de la donnée vivent désormais hors des maquettes, versionnées et ré-applicables sur tout le parc. L'audit qui se faisait à la main, trop tard, devient un run reproductible documenté par un rapport. L'outil se déploie sans prérequis — runtime .NET embarqué, aucun droit administrateur — et a posé les fondations de la plate-forme Olympe, dont Hermès est une extension.

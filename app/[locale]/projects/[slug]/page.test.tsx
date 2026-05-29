@@ -15,8 +15,8 @@
  *     prev/next wrap math. These call the page exports directly.
  *   GROUP B — DECISION-LOGIC tests asserted against typed Project FIXTURES, NOT
  *     against rendered MDX (Tests 3, 4): the gallery-gating predicate and the
- *     3-category discriminator — the same pure decisions the page makes, proven
- *     against the discriminated union with zero MDX render.
+ *     category + flat metadata fields — the same pure decisions the page makes,
+ *     proven against the Project type with zero MDX render.
  *
  * Mock strategy (native chai matchers — setupFiles:[] means NO jest-dom):
  *   - next/navigation: notFound spy (real notFound throws; the mock is a no-op).
@@ -156,85 +156,61 @@ describe('ProjectPage (CONTENT-02) — prev/next wrap math (D-08)', () => {
 // GROUP B — decision-logic against Project fixtures (Tests 3, 4)
 // ===========================================================================
 
-// Minimal fixtures conforming to the real discriminated union.
+// Minimal fixtures conforming to the flat Project type.
 const techFixture: Project = {
-  slug: 't',
-  title: 'T',
-  year: 2024,
+  slug: 'diskscout',
+  title: 'DiskScout',
+  year: 2026,
   cover: '/c.jpg',
   summary: 's',
   featured: false,
   category: 'tech',
-  stack: ['Next.js', 'React', 'TS', 'Tailwind'],
+  stack: ['C#', '.NET 8', 'WPF'],
+  repo: 'https://github.com/x/diskscout',
+  liveUrl: 'https://github.com/x/diskscout/releases',
   gallery: ['/p/1.jpg', '/p/2.jpg', '/p/3.jpg', '/p/4.jpg'],
 };
 
-const designFixture: Project = {
-  slug: 'd',
-  title: 'D',
-  year: 2024,
-  cover: '/c.jpg',
-  summary: 's',
-  featured: false,
-  category: 'design',
-  tools: ['Figma', 'Illustrator'],
-  client: 'Studio',
-};
-
 const bimFixture: Project = {
-  slug: 'b',
-  title: 'B',
-  year: 2024,
+  slug: 'olympe-hermes',
+  title: 'Olympe Hermès',
+  year: 2026,
   cover: '/c.jpg',
   summary: 's',
   featured: false,
   category: 'bim',
-  software: ['Revit', 'Navisworks'],
-  projectScale: 'residential',
-  location: 'France',
+  stack: ['C# 12', '.NET 8', 'geometry3Sharp'],
+  revit: 'Revit 2024 · 2025',
+  proprietary: true,
 };
 
 // --- Test 3: gallery-gating predicate --------------------------------------
 describe('ProjectPage (CONTENT-02) — gallery-gating predicate (D-04 step 4)', () => {
-  it('is true for a 4-item-gallery fixture and false for a no-gallery fixture', () => {
+  it('is true for a gallery fixture and false for a no-gallery fixture', () => {
     // The EXACT predicate the page uses to gate the gallery <section>.
     expect(Boolean(techFixture.gallery && techFixture.gallery.length > 0)).toBe(
       true,
     );
-    expect(
-      Boolean(designFixture.gallery && designFixture.gallery.length > 0),
-    ).toBe(false);
     expect(Boolean(bimFixture.gallery && bimFixture.gallery.length > 0)).toBe(
       false,
     );
   });
 });
 
-// --- Test 4: 3-category discriminator --------------------------------------
-describe('ProjectPage (CONTENT-02) — category discriminator (metadata strip)', () => {
-  it('selects the correct branch + category-specific fields per fixture', () => {
-    // tech → stack present.
-    if (techFixture.category === 'tech') {
-      expect(Array.isArray(techFixture.stack)).toBe(true);
-    } else {
-      throw new Error('tech fixture failed to narrow to tech');
-    }
+// --- Test 4: category + flat metadata fields -------------------------------
+describe('ProjectPage (CONTENT-02) — category + metadata strip fields', () => {
+  it('exposes the right flat fields per category', () => {
+    // tech → stack + public repo link, no Revit target.
+    expect(techFixture.category).toBe('tech');
+    expect(Array.isArray(techFixture.stack)).toBe(true);
+    expect(typeof techFixture.repo).toBe('string');
+    expect(techFixture.revit).toBe(undefined);
 
-    // design → tools + client present.
-    if (designFixture.category === 'design') {
-      expect(Array.isArray(designFixture.tools)).toBe(true);
-      expect(typeof designFixture.client).toBe('string');
-    } else {
-      throw new Error('design fixture failed to narrow to design');
-    }
-
-    // bim → software + projectScale + location present.
-    if (bimFixture.category === 'bim') {
-      expect(Array.isArray(bimFixture.software)).toBe(true);
-      expect(bimFixture.projectScale).toBe('residential');
-      expect(typeof bimFixture.location).toBe('string');
-    } else {
-      throw new Error('bim fixture failed to narrow to bim');
-    }
+    // bim → stack + Revit target + proprietary (private repo → no public link).
+    expect(bimFixture.category).toBe('bim');
+    expect(Array.isArray(bimFixture.stack)).toBe(true);
+    expect(typeof bimFixture.revit).toBe('string');
+    expect(bimFixture.proprietary).toBe(true);
+    expect(bimFixture.repo).toBe(undefined);
   });
 });

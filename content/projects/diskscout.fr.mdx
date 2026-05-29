@@ -1,0 +1,34 @@
+---
+slug: diskscout
+title: DiskScout
+year: 2026
+category: tech
+cover: /projects/diskscout/cover.jpg
+summary: Analyseur et nettoyeur de disque Windows avec un audit de sécurité assisté par IA — 11 onglets, treemap, déduplication vérifiée et quarantaine.
+featured: true
+order: 5
+repo: https://github.com/tanguynoumea-collab/DiskScout
+liveUrl: https://github.com/tanguynoumea-collab/DiskScout/releases
+stack:
+  - C#
+  - .NET 8
+  - WPF
+  - P/Invoke
+  - xxHash3
+---
+
+## Contexte
+
+Les nettoyeurs de disque sont soit rapides mais aveugles (ils montrent sans nettoyer), soit actifs mais opaques (ils suppriment sans expliquer). DiskScout, mon projet personnel open-source, combine les deux : visualiser, classer et nettoyer un disque Windows, avec en plus une couche de sécurité inédite — un bouton qui génère une analyse prête à soumettre à une IA pour vérifier chaque suppression envisagée.
+
+## Défi
+
+Supprimer des fichiers est irréversible : l'outil devait être à la fois puissant et impossible à transformer en accident. Il fallait aussi gérer correctement les particularités de Windows — les fichiers OneDrive et SharePoint en cloud (octets physiques contre octets logiques), les chemins très longs, les fichiers système protégés — et scanner un disque de plusieurs centaines de gigaoctets sans figer l'interface.
+
+## Processus
+
+Le scan repose sur du P/Invoke (`FindFirstFileExW` avec `FIND_FIRST_EX_LARGE_FETCH`) pour lire le système de fichiers rapidement, et distingue les octets réels des placeholders cloud via les reparse tags Windows. L'interface WPF expose 11 onglets : tableau de bord noté A+ à D, programmes installés, rémanents, nettoyage, arborescence virtualisée, treemap squarifiée, gros fichiers, extensions, doublons et quarantaine. Les doublons sont confirmés par un hash xxHash3 (partiel puis complet) pour éliminer les faux positifs. La sécurité repose sur quatre couches : un dialogue à chaque suppression (quarantaine 30 jours, corbeille ou définitif), un récapitulatif avant purge qui marque les chemins sensibles, le bouton Log IA, et un journal d'audit complet.
+
+## Résultat
+
+DiskScout réunit la visibilité d'un WizTree et l'action d'un CCleaner, avec une attention obsessionnelle à la sécurité des suppressions. C'est un exécutable portable, sans installation, publié sous licence MIT. Au-delà du BIM, il montre ma capacité à livrer une application desktop Windows complète, du P/Invoke bas niveau jusqu'à l'expérience utilisateur.

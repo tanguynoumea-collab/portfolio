@@ -1,0 +1,34 @@
+---
+slug: olympe-hermes
+title: Olympe Hermès
+year: 2026
+category: bim
+cover: /projects/olympe-hermes/cover.jpg
+summary: Extension Revit qui redescend les paramètres des pièces vers les objets via un moteur de calcul géométrique offline (BVH + FastWindingNumber).
+featured: true
+order: 2
+proprietary: true
+revit: "Revit 2024 · 2025"
+stack:
+  - C# 12
+  - .NET 8
+  - WPF
+  - geometry3Sharp
+  - SQLite
+---
+
+## Contexte
+
+Sur une maquette, une information capitale est souvent portée par la pièce : son nom, son numéro, sa zone, son lot. Mais les objets qui s'y trouvent — luminaires, équipements, mobilier — ne connaissent pas la pièce qui les contient. Olympe Hermès répond à ce besoin : transférer automatiquement les paramètres d'une pièce vers tous les objets qu'elle contient. C'est ma propriété intellectuelle, développée hors de tout contrat de travail, comme extension de la plate-forme Olympe.
+
+## Défi
+
+Déterminer si un objet est « dans » une pièce est un problème de géométrie 3D, pas de base de données. Une pièce est un volume quelconque, parfois concave, parfois éclaté sur plusieurs maquettes ; un objet peut être un point, une surface ou un solide, parfois légèrement hors du volume. Faire ce test pour des milliers d'objets contre des centaines de pièces, de façon fiable et rapide, sans surcharger Revit, était le vrai défi.
+
+## Processus
+
+J'ai sorti le calcul de Revit. Hermès récupère pièces, volumes et objets depuis la maquette, puis exécute un match N×M entièrement offline : une structure d'accélération BVH (bounding volume hierarchy) élimine les paires impossibles, et un FastWindingNumber, via geometry3Sharp, tranche l'appartenance même pour des volumes concaves. Une tolérance d'éloignement rattache les objets légèrement hors pièce à la plus proche dans un rayon configurable. On peut unir plusieurs maquettes en un seul groupe géométrique. Une fois le calcul validé, l'Apply redescend les paramètres dans Revit en transaction. Des routines programmées relancent l'extraction et l'application avec recalcul automatique.
+
+## Résultat
+
+Un travail d'assignation fastidieux et source d'erreurs devient un calcul reproductible : on récupère, on calcule, on applique. Le moteur offline tient des maquettes lourdes sans bloquer Revit, et la tolérance gère les cas réels où la géométrie n'est jamais parfaite. Hermès démontre qu'un problème métier BIM peut se résoudre avec de vrais algorithmes de géométrie computationnelle.

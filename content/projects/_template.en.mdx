@@ -11,8 +11,12 @@ stack:
   - TypeScript
   - Tailwind CSS
   - Motion
-repo: https://github.com/tanguynoumea/portfolio-template
+repo: https://github.com/tanguynoumea-collab/portfolio-template
 liveUrl: https://example.com
+# order (optional) — ascending sort key in the grid; projects without one sort last.
+order: 99
+# revit (optional, BIM tools) — targeted Revit version(s), e.g. "Revit 2024 · 2025".
+# proprietary (optional) — true for a private/employer repo: shows a "Proprietary" badge instead of a dead repo link.
 # gallery (optional) — uncomment and adapt to render an image gallery.
 # Place the files in public/projects/[slug]/.
 # gallery:
@@ -38,4 +42,4 @@ Close with what shipped and a quantified or qualitative win where plausible.
 
 ---
 
-Note: this file starts with an underscore, so `lib/projects.ts` filters it out (D-24) — it never appears in the project list or gallery. Aim for 250-400 words per locale on real entries; the template itself is excluded from the `scripts/check-mdx-structure.ts` gate. If you change `category` to `design` or `bim`, replace `stack/repo/liveUrl` with `tools/client?` or `software/projectScale/location?`.
+Note: this file starts with an underscore, so `lib/projects.ts` filters it out (D-24) — it never appears in the project list or gallery. Aim for 250-400 words per locale on real entries; the template itself is excluded from the `scripts/check-mdx-structure.ts` gate. `category` is `bim` (BIM·Revit tools) or `tech` (other tools & apps). Fields: `stack[]` required; `revit?`, `repo?` (public repos only), `liveUrl?`, `proprietary?`, `order?` optional.

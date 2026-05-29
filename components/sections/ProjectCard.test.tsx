@@ -1,20 +1,19 @@
 /**
  * ProjectCard.test.tsx — HOME-04 acceptance suite.
  *
- * Wave 0 shipped a RED harness with a single i18n render assertion.
- * Wave 2 (04-03-projects-PLAN.md Task 3) expands the suite to cover the
- * full HOME-04 contract:
+ * Covers the HOME-04 contract against the flat Project model (2 categories):
  *   1. Renders title + year + summary from project prop
- *   2. Category badge variant matches project.category (data-variant)
- *   3. Footer renders discriminated metadata per category:
- *      tech → stack[0..2] / design → tools[0..2] / bim → software[0..1] + projectScale
+ *   2. Category badge variant matches project.category (category-bim / category-tech)
+ *      and its label comes from i18n (filters.bim / filters.tech)
+ *   3. Footer renders up to 3 metadata tags: Revit version first (BIM tools),
+ *      then the tech stack
  *   4. Link from @/i18n/navigation has href=/projects/{slug}
  *   5. Link aria-label includes project title + viewProject label
  *   6. whileHover is undefined under useReducedMotion()===true
  *   7. whileHover is { scale: 1.02 } under useReducedMotion()===false
  *
  * Mock strategy:
- *   - next-intl mocked with the projects.viewProject key
+ *   - next-intl mocked with viewProject + filters.* keys
  *   - next/image stubbed as a plain <img> tag so getByAltText works
  *   - @/i18n/navigation Link rendered as a real <a> so href assertions work
  *   - motion/react: motion.div + motion.span return real React elements
@@ -29,17 +28,15 @@ import React from 'react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import type { ReactNode } from 'react';
-import type {
-  BIMProject,
-  DesignProject,
-  TechProject,
-} from '@/lib/projects';
+import type { Project } from '@/lib/projects';
 
-// next-intl mock — projects.viewProject key for the aria-label
+// next-intl mock — viewProject (aria-label) + filters.* (category badge label)
 vi.mock('next-intl', () => ({
   useTranslations: () => (k: string) => {
     const map: Record<string, string> = {
       viewProject: 'View project',
+      'filters.bim': 'BIM·Revit',
+      'filters.tech': 'Outils',
     };
     return map[k] ?? k;
   },
@@ -147,38 +144,29 @@ vi.mock('lucide-react', () => ({
 
 // ----- Fixtures -----
 
-const techProject: TechProject = {
-  slug: 'texture-manager',
-  title: 'Texture Manager',
-  year: 2024,
+const techProject: Project = {
+  slug: 'diskscout',
+  title: 'DiskScout',
+  year: 2026,
   category: 'tech',
-  cover: '/projects/texture-manager/cover.jpg',
-  summary: 'Procedural texture manager for real-time 3D environments.',
+  cover: '/projects/diskscout/cover.jpg',
+  summary: 'Windows disk analyzer and cleaner with an AI-assisted safety audit.',
   featured: true,
-  stack: ['TypeScript', 'Three.js', 'React', 'Vite'],
+  stack: ['C#', '.NET 8', 'WPF', 'P/Invoke', 'xxHash3'],
+  repo: 'https://github.com/x/diskscout',
 };
 
-const designProject: DesignProject = {
-  slug: 'brand-system',
-  title: 'Brand System',
-  year: 2023,
-  category: 'design',
-  cover: '/projects/brand-system/cover.jpg',
-  summary: 'Complete visual identity for a creative studio.',
-  featured: false,
-  tools: ['Figma', 'Illustrator', 'InDesign', 'Photoshop'],
-};
-
-const bimProject: BIMProject = {
-  slug: 'tower-concept',
-  title: 'Tower Concept',
-  year: 2022,
+const bimProject: Project = {
+  slug: 'olympe-hermes',
+  title: 'Olympe Hermès',
+  year: 2026,
   category: 'bim',
-  cover: '/projects/tower-concept/cover.jpg',
-  summary: 'Conceptual study for a mixed-use high-rise.',
-  featured: false,
-  software: ['Revit', 'Rhino', 'Twinmotion'],
-  projectScale: 'urban',
+  cover: '/projects/olympe-hermes/cover.jpg',
+  summary: 'Revit extension for room-to-object parameter transfer.',
+  featured: true,
+  revit: 'Revit 2024 · 2025',
+  stack: ['C# 12', '.NET 8', 'WPF', 'geometry3Sharp'],
+  proprietary: true,
 };
 
 beforeEach(() => {
@@ -190,9 +178,9 @@ describe('ProjectCard (HOME-04) — content rendering', () => {
   it('renders title, year, and summary for a tech project', async () => {
     const { ProjectCard } = await import('./ProjectCard');
     render(<ProjectCard project={techProject} />);
-    expect(screen.getByText(/Texture Manager/)).toBeTruthy();
-    expect(screen.getByText(/2024/)).toBeTruthy();
-    expect(screen.getByText(/Procedural texture manager/)).toBeTruthy();
+    expect(screen.getByText(/DiskScout/)).toBeTruthy();
+    expect(screen.getByText(/2026/)).toBeTruthy();
+    expect(screen.getByText(/Windows disk analyzer/)).toBeTruthy();
   });
 
   it('renders cover image with project.cover as src + project.title as alt', async () => {
@@ -200,83 +188,58 @@ describe('ProjectCard (HOME-04) — content rendering', () => {
     const { container } = render(<ProjectCard project={techProject} />);
     const img = container.querySelector('img');
     expect(img).not.toBeNull();
-    expect(img?.getAttribute('alt')).toBe('Texture Manager');
-    expect(img?.getAttribute('src')).toBe(
-      '/projects/texture-manager/cover.jpg',
-    );
+    expect(img?.getAttribute('alt')).toBe('DiskScout');
+    expect(img?.getAttribute('src')).toBe('/projects/diskscout/cover.jpg');
   });
 });
 
-describe('ProjectCard (HOME-04) — category badge variant', () => {
-  it('uses category-tech variant for a tech project', async () => {
+describe('ProjectCard (HOME-04) — category badge variant + label', () => {
+  it('uses category-tech variant + "Outils" label for a tech project', async () => {
     const { ProjectCard } = await import('./ProjectCard');
     const { container } = render(<ProjectCard project={techProject} />);
-    // Find the category badge (the one with category-* variant)
     const categoryBadge = container.querySelector(
       'span[data-variant="category-tech"]',
     );
     expect(categoryBadge).not.toBeNull();
-    expect(categoryBadge?.textContent).toBe('TECH');
+    expect(categoryBadge?.textContent).toBe('Outils');
   });
 
-  it('uses category-design variant for a design project', async () => {
-    const { ProjectCard } = await import('./ProjectCard');
-    const { container } = render(<ProjectCard project={designProject} />);
-    const categoryBadge = container.querySelector(
-      'span[data-variant="category-design"]',
-    );
-    expect(categoryBadge).not.toBeNull();
-    expect(categoryBadge?.textContent).toBe('DESIGN');
-  });
-
-  it('uses category-bim variant for a bim project', async () => {
+  it('uses category-bim variant + "BIM·Revit" label for a bim project', async () => {
     const { ProjectCard } = await import('./ProjectCard');
     const { container } = render(<ProjectCard project={bimProject} />);
     const categoryBadge = container.querySelector(
       'span[data-variant="category-bim"]',
     );
     expect(categoryBadge).not.toBeNull();
-    expect(categoryBadge?.textContent).toBe('BIM');
+    expect(categoryBadge?.textContent).toBe('BIM·Revit');
   });
 });
 
-describe('ProjectCard (HOME-04) — discriminated metadata footer', () => {
+describe('ProjectCard (HOME-04) — metadata footer (revit + stack, capped at 3)', () => {
   it('tech project footer shows stack[0..2] as outline badges', async () => {
     const { ProjectCard } = await import('./ProjectCard');
     const { container } = render(<ProjectCard project={techProject} />);
     const outlineBadges = container.querySelectorAll(
       'span[data-variant="outline"]',
     );
-    // techProject.stack has 4 items; we render only first 3
+    // No revit → first 3 stack items.
     expect(outlineBadges).toHaveLength(3);
-    expect(outlineBadges[0]?.textContent).toBe('TypeScript');
-    expect(outlineBadges[1]?.textContent).toBe('Three.js');
-    expect(outlineBadges[2]?.textContent).toBe('React');
+    expect(outlineBadges[0]?.textContent).toBe('C#');
+    expect(outlineBadges[1]?.textContent).toBe('.NET 8');
+    expect(outlineBadges[2]?.textContent).toBe('WPF');
   });
 
-  it('design project footer shows tools[0..2] as outline badges', async () => {
-    const { ProjectCard } = await import('./ProjectCard');
-    const { container } = render(<ProjectCard project={designProject} />);
-    const outlineBadges = container.querySelectorAll(
-      'span[data-variant="outline"]',
-    );
-    expect(outlineBadges).toHaveLength(3);
-    expect(outlineBadges[0]?.textContent).toBe('Figma');
-    expect(outlineBadges[1]?.textContent).toBe('Illustrator');
-    expect(outlineBadges[2]?.textContent).toBe('InDesign');
-  });
-
-  it('bim project footer shows software[0..1] + projectScale as outline badges', async () => {
+  it('bim project footer shows Revit version first, then stack (capped at 3)', async () => {
     const { ProjectCard } = await import('./ProjectCard');
     const { container } = render(<ProjectCard project={bimProject} />);
     const outlineBadges = container.querySelectorAll(
       'span[data-variant="outline"]',
     );
-    // 2 from software + 1 projectScale = 3 badges
+    // revit + first 2 stack items = 3 badges.
     expect(outlineBadges).toHaveLength(3);
-    expect(outlineBadges[0]?.textContent).toBe('Revit');
-    expect(outlineBadges[1]?.textContent).toBe('Rhino');
-    expect(outlineBadges[2]?.textContent).toBe('urban');
+    expect(outlineBadges[0]?.textContent).toBe('Revit 2024 · 2025');
+    expect(outlineBadges[1]?.textContent).toBe('C# 12');
+    expect(outlineBadges[2]?.textContent).toBe('.NET 8');
   });
 });
 
@@ -286,7 +249,7 @@ describe('ProjectCard (HOME-04) — locale-aware Link', () => {
     const { container } = render(<ProjectCard project={techProject} />);
     const link = container.querySelector('a');
     expect(link).not.toBeNull();
-    expect(link?.getAttribute('href')).toBe('/projects/texture-manager');
+    expect(link?.getAttribute('href')).toBe('/projects/diskscout');
   });
 
   it('Link has aria-label containing project title + viewProject text', async () => {
@@ -294,7 +257,7 @@ describe('ProjectCard (HOME-04) — locale-aware Link', () => {
     const { container } = render(<ProjectCard project={techProject} />);
     const link = container.querySelector('a');
     const ariaLabel = link?.getAttribute('aria-label') ?? '';
-    expect(ariaLabel).toMatch(/Texture Manager/);
+    expect(ariaLabel).toMatch(/DiskScout/);
     expect(ariaLabel).toMatch(/View project/);
   });
 });
@@ -304,12 +267,8 @@ describe('ProjectCard (HOME-04) — useReducedMotion gate (Pitfall 4-B)', () => 
     useReducedMotionMock.mockReturnValue(true);
     const { ProjectCard } = await import('./ProjectCard');
     const { container } = render(<ProjectCard project={techProject} />);
-    // The outer motion.div carries data-while-hover.
-    // Find divs and locate the wrapper with aspect-* or h-full classes
-    // (the outermost motion.div in ProjectCard has className="h-full").
     const motionDivs = container.querySelectorAll('div[data-while-hover]');
     expect(motionDivs.length).toBeGreaterThan(0);
-    // First (outermost) div is the card wrapper
     const cardWrapper = motionDivs[0];
     expect(cardWrapper?.getAttribute('data-while-hover')).toBe('undefined');
   });
@@ -331,7 +290,6 @@ describe('ProjectCard (HOME-04) — useReducedMotion gate (Pitfall 4-B)', () => 
     useReducedMotionMock.mockReturnValue(true);
     const { ProjectCard } = await import('./ProjectCard');
     const { container } = render(<ProjectCard project={techProject} />);
-    // The motion.span wrapping the ArrowUpRight icon
     const motionSpans = container.querySelectorAll('span[data-while-hover]');
     expect(motionSpans.length).toBeGreaterThan(0);
     const arrowWrapper = motionSpans[0];

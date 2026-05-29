@@ -1,0 +1,34 @@
+---
+slug: diskscout
+title: DiskScout
+year: 2026
+category: tech
+cover: /projects/diskscout/cover.jpg
+summary: A Windows disk analyzer and cleaner with an AI-assisted safety audit — 11 tabs, treemap, verified de-duplication and quarantine.
+featured: true
+order: 5
+repo: https://github.com/tanguynoumea-collab/DiskScout
+liveUrl: https://github.com/tanguynoumea-collab/DiskScout/releases
+stack:
+  - C#
+  - .NET 8
+  - WPF
+  - P/Invoke
+  - xxHash3
+---
+
+## Context
+
+Disk cleaners are either fast but blind (they show without cleaning) or active but opaque (they delete without explaining). DiskScout, my open-source side project, combines both: visualise, classify and clean up a Windows disk — plus a novel safety layer, a button that generates an analysis ready to hand to an AI so it can vet every deletion you are considering.
+
+## Challenge
+
+Deleting files is irreversible: the tool had to be both powerful and impossible to turn into an accident. It also had to handle Windows' quirks correctly — OneDrive and SharePoint cloud files (physical versus logical bytes), very long paths, protected system files — and scan a disk of several hundred gigabytes without freezing the interface.
+
+## Process
+
+The scan relies on P/Invoke (`FindFirstFileExW` with `FIND_FIRST_EX_LARGE_FETCH`) to read the filesystem fast, and separates real bytes from cloud placeholders via Windows reparse tags. The WPF interface exposes 11 tabs: an A+ to D graded dashboard, installed programs, leftovers, cleanup, a virtualised tree, a squarified treemap, large files, extensions, duplicates and quarantine. Duplicates are confirmed with an xxHash3 hash (partial then full) to rule out false positives. Safety rests on four layers: a dialog on every deletion (30-day quarantine, Recycle Bin or permanent), a pre-purge summary that flags sensitive paths, the AI Log button, and a full audit log.
+
+## Outcome
+
+DiskScout brings together the visibility of a WizTree and the action of a CCleaner, with obsessive attention to deletion safety. It is a portable executable, no install, released under the MIT licence. Beyond BIM, it shows I can ship a complete Windows desktop application, from low-level P/Invoke all the way to the user experience.

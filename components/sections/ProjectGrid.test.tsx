@@ -99,11 +99,12 @@ const fakeProjects: Project[] = [
     slug: 'brand-system',
     title: 'Brand System',
     year: 2023,
-    category: 'design',
+    category: 'bim',
     cover: '/projects/brand-system/cover.jpg',
-    summary: 'Design project.',
+    summary: 'BIM project.',
     featured: false,
-    tools: ['Figma'],
+    stack: ['C#'],
+    revit: 'Revit 2025',
   },
   {
     slug: 'tower-concept',
@@ -113,8 +114,7 @@ const fakeProjects: Project[] = [
     cover: '/projects/tower-concept/cover.jpg',
     summary: 'BIM project.',
     featured: false,
-    software: ['Revit'],
-    projectScale: 'urban',
+    stack: ['Revit'],
   },
 ];
 

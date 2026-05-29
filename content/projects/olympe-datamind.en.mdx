@@ -1,0 +1,34 @@
+---
+slug: olympe-datamind
+title: Olympe Datamind
+year: 2026
+category: bim
+cover: /projects/olympe-datamind/cover.jpg
+summary: Parametric management of Revit models through an external rules engine — define, apply and audit data without touching the families.
+featured: true
+order: 1
+proprietary: true
+revit: "Revit 2024 · 2025"
+stack:
+  - C# 12
+  - .NET 8
+  - WPF
+  - SQLite
+  - Revit API
+---
+
+## Context
+
+In any serious BIM environment, the quality of Revit parameters drives everything: quantities, IFC exports, the ERP link, compliance audits. Yet the business rules usually live in scattered Excel files or in people's heads, checks happen by hand, and every project starts from scratch. Olympe Datamind is the Windows application I built for HRS Real Estate AG to centralise that data: define, apply and audit the parameters of every model from one dedicated, versionable tool, re-applicable in a single click.
+
+## Challenge
+
+The bet: pilot Revit without making it fragile. Touching a project's families or views risks breaking an already-shaky model. So I needed an architecture where the logic lives outside and execution happens inside, cleanly, with a full history and the ability to replay any operation — including in batch, overnight, across several models at once.
+
+## Process
+
+I split the system in two: a WPF application that owns the rules, specs and history, and a multi-version Revit plug-in (2024 / 2025) that runs the transactions in a clean Revit environment. The two talk through versioned JSON files — no server, no tight coupling. The engine handles classic rules (AND/OR conditions into Set/Clear actions) and matrix rules for multi-column cases. For audits, a multi-sheet Excel spec becomes a ruleset, run against a model in one click, with an auto-generated Excel report (data bars, success rate) and PDF export. A scheduler chains Open, Extract, Apply, Sync and Close in batch mode.
+
+## Outcome
+
+Data-management rules now live outside the models, versioned and re-applicable across the whole portfolio. The audit that used to happen by hand, too late, becomes a reproducible run documented by a report. The tool deploys with no prerequisites — embedded .NET runtime, no admin rights — and laid the foundations of the Olympe platform, of which Hermès is an extension.

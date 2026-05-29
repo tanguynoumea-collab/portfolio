@@ -33,12 +33,12 @@ vi.mock('@/i18n/navigation', () => ({
 
 vi.mock('@/lib/projects', () => ({
   getProjectBySlug: vi.fn(async () => ({
-    title: 'Texture Manager',
+    title: 'DiskScout',
     summary: 'A tool.',
-    year: 2024,
+    year: 2026,
     category: 'tech',
   })),
-  getProjectSlugs: vi.fn(async () => ['texture-manager']),
+  getProjectSlugs: vi.fn(async () => ['diskscout']),
 }));
 
 vi.mock('next-intl/server', () => ({
@@ -58,18 +58,18 @@ import { SITE_URL } from '@/lib/constants';
 describe('project generateMetadata (A11Y-01)', () => {
   it('returns type:article + per-project OG + hreflang', async () => {
     const md = await generateMetadata({
-      params: Promise.resolve({ locale: 'en', slug: 'texture-manager' }),
+      params: Promise.resolve({ locale: 'en', slug: 'diskscout' }),
     } as never);
 
-    expect(md.title).toBe('Texture Manager — Tanguy Delrieu');
+    expect(md.title).toBe('DiskScout — Tanguy Delrieu');
     expect(md.description).toBe('A tool.');
     expect((md.openGraph as { type?: string })?.type).toBe('article');
 
     const langs = md.alternates?.languages as Record<string, string>;
-    expect(langs['fr-FR']).toBe(`${SITE_URL}/fr/projects/texture-manager`);
-    expect(langs['en-US']).toBe(`${SITE_URL}/en/projects/texture-manager`);
-    expect(langs['x-default']).toBe(`${SITE_URL}/fr/projects/texture-manager`);
-    expect(md.alternates?.canonical).toBe(`${SITE_URL}/en/projects/texture-manager`);
+    expect(langs['fr-FR']).toBe(`${SITE_URL}/fr/projects/diskscout`);
+    expect(langs['en-US']).toBe(`${SITE_URL}/en/projects/diskscout`);
+    expect(langs['x-default']).toBe(`${SITE_URL}/fr/projects/diskscout`);
+    expect(md.alternates?.canonical).toBe(`${SITE_URL}/en/projects/diskscout`);
   });
 
   it('returns {} when project not found', async () => {

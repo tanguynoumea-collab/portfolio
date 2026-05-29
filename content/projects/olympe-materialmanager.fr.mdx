@@ -1,0 +1,33 @@
+---
+slug: olympe-materialmanager
+title: Olympe MaterialManager
+year: 2026
+category: bim
+cover: /projects/olympe-materialmanager/cover.jpg
+summary: Add-in Revit pour gérer visuellement les matériaux de tous les types visibles dans une vue 3D, depuis un éditeur à trois panneaux.
+featured: true
+order: 3
+revit: "Revit 2024 · 2025 · 2026"
+repo: https://github.com/tanguynoumea-collab/TEXTURE-MANAGER
+stack:
+  - C#
+  - WPF
+  - Revit API
+  - WiX
+---
+
+## Contexte
+
+Attribuer les bons matériaux à une maquette Revit est fastidieux : ouvrir chaque type, naviguer dans la structure en couches, retrouver le bon matériau, recommencer. Olympe MaterialManager est l'add-in Revit que j'ai conçu pour rendre ce travail visuel et rapide : un éditeur unifié où l'architecte applique un matériau preset aux couches ou aux paramètres de n'importe quel type visible dans la vue 3D active, en quelques clics.
+
+## Défi
+
+Le défi était de relier trois mondes dans une seule interface lisible : la liste des familles et types présents dans la vue, la structure interne de chaque type (les couches CompoundStructure des murs, sols, toits et plafonds, ou les paramètres matériau des familles chargées), et une bibliothèque de matériaux presets réutilisables. Le tout devait rester synchronisé avec Revit en temps réel et fonctionner sur trois versions (2024, 2025, 2026).
+
+## Processus
+
+J'ai structuré l'interface en trois panneaux. À gauche, l'arbre des familles et types de la « scène active » — un sous-ensemble que l'utilisateur compose à la volée, par liste ou par clic dans la vue 3D, murs et sols en tête. Au centre, les couches ou paramètres matériau du type sélectionné, avec sélection multiple. À droite, les matériaux presets organisés par groupes, persistés en JSON à un emplacement choisi et mémorisé. Un visualiseur affiche nom, motif, couleur et teinte avec une preview, et l'édition live écrit dans Revit via une Transaction. Le Set Mat applique le preset aux couches ou au paramètre choisi. Un installeur WiX gère le choix de la version Revit.
+
+## Résultat
+
+Ce qui prenait de nombreux allers-retours dans les menus de Revit se fait depuis un seul écran, en direct sur la vue 3D. L'outil est public sur GitHub et illustre ma façon d'aborder l'outillage BIM : partir d'une douleur concrète du quotidien et construire l'interface qui la supprime.

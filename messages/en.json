@@ -30,9 +30,8 @@
     "title": "Projects",
     "filters": {
       "all": "All",
-      "tech": "Tech",
-      "design": "Design",
-      "bim": "BIM"
+      "bim": "BIM·Revit",
+      "tech": "Tools"
     },
     "empty": "No project matches this filter.",
     "viewProject": "View project",
@@ -45,23 +44,14 @@
       "copy": "Copy",
       "copied": "Copied!",
       "meta": {
-        "tech": "Tech",
-        "design": "Design",
-        "bim": "BIM",
+        "bim": "BIM·Revit",
+        "tech": "Tools",
         "year": "Year",
         "stack": "Stack",
-        "tools": "Tools",
-        "software": "Software",
-        "scale": {
-          "concept": "Concept",
-          "residential": "Residential",
-          "commercial": "Commercial",
-          "urban": "Urban"
-        },
-        "location": "Location",
+        "revit": "Revit",
         "repo": "Source",
-        "live": "Live demo",
-        "client": "Client"
+        "live": "Download",
+        "proprietary": "Proprietary"
       }
     }
   },
