@@ -2,9 +2,9 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: complete
-stopped_at: "Milestone v1.0 SHIPPED + post-v1.0 polish + Pass 2 (5 real GitHub projects, flat 2-category Project model) live on Vercel. Remaining: user content (LinkedIn URL, CV-EN, real project screenshots)."
-last_updated: "2026-05-29T20:30:00.000Z"
+status: Milestone v1.0 shipped (live on Vercel)
+stopped_at: "Milestone v1.0 + post-launch patches + Pass 2 live on Vercel — BIM identity refocus (4a8f21c), full name everywhere (85b1834), hero centering fix (92c2a56 + d088010), and **Pass 2** (94a848d): 6 fictional projects → 5 real GitHub projects (Olympe Datamind/Hermès/MaterialManager, HRS.tab, DiskScout), Project model flattened to 2 categories (BIM·Revit/Outils), private repos featured-but-not-linked. Docs updated. `main` synced."
+last_updated: "2026-05-29T12:25:06.797Z"
 last_activity: 2026-05-29
 progress:
   total_phases: 7
@@ -28,7 +28,7 @@ See: .planning/PROJECT.md (updated 2026-05-25)
 Phase: 7 of 7 — COMPLETE
 Plan: All complete
 Status: Milestone v1.0 shipped (live on Vercel)
-Last activity: 2026-05-28
+Last activity: 2026-05-29
 
 Progress: [██████████] 100%
 
