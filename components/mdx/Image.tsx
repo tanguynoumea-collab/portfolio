@@ -73,10 +73,14 @@ export default function MDXImage({
           )}
         </motion.button>
       </DialogTrigger>
+      {/* Lightbox fills the viewport. The `sm:max-w-[96vw]` override is REQUIRED:
+          DialogContent's base class carries `sm:max-w-sm` (384px), a responsive
+          variant that otherwise beats a plain `max-w-*` on screens ≥640px and
+          shrinks the zoom to a thumbnail. */}
       <DialogContent
         data-lenis-prevent
         showCloseButton={true}
-        className="max-h-screen w-full max-w-7xl p-2"
+        className="w-full max-w-[96vw] p-2 sm:max-w-[96vw]"
       >
         <DialogTitle className="sr-only">{alt}</DialogTitle>
         <NextImage
@@ -84,8 +88,8 @@ export default function MDXImage({
           alt={alt}
           width={width}
           height={height}
-          sizes="100vw"
-          className="h-auto max-h-[90vh] w-full object-contain"
+          sizes="96vw"
+          className="mx-auto h-auto max-h-[88vh] w-full object-contain"
         />
       </DialogContent>
     </Dialog>
