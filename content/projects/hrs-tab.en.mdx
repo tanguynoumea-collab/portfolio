@@ -18,16 +18,34 @@ stack:
 
 ## Context
 
-Day to day, a BIM team repeats the same gestures: check that the right parameters are filled, clean up view filters, fix schedules, audit a model's consistency. HRS.tab is the pyRevit tab I built to tool these recurring tasks straight in the Revit ribbon, in Python, without resorting to throwaway Dynamo scripts.
+HRS.tab is the in-house **pyRevit** extension I built for HRS's BIM team: a dedicated tab in the Revit ribbon that gathers the everyday tools — data auditing, parameter checks, view filters, schedule editing. Rather than throwaway Dynamo scripts, each tool is a pyRevit button (Python + Revit API), packaged, versioned and shared, with a common visual language (dark tiles, orange accent).
 
 ## Challenge
 
-The hard part of an internal toolbox isn't any single tool, but the coherence of the whole: dozens of buttons must share common logic, a consistent interface and enough reliability to be used without supervision. Each tool hits the Revit API, where a badly scoped query can be slow on a large model or silently produce a wrong result.
+An internal toolbox is only as good as its consistency and reliability: a dozen buttons must share common logic, clear interfaces and safe behavior on large models. Each tool hits the Revit API, where a badly scoped query is slow or silently produces a wrong result. It needed readable WPF interfaces, clean transactions and reversible actions — usable without supervision.
 
 ## Process
 
-I organised the extension into three panels: Analyse, Edit and Filter. The centrepiece is the Param Category Auditor, which separates a data engine (collecting shared parameters, computing the fill rate per category) from a WPF interface in XAML — segmented colour bars, a detail table, an adjustable threshold — with Excel export and unassignment of unused parameters. Alongside it, a Shared Parameters Checker compares parameters across models, a Geometry Analyser and a family-nesting detector inspect the model, a Smart Filter and a View Filter Cleaner manage view filters, and a Nomenclature Modifier bulk-edits schedules. Each button follows the pyRevit format (bundle plus script) over a shared base.
+I organised the tab into three panels; each button follows the pyRevit format (bundle + `script.py` + `ui.xaml` + icon).
+
+**Analyse**
+
+- **Param Category Auditor** — the centrepiece: audits shared parameters per category. It computes the fill rate, surfaces the most frequent values and lets you clean up unused parameters.
+- **Shared Parameters Checker** — compares the GUIDs of the project's shared parameters against a reference shared-parameter `.txt` file, to catch mismatches.
+- **Param Manager** — a complete manager: lists every parameter (shared, project, built-in, including hidden ones), with search, filtering and deletion.
+- **Family Imbrication** — recursively walks the loaded families and quantifies their nesting depth (0-2 fine, 3 to watch, 4+ critical for performance).
+- **Geometry Analyser** — inspects the geometry of the model's elements.
+
+**Edit**
+
+- **Nomenclature Modifier** — adds a parameter (column) to several schedules in one batch pass, from Revit 2021 to 2026.
+
+**Filter**
+
+- **Smart Filter** — combines a parametric filter with inverse isolation: build simple filters or isolations, with or without a logic rule.
+- **View Filter Cleaner** — cleans view filters: remove them from the active view, and bulk-purge the project's unused `ParameterFilterElement`s in a single transaction.
+- **Better Splasher** — colors view elements by their parameter values and generates legends or filters. It's a community tool (BIMOne's Color Splasher, ported to pyRevit by Jean-Marc Couffin) that I integrated into the tab and credited.
 
 ## Outcome
 
-The team gets an in-house tab that turns manual checks, done too late, into one-click actions from Revit. Seeing instantly which shared parameters are actually used per category — and cleaning up the rest — keeps models from drifting. HRS.tab shows the other side of my BIM tooling: fast Python scripting, as close as possible to the workflow.
+Checks that used to happen by hand, too late, become one-click actions from Revit — consistent, traceable and reliable. Seeing instantly which shared parameters are actually used per category, and cleaning up the rest, keeps models from drifting. HRS.tab shows the other side of my BIM tooling: fast Python scripting, as close as possible to the Revit workflow.

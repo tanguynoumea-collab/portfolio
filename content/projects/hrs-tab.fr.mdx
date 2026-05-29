@@ -18,16 +18,34 @@ stack:
 
 ## Contexte
 
-Au quotidien, une équipe BIM répète les mêmes gestes : vérifier que les bons paramètres sont remplis, nettoyer des filtres de vue, corriger des nomenclatures, auditer la cohérence d'un modèle. HRS.tab est l'onglet pyRevit que j'ai développé pour outiller ces tâches récurrentes directement dans le ruban Revit, en Python, sans passer par des scripts Dynamo jetables.
+HRS.tab est l'extension **pyRevit** maison que j'ai développée pour l'équipe BIM de HRS : un onglet dédié dans le ruban Revit qui rassemble les outils du quotidien — audit de données, vérification de paramètres, filtres de vue, édition de nomenclatures. Plutôt que des scripts Dynamo jetables, chaque outil est un bouton pyRevit (Python + API Revit), packagé, versionné et partagé, avec une charte graphique commune (tuiles sombres, accent orange).
 
 ## Défi
 
-La difficulté d'une boîte à outils interne n'est pas un outil isolé, mais la cohérence de l'ensemble : des dizaines de boutons doivent partager une logique commune, une interface homogène et une fiabilité suffisante pour être utilisés sans supervision. Chaque outil touche l'API Revit, où une requête mal cadrée peut être lente sur un gros modèle ou produire un faux résultat silencieux.
+Une boîte à outils interne ne vaut que par sa cohérence et sa fiabilité : une dizaine de boutons doivent partager une logique commune, des interfaces claires et un comportement sûr sur de gros modèles. Chaque outil touche l'API Revit, où une requête mal cadrée est lente ou produit un faux résultat silencieux. Il fallait des interfaces WPF lisibles, des transactions propres et des actions réversibles — utilisables sans supervision.
 
 ## Processus
 
-J'ai organisé l'extension en trois panneaux : Analyse, Edit et Filter. Le pivot est le Param Category Auditor, qui sépare un moteur de données (collecte des shared parameters, calcul du taux de remplissage par catégorie) d'une interface WPF en XAML — barres colorées segmentées, table de détail, seuil réglable — avec export Excel et désassignation des paramètres inutilisés. À côté, un Shared Parameters Checker compare les paramètres entre modèles, un Geometry Analyser et un détecteur d'imbrication de familles inspectent la maquette, un Smart Filter et un View Filter Cleaner gèrent les filtres de vue, et un Nomenclature Modifier édite les nomenclatures en masse. Chaque bouton suit le format pyRevit (bundle plus script) au-dessus d'une base commune.
+J'ai organisé l'onglet en trois panels ; chaque bouton suit le format pyRevit (bundle + `script.py` + `ui.xaml` + icône).
+
+**Analyse**
+
+- **Param Category Auditor** — le pivot de l'onglet : audit des paramètres partagés par catégorie. Calcule le taux de remplissage, repère les valeurs les plus fréquentes et permet de nettoyer les paramètres inutilisés.
+- **Shared Parameters Checker** — compare les GUID des paramètres partagés du projet avec un fichier de paramètres partagés `.txt` de référence, pour détecter les discordances.
+- **Param Manager** — gestionnaire complet : affiche tous les paramètres (partagés, projet, built-in, y compris cachés), avec recherche, filtrage et suppression.
+- **Family Imbrication** — parcourt récursivement les familles chargées et quantifie leur niveau d'imbrication (0-2 acceptable, 3 à surveiller, 4+ critique pour la performance).
+- **Geometry Analyser** — inspection de la géométrie des éléments du modèle.
+
+**Édition**
+
+- **Nomenclature Modifier** — ajoute un paramètre (colonne) à plusieurs nomenclatures en une seule passe (batch), de Revit 2021 à 2026.
+
+**Filtres**
+
+- **Smart Filter** — combine filtre paramétrique et masquage inverse : crée des filtres simples ou des masquages, avec ou sans règle logique.
+- **View Filter Cleaner** — nettoie les filtres de vue : retrait sur la vue active, et purge en masse des `ParameterFilterElement` non utilisés du projet entier, en une transaction.
+- **Better Splasher** — colore les éléments de la vue selon leurs valeurs de paramètre et génère légendes ou filtres. C'est un outil communautaire (Color Splasher de BIMOne, porté sur pyRevit par Jean-Marc Couffin) que j'ai intégré à l'onglet et crédité.
 
 ## Résultat
 
-L'équipe dispose d'un onglet maison qui transforme des vérifications manuelles, faites trop tard, en actions d'un clic depuis Revit. Voir instantanément quels shared parameters sont réellement utilisés par catégorie — et nettoyer les autres — évite la dérive des modèles. HRS.tab montre l'autre face de mon outillage BIM : le scripting Python rapide, au plus près du flux de travail.
+Des vérifications qui se faisaient à la main, trop tard, deviennent des actions d'un clic depuis Revit — homogènes, traçables et fiables. Voir instantanément quels paramètres partagés sont réellement utilisés par catégorie, et nettoyer le reste, évite la dérive des modèles. HRS.tab montre l'autre face de mon outillage BIM : du scripting Python rapide, au plus près du flux de travail Revit.

@@ -21,7 +21,9 @@ const FR_MARKERS = ['## Contexte', '## Défi', '## Processus', '## Résultat'] a
 const EN_MARKERS = ['## Context', '## Challenge', '## Process', '## Outcome'] as const;
 
 const MIN_WORDS = 250;
-const MAX_WORDS = 400;
+// Most case studies sit ~300 words; tool-suite write-ups that detail many
+// sub-components (e.g. HRS.tab's pyRevit plugins) legitimately run longer.
+const MAX_WORDS = 700;
 
 type Locale = 'fr' | 'en';
 
