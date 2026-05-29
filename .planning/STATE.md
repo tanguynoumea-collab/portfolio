@@ -3,8 +3,8 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: complete
-stopped_at: "Milestone v1.0 SHIPPED + post-v1.0 BIM refocus & full-name/hero polish (2026-05-29) live on Vercel. Pass 2 (real projects + filter removal) pending user go."
-last_updated: "2026-05-29T18:45:00.000Z"
+stopped_at: "Milestone v1.0 SHIPPED + post-v1.0 polish + Pass 2 (5 real GitHub projects, flat 2-category Project model) live on Vercel. Remaining: user content (LinkedIn URL, CV-EN, real project screenshots)."
+last_updated: "2026-05-29T20:30:00.000Z"
 last_activity: 2026-05-29
 progress:
   total_phases: 7
@@ -21,7 +21,7 @@ progress:
 See: .planning/PROJECT.md (updated 2026-05-25)
 
 **Core value:** Mettre en valeur le profil d'ingenieur BIM de Tanguy Delrieu via une experience web personnalisable qui prouve la maitrise technique, le sens du design et l'attention aux details. (Identite refocalisee Tech/Design/BIM fictif -> BIM reel le 2026-05-29.)
-**Current focus:** Milestone v1.0 SHIPPED 🎉 — https://detportfolio.vercel.app · post-v1.0 refocus BIM + nom complet + fix hero livres. Pass 2 (vrais projets + retrait filtre) en attente du feu vert utilisateur.
+**Current focus:** Milestone v1.0 SHIPPED 🎉 — https://detportfolio.vercel.app · post-v1.0 refocus BIM + nom complet + fix hero + **Pass 2 livre** (5 vrais projets GitHub, modele Project aplati a 2 categories BIM·Revit/Outils). Reste : contenu utilisateur (URL LinkedIn, CV-EN, vraies captures projets).
 
 ## Current Position
 
@@ -194,8 +194,8 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-05-29 (post-v1.0 polish, outside the phase cycle)
-Stopped at: Milestone v1.0 shipped + post-launch content/UI patch live on Vercel — BIM identity refocus (4a8f21c), full name "Tanguy Delrieu" everywhere (85b1834), hero name-centering fix (92c2a56 SplitText words,chars + d088010 max-w-5xl). Docs updated (PROJECT.md/STATE.md/README.md). `main` synced with origin.
-Resume point: **Pass 2** — replace the 6 fictional projects (texture-manager/agora/brand-system/editorial-grid/tower-concept/residential-renovation) with real BIM/construction case studies from the CV + remove the CategoryFilter (user-chosen). Blocked on user "go". User still owes: real LinkedIn URL, EN CV translation (public/cv-en.pdf is a FR copy), real project images.
+Last session: 2026-05-29 (post-v1.0 polish + Pass 2, outside the phase cycle)
+Stopped at: Milestone v1.0 + post-launch patches + Pass 2 live on Vercel — BIM identity refocus (4a8f21c), full name everywhere (85b1834), hero centering fix (92c2a56 + d088010), and **Pass 2** (94a848d): 6 fictional projects → 5 real GitHub projects (Olympe Datamind/Hermès/MaterialManager, HRS.tab, DiskScout), Project model flattened to 2 categories (BIM·Revit/Outils), private repos featured-but-not-linked. Docs updated. `main` synced.
+Resume point: **user content swaps** — real LinkedIn URL (linkedin.com/in/tanguy-delrieu unverified), EN CV translation (public/cv-en.pdf is a FR copy), and real project screenshots (covers + galleries; currently generated placeholders under public/projects/{slug}/). Optional next: per-project gallery images, About photo swap.
 
 Previous session: 2026-05-28 — Phase 7 deployment (repo pushed to tanguynoumea-collab/portfolio, Vercel connected, 4 post-deploy hotfixes). Resume file: .planning/phases/07-deployment/07-01-go-live-PLAN.md
