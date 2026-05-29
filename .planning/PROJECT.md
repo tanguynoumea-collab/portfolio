@@ -2,11 +2,13 @@
 
 ## What This Is
 
-Portfolio personnel bilingue FR/EN servant de complément au CV PDF, présentant un profil hybride **Tech (dev) × Design (créatif) × BIM (architecture)**. Le site expose 6 à 10 projets personnels filtrables par catégorie, avec un ton créatif assumé et des easter eggs. Sa **feature signature** est un système de palettes interactif (4 presets + custom color picker + génération harmonique avec contrôle WCAG temps réel + palette secrète Vaporwave déblocable via Konami code) qui permet à chaque visiteur de personnaliser le thème en live.
+Portfolio personnel bilingue FR/EN servant de complément au CV PDF, présentant **Tanguy Delrieu, ingénieur BIM** (coordination & modélisation, du modèle numérique au suivi de chantier). Le site expose des projets personnels avec un ton créatif assumé et des easter eggs. Sa **feature signature** est un système de palettes interactif (4 presets + custom color picker + génération harmonique avec contrôle WCAG temps réel + palette secrète Vaporwave déblocable via Konami code) qui permet à chaque visiteur de personnaliser le thème en live.
+
+> **Note identité (post-v1.0, 2026-05-29) :** l'identité initiale était un profil fictif hybride *Tech × Design × BIM*. Elle a été refocalisée sur le **profil réel d'ingénieur BIM** issu du CV (voir bloc *Post-v1.0* dans Requirements). La section Projets contient encore les 6 projets fictifs catégorisés Tech/Design/BIM en attendant la refonte (Pass 2).
 
 ## Core Value
 
-Démontrer le profil créatif hybride Tech/Design/BIM via une expérience web personnalisable qui **prouve la maîtrise technique, le sens du design et l'attention aux détails** — un portfolio qui est lui-même une démo vivante de ce que je sais faire.
+Mettre en valeur le profil d'**ingénieur BIM** de Tanguy Delrieu via une expérience web personnalisable qui **prouve la maîtrise technique, le sens du design et l'attention aux détails** — un portfolio qui est lui-même une démo vivante de son savoir-faire.
 
 ## Requirements
 
@@ -117,6 +119,17 @@ Démontrer le profil créatif hybride Tech/Design/BIM via une expérience web pe
 
 **Correctifs post-déploiement (trouvés + corrigés live, vérifiés navigateur) :** SITE_URL → origine réelle ; `localePrefix` `as-needed`→`always` (home FR à `/` était cassée — sans `<html lang>`/`<title>`) ; transition de page déplacée root→`[locale]` (le template racine remontait toute l'app à chaque navigation → page blanche) ; `remark-frontmatter` ajouté (le frontmatter YAML s'affichait en clair sur les pages projet).
 
+**Post-v1.0 — Refocus BIM & polish (2026-05-29)** — correctifs de contenu et UI post-lancement, hors cycle de phase (milestone v1.0 déjà clôturé). Commits directs sur `main`, auto-déployés sur Vercel.
+
+- [x] **Identité refocalisée sur le BIM réel** (depuis le CV) : `hero.role` → "Ingénieur BIM" / "BIM Engineer", tagline coordination/modélisation, bio `about.paragraphs` (ESTP Paris, Vinci Construction Genève, suivi de chantier Nouvelle-Calédonie), `skills.groups` relabellisés BIM (Logiciels BIM : Revit/Navisworks/NEXT-BIM/BimCollab/AutoCAD ; Coordination & chantier ; Méthodes & économie), email réel `tanguy.delrieu@estp.fr`, metadata/OpenGraph/ASCII alignés. L'identité fictive Tech/Design/BIM est remplacée. *(commit `4a8f21c`)*
+- [x] **Nom complet "Tanguy Delrieu"** partout où le prénom seul s'affichait : titre hero (haut-centre), wordmark navigation (haut-gauche), titre du menu mobile, `hero.name` FR/EN. *(commit `85b1834`)*
+- [x] **Correctif centrage du nom dans le hero** : `SplitText` passé de `type:'chars'` → `'words,chars'` (empêchait la coupure en plein milieu d'un mot qui isolait une lettre — "Delrie"/"u") + conteneur titre `max-w-4xl` → `max-w-5xl` (le nom complet tient sur une ligne dès 1024px ; mobile wrappe proprement à l'espace). Vérifié navigateur (preview live) à 1024/1280/375px ; 336/336 tests verts. *(commits `92c2a56`, `d088010`)*
+
+**Reste à faire (Pass 2 — refonte de la section Projets, en attente du feu vert utilisateur) :**
+
+- [ ] Remplacer les 6 projets fictifs (texture-manager/agora/brand-system/editorial-grid/tower-concept/residential-renovation) par les **vrais projets BIM/construction du CV** + retirer le `CategoryFilter` (choix utilisateur — un seul domaine désormais)
+- [ ] Fournir l'**URL LinkedIn réelle** (actuellement `linkedin.com/in/tanguy-delrieu`, non vérifiée), la **traduction EN du CV** (`public/cv-en.pdf` = copie du FR), et les **vraies images de projets** (couvertures + galeries, actuellement placeholders)
+
 ### Out of Scope
 
 - **Scroll horizontal sur Projects (GSAP pin)** — Casse les gestures mobile, conflit avec AnimatePresence du filter, complexité disproportionnée vs valeur en v1. Re-évaluer en v2.
@@ -134,9 +147,9 @@ Démontrer le profil créatif hybride Tech/Design/BIM via une expérience web pe
 ## Context
 
 **Profil utilisateur :**
-- Tanguy, profil hybride Tech (développement) × Design (créatif) × BIM (architecture)
-- Le portfolio sert de complément au CV PDF — audience : recruteurs, clients potentiels, communauté tech/design/archi
-- Confort technique avec Next.js, TypeScript, Tailwind, animations modernes
+- **Tanguy Delrieu**, ingénieur BIM — diplômé de l'ESTP Paris ; coordination BIM chez Vinci Construction (Genève), suivi de chantier en Nouvelle-Calédonie (gros œuvre & rénovation)
+- Le portfolio sert de complément au CV PDF — audience : recruteurs et acteurs de la construction / AEC
+- Profil refocalisé sur le BIM le 2026-05-29 (l'identité initiale fictive Tech/Design/BIM a été remplacée par le profil réel issu du CV — voir le bloc *Post-v1.0* dans Requirements)
 
 **Inspiration & benchmark :**
 - Portfolios créatifs hybrides combinant fluidité d'animation (style Astro/GSAP) et UX moderne (style Next/Framer Motion)
@@ -200,4 +213,6 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-05-28 — **MILESTONE v1.0 SHIPPED 🎉** (Phase 7: Deployment complete). Live: **https://detportfolio.vercel.app** · Repo: **github.com/tanguynoumea-collab/portfolio** (public, auto-deploy on `main`) · Vercel Analytics + Speed Insights active. All 7 phases + 52/52 requirements complete. Deployed Lighthouse mobile: A11y 92 / Best-Practices 100 / SEO 100 ✓ ; Performance 68 (FCP 0.2s/LCP 0.7s excellent; TBT 1080ms = GSAP+Lenis+Motion animation stack — A11Y-08's ≥90-all-axes is met on 3/4, Performance is an accepted creative-portfolio trade-off, v2 optimization candidate). 336/336 Vitest tests green. Post-launch hotfixes: SITE_URL, localePrefix as-needed→always (fixed broken FR root), root→[locale] template relocation (fixed blank-page-on-navigation), remark-frontmatter (fixed YAML leak on project pages). Remaining = user content swaps (PRE-DEPLOY-CHECKLIST.md): real bio/photo/email/LinkedIn/project covers+galleries/MDX bodies/CV-EN. v2 candidates: animation perf optimization, blog, 3D BIM viewer, palette export, contact-form backend, custom domain.*
+*Last updated: 2026-05-28 — **MILESTONE v1.0 SHIPPED 🎉** (Phase 7: Deployment complete). Live: **https://detportfolio.vercel.app** · Repo: **github.com/tanguynoumea-collab/portfolio** (public, auto-deploy on `main`) · Vercel Analytics + Speed Insights active. All 7 phases + 52/52 requirements complete. Deployed Lighthouse mobile: A11y 92 / Best-Practices 100 / SEO 100 ✓ ; Performance 68 (FCP 0.2s/LCP 0.7s excellent; TBT 1080ms = GSAP+Lenis+Motion animation stack — A11Y-08's ≥90-all-axes is met on 3/4, Performance is an accepted creative-portfolio trade-off, v2 optimization candidate). 336/336 Vitest tests green. Post-launch hotfixes: SITE_URL, localePrefix as-needed→always (fixed broken FR root), root→[locale] template relocation (fixed blank-page-on-navigation), remark-frontmatter (fixed YAML leak on project pages). Remaining = user content swaps: real bio/photo/email/LinkedIn/project covers+galleries/MDX bodies/CV-EN. v2 candidates: animation perf optimization, blog, 3D BIM viewer, palette export, contact-form backend, custom domain.*
+
+*Post-v1.0 update: 2026-05-29 — Identity refocused from the fictional Tech×Design×BIM hybrid to the **real BIM-engineer profile** (from CV): role, tagline, bio, skills, email, metadata/OG/ASCII (commit `4a8f21c`). Full name **"Tanguy Delrieu"** applied everywhere the first name alone appeared — hero (top-center), nav wordmark (top-left), mobile menu title (commit `85b1834`). Hero name-centering bug fixed: SplitText `chars`→`words,chars` + title container `max-w-4xl`→`max-w-5xl`, browser-verified at 1024/1280/375px (commits `92c2a56`, `d088010`). Done & live on Vercel. **Pending (Pass 2, awaiting user go):** replace the 6 fictional projects with real BIM/construction case studies + remove the category filter; user still owes the real LinkedIn URL, EN CV translation, and real project images.*

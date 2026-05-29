@@ -1,8 +1,8 @@
 # Tanguy Delrieu — Portfolio
 
-**Bilingual (FR/EN) creative portfolio. Hybrid profile: Tech × Design × BIM.**
+**Bilingual (FR/EN) creative portfolio for Tanguy Delrieu, BIM engineer.**
 
-A personal portfolio that doubles as a living demo of what I build — a complement to the PDF CV, showcasing a hybrid profile across **development**, **creative design**, and **architecture / BIM**. The site is its own proof of work: technically rigorous, design-led, and obsessive about the details.
+A personal portfolio that complements the PDF CV — presenting **Tanguy Delrieu**, a **BIM engineer** working on coordination and modeling, from the digital model through to on-site delivery. The site is its own proof of work: technically rigorous, design-led, and obsessive about the details.
 
 > **Live:** https://detportfolio.vercel.app
 
@@ -62,4 +62,4 @@ Deployed on **Vercel** with zero config (Next.js is auto-detected — no `vercel
 
 ---
 
-Built by **Tanguy Delrieu** — Tech × Design × BIM.
+Built by **Tanguy Delrieu** — BIM engineer.

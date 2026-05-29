@@ -3,9 +3,9 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: complete
-stopped_at: "Milestone v1.0 SHIPPED — live at https://detportfolio.vercel.app (all 7 phases complete, 52/52 requirements; A11Y-08 Performance 68 = accepted animation trade-off)"
-last_updated: "2026-05-28T15:43:02.693Z"
-last_activity: 2026-05-28
+stopped_at: "Milestone v1.0 SHIPPED + post-v1.0 BIM refocus & full-name/hero polish (2026-05-29) live on Vercel. Pass 2 (real projects + filter removal) pending user go."
+last_updated: "2026-05-29T18:45:00.000Z"
+last_activity: 2026-05-29
 progress:
   total_phases: 7
   completed_phases: 7
@@ -20,8 +20,8 @@ progress:
 
 See: .planning/PROJECT.md (updated 2026-05-25)
 
-**Core value:** Demontrer le profil creatif hybride Tech/Design/BIM via une experience web personnalisable qui prouve la maitrise technique, le sens du design et l'attention aux details.
-**Current focus:** Milestone v1.0 SHIPPED 🎉 — https://detportfolio.vercel.app
+**Core value:** Mettre en valeur le profil d'ingenieur BIM de Tanguy Delrieu via une experience web personnalisable qui prouve la maitrise technique, le sens du design et l'attention aux details. (Identite refocalisee Tech/Design/BIM fictif -> BIM reel le 2026-05-29.)
+**Current focus:** Milestone v1.0 SHIPPED 🎉 — https://detportfolio.vercel.app · post-v1.0 refocus BIM + nom complet + fix hero livres. Pass 2 (vrais projets + retrait filtre) en attente du feu vert utilisateur.
 
 ## Current Position
 
@@ -194,6 +194,8 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-05-28T13:55:30.240Z
-Stopped at: Phase 7: 07-00 done; 07-01 Task 1 done (repo pushed to tanguynoumea-collab/portfolio); PAUSED awaiting user Vercel connect (Tasks 2-4)
-Resume file: .planning/phases/07-deployment/07-01-go-live-PLAN.md
+Last session: 2026-05-29 (post-v1.0 polish, outside the phase cycle)
+Stopped at: Milestone v1.0 shipped + post-launch content/UI patch live on Vercel — BIM identity refocus (4a8f21c), full name "Tanguy Delrieu" everywhere (85b1834), hero name-centering fix (92c2a56 SplitText words,chars + d088010 max-w-5xl). Docs updated (PROJECT.md/STATE.md/README.md). `main` synced with origin.
+Resume point: **Pass 2** — replace the 6 fictional projects (texture-manager/agora/brand-system/editorial-grid/tower-concept/residential-renovation) with real BIM/construction case studies from the CV + remove the CategoryFilter (user-chosen). Blocked on user "go". User still owes: real LinkedIn URL, EN CV translation (public/cv-en.pdf is a FR copy), real project images.
+
+Previous session: 2026-05-28 — Phase 7 deployment (repo pushed to tanguynoumea-collab/portfolio, Vercel connected, 4 post-deploy hotfixes). Resume file: .planning/phases/07-deployment/07-01-go-live-PLAN.md
